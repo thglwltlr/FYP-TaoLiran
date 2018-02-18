@@ -1,0 +1,98 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="!userProvider.firebaseConnection">
+      <ion-spinner name="bubbles"></ion-spinner>
+      Reconnecting
+    </ion-title>
+    <ion-title *ngIf="userProvider.firebaseConnection">
+      Xperience @EEE
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div *ngIf="!gameProvider.firstTimeFlag
+    &&!groupProvider.firstTimeFlag
+    &&!statusProvider.firstTimeFlag">
+    <!--tableAllFetched-->
+    <button *ngIf="(groupProvider.userGroupId==null||groupProvider.userGroupId=='')"
+            ion-button block (click)="joinGroup()">Join Group
+    </button>
+    <div *ngIf="statusProvider.statusTableInfo.startTime!=null
+    &&statusProvider.statusTableInfo.startTime!=''
+    &&(statusProvider.statusTableInfo.endTime==null
+    ||statusProvider.statusTableInfo.endTime=='')">
+      <!--game master has started game, and in progress;-->
+      <div *ngIf="(statusProvider.statusTableInfo.groups==null
+    ||statusProvider.statusTableInfo.groups.length==0
+    ||statusProvider.groupStatus==null)">
+        <!--group not started-->
+        <button ion-button *ngIf="groupProvider.groupLeaderFlag"
+                block (click)="startGame()">Start Game
+        </button>
+        <ion-item
+          *ngIf="!groupProvider.groupLeaderFlag">
+          Wait for Group Leader to start game
+        </ion-item>
+      </div>
+      <div *ngIf="(statusProvider.statusTableInfo.groups!=null
+    &&statusProvider.statusTableInfo.groups.length!=0
+    &&statusProvider.groupStatus!=null
+    &&statusProvider.groupStatus.startTime!=null
+    &&statusProvider.groupStatus.puzzles!=null)">
+        <!--group started-->
+        <ion-toolbar>
+          <ion-grid>
+            <ion-row style="text-align: center;">
+              <ion-col col-6>
+                Time used: {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
+              </ion-col>
+              <ion-col col-6>
+                Point: {{statusProvider.groupStatus.point}}
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="statusProvider.groupStatus.endTime==null
+                        ||statusProvider.groupStatus.endTime==''">
+              <div class="progress-outer" col-10>
+                <div class="progress-inner"
+                     [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
+                </div>
+              </div>
+              <div col-2>
+                {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
+              </div>
+            </ion-row>
+            <ion-row *ngIf="statusProvider.groupStatus.endTime!=null
+                        &&statusProvider.groupStatus.endTime!=''">
+              check team rank
+            </ion-row>
+
+          </ion-grid>
+        </ion-toolbar>
+
+        <div *ngFor="let puzzleId of statusProvider.puzzleStatusKeys">
+          <!--group solved-->
+          <ion-item no-lines class="solvedPuzzle" *ngIf="statusProvider.puzzleStatus[puzzleId].solved"
+                    (click)="puzzleSolve(puzzleId)">
+            <ion-thumbnail item-start>
+              <img src={{gameProvider.puzzleDetails[puzzleId].photoUrl}}>
+            </ion-thumbnail>
+            <h2> {{gameProvider.puzzleDetails[puzzleId].title}}</h2>
+          </ion-item>
+        </div>
+        <ion-item *ngIf="statusProvider.firstUnsolved!=null&&statusProvider.firstUnsolved!=''"
+                  (click)="puzzleSolve(statusProvider.firstUnsolved)">
+          <p>unsolved:{{gameProvider.puzzleDetails[statusProvider.firstUnsolved].title}}</p>
+        </ion-item>
+        <ion-item *ngIf="statusProvider.groupStatus.endTime!=null
+                        &&statusProvider.groupStatus.endTime!=''">
+          <p>Game Finished</p>
+        </ion-item>
+      </div>
+    </div>
+  </div>
+</ion-content>

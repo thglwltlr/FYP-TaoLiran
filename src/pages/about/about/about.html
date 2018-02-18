@@ -1,0 +1,21 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>about</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let userId of userProvider.userTableInfoKey">
+      <p>{{userProvider.userTableInfo[userId].name}}</p>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <button ion-button block (click)="goToAdminPage()"> Admin Option</button>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,21 +1,38 @@
 import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import {ModalController, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {OpenPage} from '../pages/open/open';
+import {UserProvider} from '../providers/tables/user/user';
+import {User} from '../assets/models/interfaces/User';
 
-import { HomePage } from '../pages/home/home';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage: any = OpenPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor(modalCtrl: ModalController, userProvider: UserProvider, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      userProvider.anonymousLogin().then((res) => {
+        if (res == true) {
+          console.log("login success");
+          userProvider.checkUser().then((res: User) => {
+            if (res == null || (res).edited == null || (res).edited == false) {
+              this.rootPage = 'ProfilePage';
+            }
+            else {
+              this.rootPage = 'TabsPage';
+            }
+          }).catch((err) => {
+            console.log("err", err.message);
+          });
+        }
+      }).catch((err) => {
+        console.log("login fail")
+      });
     });
   }
 }

@@ -1,0 +1,32 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>admin</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <button ion-button block (click)="goToLocationPage()"> Edit Game</button>
+    </ion-item>
+    <ion-item>
+      <button ion-button block (click)="startGame()"> Start Game</button>
+    </ion-item>
+    <ion-item
+      *ngIf="statusProvider.statusTableInfo!=null&&(statusProvider.statusTableInfo.endTime==null||statusProvider.statusTableInfo.endTime=='')">
+      <button ion-button block (click)="endGame()"> End Game</button>
+    </ion-item>
+  </ion-list>
+  <ion-item
+    *ngIf="statusProvider.statusTableInfo!=null&&(statusProvider.statusTableInfo.endTime==null||statusProvider.statusTableInfo.endTime=='')">
+    {{settingProvider.time-statusProvider.statusTableInfo.startTime|date:'HH:mm:ss':'UTC'}}
+  </ion-item>
+  <ion-item
+    *ngIf="statusProvider.statusTableInfo!=null&&statusProvider.statusTableInfo.endTime!=null&&statusProvider.statusTableInfo.endTime!=''">
+    {{ statusProvider.statusTableInfo.endTime-statusProvider.statusTableInfo.startTime|date:'HH:mm:ss':'UTC'}}
+  </ion-item>
+
+</ion-content>

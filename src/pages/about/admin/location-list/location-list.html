@@ -1,0 +1,72 @@
+<ion-header>
+
+  <ion-navbar color="hcolor">
+    <ion-title>Location List</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item-sliding *ngFor="let locationId of gameProvider.gameTableInfoKeys">
+      <ion-item>
+        <!--<ion-thumbnail item-start>-->
+        <!--<img src={{locationDetails[locationId].photoUrl}}>-->
+        <!--</ion-thumbnail>-->
+        <h2> {{gameProvider.gameTableInfo[locationId].name}}</h2>
+        <p> Type: {{gameProvider.gameTableInfo[locationId].type}}</p>
+        <p> Order: {{gameProvider.gameTableInfo[locationId].order}}</p>
+        <button ion-button clear item-end (click)="viewPuzzles(locationId)">puzzles</button>
+      </ion-item>
+
+      <ion-item-options slide="left">
+        <button ion-button color="primary" (click)="editLocation(locationId)">
+          <ion-icon name="color-wand"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="deleteLocation(locationId)">
+          <ion-icon name="trash"></ion-icon>
+          Del
+        </button>
+        <!--<button ion-button color="danger" (click)="deleteLocation(locationId)">-->
+        <!--<ion-icon name="trash"></ion-icon>-->
+        <!--Del-->
+        <!--</button>-->
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div *ngIf="locationTempKey!=null&&locationTempKey!=''">
+    <ion-item-group>
+      <ion-item>
+        <ion-label floating>Location name:</ion-label>
+        <ion-input type="text"
+                   [(ngModel)]="locationTemp.name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Location type:</ion-label>
+        <ion-select [(ngModel)]="locationTemp.type">
+          <ion-option value="start">Start point</ion-option>
+          <ion-option value="random">Random point</ion-option>
+          <ion-option value="end">End point</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Location order:</ion-label>
+        <ion-input type="text"
+                   [(ngModel)]="locationTemp.order"></ion-input>
+      </ion-item>
+
+
+      <!--<div class="locationImage">-->
+      <!--<img src="{{locationTemp.photoUrl}}">-->
+      <!--</div>-->
+      <!--<button ion-button block (click)="chooseImage()">Choose from Gallery</button>-->
+      <!--<div class="spacer" style="height: 20px;"></div>-->
+      <button ion-button block (click)="updateLocation()">Submit</button>
+      <button ion-button block (click)="cancel()">Cancel</button>
+    </ion-item-group>
+  </div>
+  <button *ngIf="locationTempKey==null||locationTempKey==''" ion-button block (click)="addLocation()">Add new</button>
+  <div class="spacer" style="height: 30px;"></div>
+</ion-content>
+

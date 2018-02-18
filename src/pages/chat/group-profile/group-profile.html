@@ -1,0 +1,24 @@
+x
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>group profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="profileImage">
+    <img src="{{cameraProvider.base64Image}}">
+  </div>
+
+  <ion-item>
+    <ion-label floating>Pick a team name</ion-label>
+    <ion-input type="text"
+               [(ngModel)]="groupTemp.name"></ion-input>
+  </ion-item>
+  <button ion-button block [disabled]="lock" (click)="chooseImage()">Choose image</button>
+
+  <button ion-button block [disabled]="lock" (click)="update()">Submit</button>
+</ion-content>

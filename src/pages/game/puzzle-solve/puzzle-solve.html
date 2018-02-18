@@ -1,0 +1,120 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title *ngIf="!userProvider.firebaseConnection">
+      <ion-spinner name="bubbles"></ion-spinner>
+      Reconnecting
+    </ion-title>
+    <ion-title *ngIf="userProvider.firebaseConnection">
+      Solve the puzzle!
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row style="text-align: center;">
+        <ion-col col-6>
+          Time used: {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
+        </ion-col>
+        <ion-col col-6>
+          Point: {{statusProvider.groupStatus.point}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="statusProvider.groupStatus.endTime==null
+                        ||statusProvider.groupStatus.endTime==''">
+        <div class="progress-outer" col-10>
+          <div class="progress-inner"
+               [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
+          </div>
+        </div>
+        <div col-2>
+          {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
+        </div>
+      </ion-row>
+      <ion-row *ngIf="statusProvider.groupStatus.endTime!=null
+                        &&statusProvider.groupStatus.endTime!=''">
+        check team rank
+      </ion-row>
+
+    </ion-grid>
+  </ion-toolbar>
+
+
+  <div padding>
+    <ion-item no-lines>
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+            <h2 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].title}}</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+            <h5 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].puzzleContent}}</h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+
+            <img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' imageViewer>
+
+          </div>
+        </div>
+      </div>
+    </ion-item>
+    <div class="spacer" style="height: 10px;"></div>
+    <button ion-button [disabled]="lock"
+            *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false"
+            block (click)="viewHint1()">View Hint(-20)
+    </button>
+    <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true">
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+            <h5 style="text-align: left;">Hint 1:{{gameProvider.puzzleDetails[puzzleId].hint1}}</h5>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+    <div class="spacer" style="height: 10px;"></div>
+    <button ion-button [disabled]="lock"
+            *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true"
+            block (click)="viewHint2()">View More Hint(-20)
+    </button>
+    <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true">
+      <div class="row">
+        <div class="col">
+          <div class="text-center">
+            <h5 style="text-align: left;">Hint 2:{{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
+          </div>
+        </div>
+      </div>
+    </ion-item>
+    <div class="spacer" style="height: 10px;"></div>
+    <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
+      <ion-item no-lines>
+        <ion-label floating>Your answer:</ion-label>
+        <ion-input type="text"
+                   [(ngModel)]="answerTemp"></ion-input>
+      </ion-item>
+      <button ion-button block (click)="answerPuzzle()">Answer Question (+10)</button>
+    </div>
+    <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
+      <div class="col">
+        <div class="text-center">
+          <h5 style="text-align: left;">Puzzle has been solved,
+            answer:{{gameProvider.puzzleDetails[puzzleId].answer}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

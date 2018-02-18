@@ -1,0 +1,30 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>group</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button block (click)="publicChat()">Public Chat</button>
+  <div *ngIf="!groupProvider.firstTimeFlag
+               &&groupProvider.userGroupId!=null
+               &&groupProvider.userGroupId!=''">
+    <button ion-button block (click)="groupChat()">
+      Group Chat
+    </button>
+
+    <button ion-button block (click)="joinGroup()">
+      Change Group
+    </button>
+
+  </div>
+
+  <button *ngIf="!groupProvider.firstTimeFlag
+                &&(groupProvider.userGroupId==null
+                ||groupProvider.userGroupId=='')"
+          ion-button block (click)="joinGroup()">Join Group
+  </button>
+</ion-content>

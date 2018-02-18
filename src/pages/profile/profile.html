@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="profileImage">
+    <img src="{{cameraProvider.base64Image}}">
+  </div>
+
+  <ion-item>
+    <ion-label floating>Pick a name</ion-label>
+    <ion-input type="text"
+               [(ngModel)]="userTemp.name"></ion-input>
+  </ion-item>
+  <button ion-button block [disabled]="lock" (click)="chooseImage()">Choose image</button>
+
+  <button ion-button block [disabled]="lock" (click)="update()">Submit</button>
+</ion-content>
