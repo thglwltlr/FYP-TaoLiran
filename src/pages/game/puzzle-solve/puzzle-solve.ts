@@ -6,7 +6,8 @@ import {UserProvider} from '../../../providers/tables/user/user';
 import {SettingProvider} from '../../../providers/setting/setting';
 import {ToastProvider} from '../../../providers/utility/toast/toast';
 import {LoaderProvider} from '../../../providers/utility/loader/loader';
-
+import {ModalController} from 'ionic-angular';
+import {GalleryModal} from 'ionic-gallery-modal';
 
 @IonicPage()
 @Component({
@@ -18,12 +19,25 @@ export class PuzzleSolvePage {
   lock = false;
   answerTemp = '';
 
-  constructor(private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.puzzleId = this.navParams.get('puzzleId');
     if (this.statusProvider.puzzleStatus[this.puzzleId] == null) {
       this.navCtrl.pop();
     }
     this.answerTemp = '';
+  }
+
+  openImage() {
+    var photos = [];
+    photos.push({
+      url: this.gameProvider.puzzleDetails[this.puzzleId].photoUrl
+  })
+    let modal = this.modalCtrl.create(GalleryModal, {
+        photos: photos,
+        initialSlide: 0
+      })
+    ;
+    modal.present();
   }
 
 
