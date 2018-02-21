@@ -25,6 +25,7 @@ export class SettingProvider {
     clearInterval(this.timer);
   }
 
+
   getEstimatedServerTimeOnce() {
     var offsetRef = firebase.database().ref(this.SERVER_OFFSET);
     var promise = new Promise((resolve, reject) => {

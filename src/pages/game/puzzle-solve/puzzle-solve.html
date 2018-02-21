@@ -5,8 +5,11 @@
       <ion-spinner name="bubbles"></ion-spinner>
       Reconnecting
     </ion-title>
-    <ion-title *ngIf="userProvider.firebaseConnection">
+    <ion-title *ngIf="userProvider.firebaseConnection&&statusProvider.puzzleStatus[puzzleId].solved==false">
       Solve the puzzle!
+    </ion-title>
+    <ion-title *ngIf="userProvider.firebaseConnection&&statusProvider.puzzleStatus[puzzleId].solved==true">
+     Solved puzzle
     </ion-title>
   </ion-navbar>
 
@@ -14,24 +17,26 @@
 
 <ion-content>
 
-  <ion-toolbar>
+  <ion-toolbar ion-fixed>
     <ion-grid>
       <ion-row style="text-align: center;">
         <ion-col col-6>
-          Time used: {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
+          <ion-icon padding-right md="md-alarm"></ion-icon>
+          {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
         </ion-col>
         <ion-col col-6>
-          Point: {{statusProvider.groupStatus.point}}
+          <ion-icon padding-right ios="ios-clipboard" md="md-clipboard"></ion-icon>
+          {{statusProvider.groupStatus.point}}
         </ion-col>
       </ion-row>
       <ion-row *ngIf="statusProvider.groupStatus.endTime==null
                         ||statusProvider.groupStatus.endTime==''">
-        <div class="progress-outer" col-10>
+        <div class="progress-outer" col-11>
           <div class="progress-inner"
                [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
           </div>
         </div>
-        <div col-2>
+        <div col-1 class="statusNumber">
           {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
         </div>
       </ion-row>
@@ -43,7 +48,7 @@
     </ion-grid>
   </ion-toolbar>
 
-
+  <div class="spacer" style="height: 20%;"></div>
   <div padding>
     <ion-item no-lines>
       <div class="row">
@@ -108,13 +113,17 @@
       </ion-item>
       <button ion-button block (click)="answerPuzzle()">Answer Question (+10)</button>
     </div>
-    <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
+    <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
       <div class="col">
         <div class="text-center">
           <h5 style="text-align: left;">Puzzle has been solved,
-            answer:{{gameProvider.puzzleDetails[puzzleId].answer}}</h5>
+            answer:</h5>
+          <h2>
+            {{gameProvider.puzzleDetails[puzzleId].answer}}
+          </h2>
         </div>
       </div>
     </div>
   </div>
+  <div class="spacer" style="height: 20%;"></div>
 </ion-content>

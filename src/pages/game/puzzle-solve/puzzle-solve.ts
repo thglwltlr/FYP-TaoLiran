@@ -31,7 +31,7 @@ export class PuzzleSolvePage {
     var photos = [];
     photos.push({
       url: this.gameProvider.puzzleDetails[this.puzzleId].photoUrl
-  })
+    })
     let modal = this.modalCtrl.create(GalleryModal, {
         photos: photos,
         initialSlide: 0
@@ -50,7 +50,7 @@ export class PuzzleSolvePage {
       return correctAnswer == cookedAnswer;
     } else {
       //cookedAnswer match 80% of correct answer length, correct answer contains cookedAnswer, or cookedAnswer contains correct answer
-      return (cookedAnswer.length >= 0.8 * correctAnswer.length && (cookedAnswer.indexOf(correctAnswer) < 0 || correctAnswer.indexOf(cookedAnswer) < 0))
+      return (cookedAnswer.length >= 0.8 * correctAnswer.length && (cookedAnswer.indexOf(correctAnswer) >= 0 || correctAnswer.indexOf(cookedAnswer) >= 0))
     }
   }
 

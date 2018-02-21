@@ -8,6 +8,7 @@ import {GroupStatus} from '../../../assets/models/interfaces/GroupStatus';
 import {GameProvider} from '../game/game';
 import {GroupProvider} from '../group/group';
 import {UserProvider} from '../user/user';
+import {RandomStyle} from '../../../assets/models/interfaces/RandomStyle';
 
 @Injectable()
 export class StatusProvider {
@@ -24,6 +25,8 @@ export class StatusProvider {
   puzzleStatus = [] as PuzzleStatus[];
   puzzleStatusKeys = [];
   groupStatus = {} as GroupStatus;
+  randomStyle = [] as RandomStyle[];
+  readonly animationArray = ['moveHorizon', 'moveAround','rotate','moveVertical'];
 
   constructor(private userProvider: UserProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private settingProvider: SettingProvider, private events: Events) {
   }
@@ -44,7 +47,9 @@ export class StatusProvider {
         && this.groupProvider.userGroupId != '') {
         this.groupStatus = this.statusTableInfo.groups[this.groupProvider.userGroupId];
         this.getPuzzleStatus();
+        this.getRandomStyle();
         this.getFirstUnsolved();
+
       }
       this.events.publish(this.STATUS_TABLE_UPDATE);
       if (this.firstTimeFlag)
@@ -199,6 +204,48 @@ export class StatusProvider {
     }
     return locationOrder;
   }
+
+  getRandomStyle() {
+    for (let puzzleId of this.puzzleStatusKeys) {
+      if (this.puzzleStatus[puzzleId].solved) {
+        this.randomStyle[puzzleId] = {} as RandomStyle;
+        this.randomStyle[puzzleId].randomColor = this.compileRandomColors();
+        this.randomStyle[puzzleId].randomDuration = this.getRandomAnimationDuration();
+        this.randomStyle[puzzleId].randomAnimation = this.getRandomAnimation();
+      }
+    }
+    console.log(this.randomStyle);
+  }
+
+  getRandomAnimation() {
+    var animation = this.animationArray[Math.floor(Math.random() * this.animationArray.length)];
+    return animation + ' infinite'
+  }
+
+  compileRandomColors() {
+    var param1 = this.getRandomColor();
+    var param2 = this.getRandomColor();
+    var param3 = this.getRandomColor();
+    return 'linear-gradient(-45deg, ' + param1 + ', ' + param2 + ', ' + param3 + ')';
+  }
+
+  getRandomColor() {
+    var maxVal = 200;
+    var minVal = 20;
+
+    var r = Math.floor(Math.random() * maxVal) + minVal;
+    var g = Math.floor(Math.random() * maxVal) + minVal;
+    var b = Math.floor(Math.random() * maxVal) + minVal;
+    var a = 1;
+    return "rgba(" + r + "," + g + "," + b + "," + a + ")";
+
+  }
+
+  getRandomAnimationDuration() {
+    var d = Math.floor(Math.random() * 10) * 1000+10000;
+    return d + 'ms';
+  }
+
 
   initPuzzleStatus() {
     var puzzleStatus = {} as PuzzleStatus;
