@@ -26,7 +26,7 @@ export class StatusProvider {
   puzzleStatusKeys = [];
   groupStatus = {} as GroupStatus;
   randomStyle = [] as RandomStyle[];
-  readonly animationArray = ['moveHorizon', 'moveAround','rotate','moveVertical'];
+  readonly animationArray = ['moveHorizon', 'moveAround', 'rotate', 'moveVertical'];
 
   constructor(private userProvider: UserProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private settingProvider: SettingProvider, private events: Events) {
   }
@@ -58,18 +58,22 @@ export class StatusProvider {
   }
 
   getPuzzleStatus() {
-    console.log(this.groupStatus.puzzles);
-    this.puzzleStatus = this.settingProvider.jsonToArray(this.groupStatus.puzzles);
-    this.puzzleStatusKeys = Object.keys(this.puzzleStatus);
-    this.puzzleStatusKeys.sort((puzzleId1, puzzleId2) => {
-      if (this.puzzleStatus[puzzleId1].order < this.puzzleStatus[puzzleId2].order) {
-        return -1;
-      }
-      if (this.puzzleStatus[puzzleId1].order > this.puzzleStatus[puzzleId2].order) {
-        return 1;
-      }
-      return 0;
-    });
+    if (this.groupStatus != null) {
+      console.log(this.groupStatus.puzzles);
+      this.puzzleStatus = this.settingProvider.jsonToArray(this.groupStatus.puzzles);
+      this.puzzleStatusKeys = Object.keys(this.puzzleStatus);
+      this.puzzleStatusKeys.sort((puzzleId1, puzzleId2) => {
+        if (this.puzzleStatus[puzzleId1].order < this.puzzleStatus[puzzleId2].order) {
+          return -1;
+        }
+        if (this.puzzleStatus[puzzleId1].order > this.puzzleStatus[puzzleId2].order) {
+          return 1;
+        }
+        return 0;
+      });
+    } else {
+      this.groupStatus = {} as GroupStatus;
+    }
   }
 
   getFirstUnsolved() {
@@ -242,7 +246,7 @@ export class StatusProvider {
   }
 
   getRandomAnimationDuration() {
-    var d = Math.floor(Math.random() * 10) * 1000+10000;
+    var d = Math.floor(Math.random() * 10) * 1000 + 10000;
     return d + 'ms';
   }
 

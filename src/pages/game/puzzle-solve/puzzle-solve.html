@@ -9,7 +9,7 @@
       Solve the puzzle!
     </ion-title>
     <ion-title *ngIf="userProvider.firebaseConnection&&statusProvider.puzzleStatus[puzzleId].solved==true">
-     Solved puzzle
+      Solved puzzle
     </ion-title>
   </ion-navbar>
 
@@ -31,12 +31,12 @@
       </ion-row>
       <ion-row *ngIf="statusProvider.groupStatus.endTime==null
                         ||statusProvider.groupStatus.endTime==''">
-        <div class="progress-outer" col-11>
+        <div class="progress-outer" col-10>
           <div class="progress-inner"
                [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
           </div>
         </div>
-        <div col-1 class="statusNumber">
+        <div col-2 class="statusNumber">
           {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
         </div>
       </ion-row>
@@ -78,6 +78,7 @@
     </ion-item>
     <div class="spacer" style="height: 10px;"></div>
     <button ion-button [disabled]="lock"
+            class="in-progress"
             *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false"
             block (click)="viewHint1()">View Hint(-20)
     </button>

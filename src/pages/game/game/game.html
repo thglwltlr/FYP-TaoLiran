@@ -59,12 +59,12 @@
             </ion-row>
             <ion-row *ngIf="statusProvider.groupStatus.endTime==null
                         ||statusProvider.groupStatus.endTime==''">
-              <div class="progress-outer" col-11>
+              <div class="progress-outer" col-10>
                 <div class="progress-inner"
                      [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
                 </div>
               </div>
-              <div col-1 class="statusNumber">
+              <div col-2 class="statusNumber">
                 {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
               </div>
             </ion-row>
@@ -87,7 +87,7 @@
             <h2> {{gameProvider.puzzleDetails[puzzleId].title}}</h2>
           </ion-item>
         </div>
-        <ion-item *ngIf="statusProvider.firstUnsolved!=null&&statusProvider.firstUnsolved!=''"
+        <ion-item no-lines *ngIf="statusProvider.firstUnsolved!=null&&statusProvider.firstUnsolved!=''"
                   (click)="puzzleSolve(statusProvider.firstUnsolved)" class="unsolvedPuzzle">
 
           <ion-thumbnail item-start>
@@ -104,4 +104,13 @@
     </div>
   </div>
   <div class="spacer" style="height: 20%;"></div>
+  <ion-fab right bottom>
+    <button ion-fab mini color="light"><ion-icon name="arrow-dropleft"></ion-icon></button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="viewMap()"><ion-icon ios="ios-navigate" md="md-navigate"></ion-icon></button>
+      <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+    </ion-fab-list>
+  </ion-fab>
 </ion-content>

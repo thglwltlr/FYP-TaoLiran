@@ -31,4 +31,8 @@ export class GamePage {
     }).catch((err) => {
     });
   }
+
+  viewMap() {
+    this.navCtrl.push("MapPage");
+  }
 }

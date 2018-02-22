@@ -22,6 +22,9 @@ import {Camera} from '@ionic-native/camera';
 import {CameraProvider} from '../providers/utility/camera/camera';
 import * as ionicGalleryModal from 'ionic-gallery-modal';
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
+import {GoogleMaps} from '@ionic-native/google-maps'
+import {Geolocation} from '@ionic-native/geolocation';
+
 
 @NgModule({
   declarations: [
@@ -62,8 +65,11 @@ import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: ionicGalleryModal.GalleryModalHammerConfig,
-    }
-  ]
+    },
+    GoogleMaps,
+    Geolocation
+]
 })
+
 export class AppModule {
 }
