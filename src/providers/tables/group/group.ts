@@ -18,7 +18,8 @@ export class GroupProvider {
   firstTimeFlag = true;
   userGroupId = '';
   groupLeaderFlag = false;
-
+  filterString = '';
+  filteredKeys = [];
 
   constructor(private settingProvider: SettingProvider, private events: Events, private userProvider: UserProvider) {
   }
@@ -35,9 +36,24 @@ export class GroupProvider {
       });
       this.groupTableInfoKeys = Object.keys(this.groupTableInfo);
       this.updateUserGroupStatus();
-      console.log("user group status", this.userGroupId);
+      this.filterGroupTable();
       this.events.publish(this.GROUP_TABLE_UPDATE);
     });
+  }
+
+  filterGroupTable() {
+    this.filteredKeys = this.groupTableInfoKeys;
+    if (this.filterString != null && this.filterString != '') {
+      this.filteredKeys = this.filteredKeys.filter((groupId) => {
+        if (((this.groupTableInfo[groupId].groupNumber + '').toLowerCase().indexOf(this.filterString) > -1)
+          || ((this.groupTableInfo[groupId].name).toLowerCase().indexOf(this.filterString) > -1)) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      })
+    }
   }
 
   updateUserGroupStatus() {

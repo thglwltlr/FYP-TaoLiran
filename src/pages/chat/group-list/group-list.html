@@ -8,21 +8,18 @@
 
 
 <ion-content padding>
+  <ion-searchbar ion-fixed (input)="searchGroup($event)"
+                 (ionClear)="clearSearch()"
+                 placeholder="search by name or group no."></ion-searchbar>
+  <div class="spacer headSpacer"></div>
   <ion-list>
-    <ion-item *ngFor="let groupId of groupProvider.groupTableInfoKeys" text-wrap>
+    <ion-item *ngFor="let groupId of groupProvider.filteredKeys" text-wrap>
       <ion-avatar item-start>
         <img src={{groupProvider.groupTableInfo[groupId].photoUrl}}>
       </ion-avatar>
       <h2>{{groupProvider.groupTableInfo[groupId].name}}</h2>
-      <p><i>Created on: {{groupId| date:'HH:mm ,dd MMM'}}</i></p>
+      <p><i>Created on: {{groupId| date:'HH:mm'}}</i></p>
       <p><i>Group no. :{{("00"+groupProvider.groupTableInfo[groupId].groupNumber).slice(-3)}}</i></p>
-      <!--<p>No.of user:{{memberNumber[keyTemp]}}/10</p>-->
-      <!--<button *ngIf="memberNumber[keyTemp]!=10&&(groupStatus==null||groupStatus==''||groupStatus!=keyTemp)" ion-button-->
-      <!--clear item-end (click)="joinGroup(keyTemp)">Join-->
-      <!--</button>-->
-      <!--<button *ngIf="(groupStatus!=null&&groupStatus!=''&&groupStatus==keyTemp)" color='danger' ion-button clear-->
-      <!--item-end (click)="quitGroup(keyTemp)">Quit-->
-      <!--</button>-->
       <button [disabled]="lock" *ngIf="groupProvider.userGroupId!=groupId" ion-button clear item-end
               (click)="joinGroup(groupId)">
         join

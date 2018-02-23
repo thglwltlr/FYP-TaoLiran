@@ -16,7 +16,6 @@
 </ion-header>
 
 <ion-content>
-
   <ion-toolbar ion-fixed>
     <ion-grid>
       <ion-row style="text-align: center;">
@@ -48,7 +47,7 @@
     </ion-grid>
   </ion-toolbar>
 
-  <div class="spacer" style="height: 20%;"></div>
+  <div class="spacer headSpacer"></div>
   <div padding>
     <ion-item no-lines>
       <div class="row">
@@ -76,7 +75,7 @@
         </div>
       </div>
     </ion-item>
-    <div class="spacer" style="height: 10px;"></div>
+    <div class="spacer buttonSpacer"></div>
     <button ion-button [disabled]="lock"
             class="in-progress"
             *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false"
@@ -91,7 +90,7 @@
         </div>
       </div>
     </ion-item>
-    <div class="spacer" style="height: 10px;"></div>
+    <div class="spacer buttonSpacer"></div>
     <button ion-button [disabled]="lock"
             *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true"
             block (click)="viewHint2()">View More Hint(-20)
@@ -105,7 +104,7 @@
         </div>
       </div>
     </ion-item>
-    <div class="spacer" style="height: 10px;"></div>
+    <div class="spacer buttonSpacer"></div>
     <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
       <ion-item no-lines>
         <ion-label floating>Your answer:</ion-label>
@@ -126,5 +125,5 @@
       </div>
     </div>
   </div>
-  <div class="spacer" style="height: 20%;"></div>
+  <div class="spacer footSpacer"></div>
 </ion-content>

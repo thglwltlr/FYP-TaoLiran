@@ -47,6 +47,30 @@ export class GroupListPage {
     }
   }
 
+  clearSearch() {
+    this.groupProvider.filterString = '';
+    this.groupProvider.filterGroupTable();
+  }
+
+  searchGroup(searchBar) {
+    var query = searchBar.target.value;
+    if (query == '' || query == null || query.trim() == '' || query.trim() == null) {
+      this.clearSearch();
+      return;
+    }
+    if (!isNaN(query)) {
+      query = parseInt(query) + '';
+    }
+    query = query.toLowerCase();
+    this.groupProvider.filterString = query;
+    this.groupProvider.filterGroupTable();
+  }
+
+  ionViewWillLeave() {
+    this.groupProvider.filterString = '';
+  }
+
+
   joinGroupFurther(groupId) {
     this.groupProvider.joinGroup(groupId).then((res) => {
       console.log(res);

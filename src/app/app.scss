@@ -12,6 +12,25 @@
   border: none;
 }
 
+.headSpacer {
+  height: 10%;
+}
+
+.footSpacer {
+  height: 20%;
+}
+
+.buttonSpacer {
+  height: 3%;
+}
+
+ion-searchbar {
+  height: 9%;
+}
+
+ion-toolbar {
+  height: 9%;
+}
 
 .in-progress {
   text-shadow: none;
@@ -35,16 +54,28 @@
 }
 
 @-webkit-keyframes progress-bar-stripes {
-  from { background-position: 0 0; }
-  to { background-position: 40px 0; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
 }
 
 @-moz-keyframes progress-bar-stripes {
-  from { background-position: 0 0; }
-  to { background-position: 40px 0; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
 }
 
 @keyframes progress-bar-stripes {
-  from { background-position: 0 0; }
-  to { background-position: 40px 0; }
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 40px 0;
+  }
 }

@@ -9,7 +9,7 @@ import {
   Marker, LatLng, CameraPosition, ILatLng
 } from '@ionic-native/google-maps';
 import {Geolocation} from '@ionic-native/geolocation';
-import {ToastProvider} from '../../providers/utility/toast/toast';
+import {ToastProvider} from '../../../../providers/utility/toast/toast';
 
 
 @IonicPage()

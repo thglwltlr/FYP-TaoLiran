@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Team Rank</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <ion-toolbar ion-fixed>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          You team rank:{{statusProvider.groupRankKeys.indexOf(groupProvider.userGroupId)+1}}
+        </ion-col>
+        <ion-col *ngIf="statusProvider.groupStatus.endTime==null
+                        ||statusProvider.groupStatus.endTime==''" col-6>
+          Puzzle Solved:
+          {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
+        </ion-col>
+        <ion-col *ngIf="statusProvider.groupStatus.endTime!=null
+                        &&statusProvider.groupStatus.endTime!=''" col-6>
+          Finish at {{statusProvider.groupRank[groupProvider.userGroupId].endTime|date:'HH:mm:ss'}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+  <div class="spacer headSpacer"></div>
+  <ion-item no-lines *ngFor="let groupId of statusProvider.groupRankKeys">
+    <ion-avatar item-start>
+      <img src={{groupProvider.groupTableInfo[groupId].photoUrl}}>
+    </ion-avatar>
+    <h2>No.{{statusProvider.groupRankKeys.indexOf(groupId)+1}}</h2>
+    <h2>{{groupProvider.groupTableInfo[groupId].name}}</h2>
+    <h5 *ngIf="statusProvider.groupRank[groupId].endTime==null
+        ||statusProvider.groupRank[groupId].timeUsed==''">Puzzle
+      Solved: {{statusProvider.groupRank[groupId].solvedPuzzleNo}}/{{statusProvider.puzzleStatusKeys.length}}</h5>
+    <h5 *ngIf="statusProvider.groupRank[groupId].endTime!=null
+        &&statusProvider.groupRank[groupId].timeUsed!=''">Finished
+      at {{statusProvider.groupRank[groupId].endTime|date:'HH:mm:ss'}}</h5>
+    <h5>Time used: {{statusProvider.groupRank[groupId].timeUsed|date:'HH:mm:ss':'UTC'}}</h5>
+  </ion-item>
+</ion-content>
