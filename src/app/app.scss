@@ -4,10 +4,11 @@
   top: 0;
   transform: translateX(-50%);
   height: 100%;
-  width: 100%;
+  width: 70%;
   text-align: center;
 
 }
+
 .bar-header {
   border: 0px !important;
   border-bottom-color: transparent !important;
@@ -17,6 +18,13 @@
 
 .toolbar-background {
   border: none;
+}
+
+.bottomElement {
+  position: fixed;
+  bottom: 5%;
+  text-align: center;
+
 }
 
 .headSpacer {

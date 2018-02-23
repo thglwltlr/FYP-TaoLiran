@@ -12,7 +12,7 @@
 
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <ion-toolbar *ngIf="(!gameProvider.firstTimeFlag
     &&!groupProvider.firstTimeFlag
     &&!statusProvider.firstTimeFlag)
@@ -104,21 +104,58 @@
     ||statusProvider.statusTableInfo.groups.length==0
     ||statusProvider.groupStatus==null||statusProvider.groupStatus.startTime==null">
         <!--group not started-->
-
-        <!--to delete-->
         <div class="balloonContainer" *ngIf="groupProvider.groupTableInfo[groupProvider.userGroupId]!=null">
           <div class="balloon"
                *ngFor="let memberId of groupProvider.groupTableInfo[groupProvider.userGroupId].members">
             <img src="{{userProvider.userTableInfo[memberId].photoUrl}}">
           </div>
+
         </div>
-        <button ion-button *ngIf="groupProvider.groupLeaderFlag"
-                block (click)="startGame()">Start Game
-        </button>
-        <ion-item
-          *ngIf="!groupProvider.groupLeaderFlag">
-          Wait for Group Leader to start game
-        </ion-item>
+        <ion-grid class="bottomElement" *ngIf="!groupProvider.groupLeaderFlag">
+          <ion-row no-padding>
+            <ion-col col-10 offset-1 no-padding>
+              <h6 no-margin>
+                Ask you team leader to start.
+              </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 no-padding>
+              <h6 no-margin>
+                You team leader is: </h6>
+            </ion-col>
+
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 no-padding>
+              <img class="groupLeaderAvatar"
+                   src={{userProvider.userTableInfo[groupProvider.groupTableInfo[groupProvider.userGroupId].groupCreator].photoUrl}}>
+              <span> {{userProvider.userTableInfo[groupProvider.groupTableInfo[groupProvider.userGroupId].groupCreator].name}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid class="bottomElement" *ngIf="groupProvider.groupLeaderFlag">
+          <ion-row>
+            <ion-col col-10 offset-1 no-padding>
+              <h6 no-margin>
+                You are team leader.</h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-10 offset-1 no-padding>
+              <h6 no-margin>
+                Your team is waiting for you.
+              </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col offset-3 col-6>
+              <button ion-button no-margin
+                      round outline small (click)="startGame()">Start Game
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
       <div *ngIf="(statusProvider.statusTableInfo.groups!=null
     &&statusProvider.statusTableInfo.groups.length!=0

@@ -21,18 +21,27 @@
       </ion-avatar>
       <h2>{{groupProvider.groupTableInfo[groupId].name}}</h2>
       <h2 *ngIf="groupProvider.groupTableInfo[groupId].members!=null">
-        {{groupProvider.groupTableInfo[groupId].members.length}}</h2>
+        {{groupProvider.groupTableInfo[groupId].members.length}}/10</h2>
       <p><i>Created on: {{groupId| date:'HH:mm'}}</i></p>
       <p><i>Group no :{{("00"+groupProvider.groupTableInfo[groupId].groupNumber).slice(-3)}}</i></p>
-      <button [disabled]="lock" *ngIf="(statusProvider.statusTableInfo==null
+      <div *ngIf="(statusProvider.statusTableInfo==null
                 ||statusProvider.statusTableInfo.groups==null
                 ||statusProvider.statusTableInfo.groups[groupId]==null
                 ||statusProvider.statusTableInfo.groups[groupId].startTime==null
                 ||statusProvider.statusTableInfo.groups[groupId].startTime=='')
-                &&groupProvider.userGroupId!=groupId" ion-button clear item-end
-              (click)="joinGroup(groupId)">
-        join
-      </button>
+                &&groupProvider.userGroupId!=groupId">
+        <button *ngIf="groupProvider.groupTableInfo[groupId].members.length<10" [disabled]="lock" ion-button clear
+                item-end
+                (click)="joinGroup(groupId)">
+          join
+        </button>
+        <button *ngIf="groupProvider.groupTableInfo[groupId].members.length>=10" ion-button clear item-end
+                color="light">
+          full
+        </button>
+
+      </div>
+
       <button [disabled]="lock" *ngIf="(statusProvider.statusTableInfo==null
                 ||statusProvider.statusTableInfo.groups==null
                 ||statusProvider.statusTableInfo.groups[groupId]==null
