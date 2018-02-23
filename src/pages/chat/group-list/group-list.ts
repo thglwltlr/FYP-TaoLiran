@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GroupProvider} from '../../../providers/tables/group/group';
+import {StatusProvider} from '../../../providers/tables/status/status';
 
 @IonicPage()
 @Component({
@@ -11,12 +12,63 @@ export class GroupListPage {
 
   lock = false;
 
-  constructor(private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.lock = false;
   }
 
   createGroup() {
     this.navCtrl.push("GroupProfilePage");
+  }
+
+  showDismissAlert(groupId) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm dismiss',
+      message: 'If group is dismissed, all team members will have to join another group.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Dismiss',
+          handler: () => {
+            this.groupProvider.dismissGroup(this.groupProvider.userGroupId).then((res) => {
+            }).catch((err) => {
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  showGroupOptions(groupId) {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Options:',
+      buttons: [
+        {
+          text: 'Edit',
+          handler: () => {
+            this.editGroup(groupId);
+          }
+        },
+        {
+          text: 'Dismiss',
+          handler: () => {
+            this.showDismissAlert(groupId);
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   joinGroup(groupId) {
@@ -84,10 +136,8 @@ export class GroupListPage {
   quitGroup() {
     var promise = new Promise((resolve, reject) => {
       this.groupProvider.quitGroup().then((res) => {
-        console.log(res);
         resolve(true);
       }).catch((err) => {
-        console.log(err);
         reject(err);
       })
     });

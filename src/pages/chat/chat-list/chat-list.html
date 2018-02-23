@@ -16,7 +16,13 @@
       Group Chat
     </button>
 
-    <button ion-button block (click)="joinGroup()">
+    <button *ngIf="!statusProvider.firstTimeFlag
+                  &&(statusProvider.statusTableInfo==null
+                  ||statusProvider.statusTableInfo.groups==null
+                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId]==null
+                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime==null
+                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime=='')"
+            ion-button block (click)="joinGroup()">
       Change Group
     </button>
 

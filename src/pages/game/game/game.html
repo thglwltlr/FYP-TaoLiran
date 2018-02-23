@@ -38,7 +38,9 @@
       </ion-row>
       <ion-row *ngIf="statusProvider.groupStatus.endTime==null
                         ||statusProvider.groupStatus.endTime==''">
-        <div class="progress-outer" col-10>
+        <div col-1>
+        </div>
+        <div class="progress-outer" col-9>
           <div class="progress-inner"
                [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
           </div>
@@ -85,7 +87,7 @@
 
     </ion-fab-list>
   </ion-fab>
-  <div class="spacer headSpacer" ></div>
+  <div class="spacer headSpacer"></div>
   <div *ngIf="!gameProvider.firstTimeFlag
     &&!groupProvider.firstTimeFlag
     &&!statusProvider.firstTimeFlag">
@@ -102,6 +104,14 @@
     ||statusProvider.statusTableInfo.groups.length==0
     ||statusProvider.groupStatus==null||statusProvider.groupStatus.startTime==null">
         <!--group not started-->
+
+        <!--to delete-->
+        <div class="balloonContainer" *ngIf="groupProvider.groupTableInfo[groupProvider.userGroupId]!=null">
+          <div class="balloon"
+               *ngFor="let memberId of groupProvider.groupTableInfo[groupProvider.userGroupId].members">
+            <img src="{{userProvider.userTableInfo[memberId].photoUrl}}">
+          </div>
+        </div>
         <button ion-button *ngIf="groupProvider.groupLeaderFlag"
                 block (click)="startGame()">Start Game
         </button>
@@ -145,5 +155,5 @@
       </div>
     </div>
   </div>
-  <div class="spacer footSpacer" ></div>
+  <div class="spacer footSpacer"></div>
 </ion-content>

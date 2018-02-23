@@ -4,8 +4,15 @@
   top: 0;
   transform: translateX(-50%);
   height: 100%;
-  width: 70%;
+  width: 100%;
   text-align: center;
+
+}
+.bar-header {
+  border: 0px !important;
+  border-bottom-color: transparent !important;
+  background-image: none !important;
+  border-bottom: none !important;
 }
 
 .toolbar-background {
@@ -30,6 +37,33 @@ ion-searchbar {
 
 ion-toolbar {
   height: 9%;
+  box-shadow: 0 3px 3px 0 rgba(0, 55, 119, 0.1), 0 5px 5px 0
+}
+
+.progress-outer {
+  margin: 0;
+  text-align: center;
+  background-color: #f4f4f4;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  opacity: 0.7;
+}
+
+.progress-inner {
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 2%;
+  height: 95%;
+  border-radius: 10px;
+  background-color: color($colors, eeeBlue, base);
+  opacity: 0.5;
+}
+
+.selfView {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 5px;
+  border-color: color($colors, eeeBlue, base);
 }
 
 .in-progress {

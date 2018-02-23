@@ -30,7 +30,9 @@
       </ion-row>
       <ion-row *ngIf="statusProvider.groupStatus.endTime==null
                         ||statusProvider.groupStatus.endTime==''">
-        <div class="progress-outer" col-10>
+        <div col-1>
+        </div>
+        <div class="progress-outer" col-9>
           <div class="progress-inner"
                [style.width]="statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)/statusProvider.puzzleStatusKeys.length*100 + '%'">
           </div>

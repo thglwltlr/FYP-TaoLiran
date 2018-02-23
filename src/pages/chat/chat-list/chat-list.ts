@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GroupProvider} from '../../../providers/tables/group/group';
+import {StatusProvider} from '../../../providers/tables/status/status';
 
 @IonicPage()
 @Component({
@@ -9,7 +10,7 @@ import {GroupProvider} from '../../../providers/tables/group/group';
 })
 export class ChatListPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public groupProvider: GroupProvider) {
+  constructor(private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams, private groupProvider: GroupProvider) {
   }
 
   publicChat() {

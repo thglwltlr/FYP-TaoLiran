@@ -25,7 +25,9 @@
     </ion-grid>
   </ion-toolbar>
   <div class="spacer headSpacer"></div>
-  <ion-item no-lines *ngFor="let groupId of statusProvider.groupRankKeys">
+  <ion-item *ngFor="let groupId of statusProvider.groupRankKeys"
+            ngClass="{{groupId==groupProvider.userGroupId?'selfView':''}}"
+            no-lines >
     <ion-avatar item-start>
       <img src={{groupProvider.groupTableInfo[groupId].photoUrl}}>
     </ion-avatar>
