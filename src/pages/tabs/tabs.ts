@@ -6,6 +6,7 @@ import {GroupProvider} from '../../providers/tables/group/group';
 import {SettingProvider} from '../../providers/setting/setting';
 import {StatusProvider} from '../../providers/tables/status/status';
 import {ChatProvider} from '../../providers/tables/chat/chat';
+import {OverlayProvider} from '../../providers/utility/overlay/overlay';
 
 @IonicPage()
 @Component({

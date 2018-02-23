@@ -24,7 +24,8 @@ import * as ionicGalleryModal from 'ionic-gallery-modal';
 import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {GoogleMaps} from '@ionic-native/google-maps'
 import {Geolocation} from '@ionic-native/geolocation';
-
+import {ComponentsModule} from '../components/components.module';
+import { OverlayProvider } from '../providers/utility/overlay/overlay';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {Geolocation} from '@ionic-native/geolocation';
     IonicModule.forRoot(MyApp, {tabsPlacement: 'top', scrollAssist: false, autoFocusAssist: true}),
     AngularFireModule.initializeApp(config),
     ionicGalleryModal.GalleryModalModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,8 +69,9 @@ import {Geolocation} from '@ionic-native/geolocation';
       useClass: ionicGalleryModal.GalleryModalHammerConfig,
     },
     GoogleMaps,
-    Geolocation
-]
+    Geolocation,
+    OverlayProvider
+  ]
 })
 
 export class AppModule {

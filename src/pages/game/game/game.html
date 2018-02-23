@@ -93,8 +93,8 @@
       <button ion-fab (click)="viewRank()">
         <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
       </button>
-      <button ion-fab>
-        <ion-icon name="logo-googleplus"></ion-icon>
+      <button ion-fab (click)="overlayProvider.showDraw()">
+        <ion-icon ios="ios-color-palette" md="md-color-palette"></ion-icon>
       </button>
 
     </ion-fab-list>
@@ -204,5 +204,14 @@
       </div>
     </div>
   </div>
+
   <div class="spacer footSpacer"></div>
 </ion-content>
+<div class="overlay" [hidden]="!overlayProvider.showOverLay" hide-tabs>
+  <canvas-draw *ngIf="overlayProvider.showCanvas"></canvas-draw>
+  <button ion-button icon-only style="height: 5%; float: right; background-color: transparent"
+          (click)="overlayProvider.initOverlays()">
+    <ion-icon name="close-circle"></ion-icon>
+
+  </button>
+</div>

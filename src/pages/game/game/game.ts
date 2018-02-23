@@ -6,6 +6,7 @@ import {GameProvider} from '../../../providers/tables/game/game';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {SettingProvider} from '../../../providers/setting/setting';
 import {GalleryModal} from 'ionic-gallery-modal';
+import {OverlayProvider} from '../../../providers/utility/overlay/overlay';
 
 
 @IonicPage()
@@ -14,12 +15,12 @@ import {GalleryModal} from 'ionic-gallery-modal';
   templateUrl: 'game.html',
 })
 export class GamePage {
-
-  constructor(private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private overlayProvider: OverlayProvider, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  joinGroup() {
 
+  joinGroup() {
+    this.navCtrl.push("GroupListPage");
   }
 
   puzzleSolve(puzzleId) {
@@ -53,4 +54,5 @@ export class GamePage {
   viewMap() {
     this.navCtrl.push("MapPage");
   }
+
 }

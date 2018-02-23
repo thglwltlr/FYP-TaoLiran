@@ -41,12 +41,12 @@ page-game {
       margin-right: auto;
     }
   }
-.groupLeaderAvatar{
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  vertical-align:middle;
-}
+  .groupLeaderAvatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    vertical-align: middle;
+  }
   .balloon:before {
     content: "▲";
     font-size: 20px;
@@ -252,5 +252,6 @@ page-game {
       opacity: 0.85;
     }
   }
+
 
 }
