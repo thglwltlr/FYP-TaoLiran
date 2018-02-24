@@ -1,5 +1,5 @@
 import {Component, Input, Renderer2, ViewChild} from '@angular/core';
-import {Content, Platform} from 'ionic-angular';
+import {Content, NavController, Platform} from 'ionic-angular';
 
 @Component({
   selector: 'canvas-draw',
@@ -18,7 +18,7 @@ export class CanvasDrawComponent {
 
   brushSize: number = 10;
 
-  constructor(public platform: Platform, public renderer: Renderer2) {
+  constructor(public navController: NavController, public platform: Platform, public renderer: Renderer2) {
     this.availableColours = [
       '#1abc9c',
       '#3498db',
@@ -26,6 +26,10 @@ export class CanvasDrawComponent {
       '#e67e22',
       '#e74c3c'
     ];
+  }
+
+  goBack() {
+    this.navController.pop();
   }
 
   ngAfterViewInit() {

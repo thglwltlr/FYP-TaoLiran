@@ -1,8 +1,9 @@
 canvas-draw {
 
-  height: 95%;
+  height: 100%;
   width: 100%;
   display: block;
+  background: rgba(0, 0, 0, 0.7);
 
   #top-toolbar{
     position: absolute;
@@ -11,7 +12,7 @@ canvas-draw {
 
   #bottom-toolbar {
     position: absolute;
-    bottom: 5%
+    bottom: 0
   }
 
 }

@@ -6,7 +6,7 @@ import {GroupProvider} from '../../providers/tables/group/group';
 import {SettingProvider} from '../../providers/setting/setting';
 import {StatusProvider} from '../../providers/tables/status/status';
 import {ChatProvider} from '../../providers/tables/chat/chat';
-import {OverlayProvider} from '../../providers/utility/overlay/overlay';
+
 
 @IonicPage()
 @Component({
@@ -23,7 +23,7 @@ export class TabsPage {
   lastOnlineTimer;
   syncLocalTimer;
 
-  constructor(private chatProvider: ChatProvider, private statusProvider: StatusProvider, private settingProvider: SettingProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private events: Events, public userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor( private chatProvider: ChatProvider, private statusProvider: StatusProvider, private settingProvider: SettingProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private events: Events, public userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.events.subscribe(this.userProvider.USER_TABLE_UPDATE);
     this.events.subscribe(this.gameProvider.GAME_TABLE_UPDATE);
     this.events.subscribe(this.groupProvider.GROUP_TABLE_UPDATE);

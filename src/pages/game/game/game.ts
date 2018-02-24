@@ -6,7 +6,7 @@ import {GameProvider} from '../../../providers/tables/game/game';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {SettingProvider} from '../../../providers/setting/setting';
 import {GalleryModal} from 'ionic-gallery-modal';
-import {OverlayProvider} from '../../../providers/utility/overlay/overlay';
+import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 
 
 @IonicPage()
@@ -15,7 +15,7 @@ import {OverlayProvider} from '../../../providers/utility/overlay/overlay';
   templateUrl: 'game.html',
 })
 export class GamePage {
-  constructor(private overlayProvider: OverlayProvider, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
 
@@ -53,6 +53,13 @@ export class GamePage {
 
   viewMap() {
     this.navCtrl.push("MapPage");
+  }
+
+  showCanvas() {
+    let canvasModal = this.modalCtrl.create(CanvasDrawComponent);
+    canvasModal.onDidDismiss((data => {
+    }));
+    canvasModal.present();
   }
 
 }

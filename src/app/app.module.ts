@@ -25,7 +25,7 @@ import {HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {GoogleMaps} from '@ionic-native/google-maps'
 import {Geolocation} from '@ionic-native/geolocation';
 import {ComponentsModule} from '../components/components.module';
-import { OverlayProvider } from '../providers/utility/overlay/overlay';
+import {CanvasDrawComponent} from '../components/canvas-draw/canvas-draw';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,8 @@ import { OverlayProvider } from '../providers/utility/overlay/overlay';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    OpenPage
+    OpenPage,
+    CanvasDrawComponent
   ],
   providers: [
     StatusBar,
@@ -69,8 +70,7 @@ import { OverlayProvider } from '../providers/utility/overlay/overlay';
       useClass: ionicGalleryModal.GalleryModalHammerConfig,
     },
     GoogleMaps,
-    Geolocation,
-    OverlayProvider
+    Geolocation
   ]
 })
 
