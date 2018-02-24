@@ -19,7 +19,6 @@ export class ChatPage {
   constructor(private userProvider:UserProvider,private chatProvider: ChatProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.title = this.navParams.get('title');
     this.receiver = this.navParams.get('receiver');
-    console.log(this.receiver);
     this.initMessage();
   }
 

@@ -7,22 +7,48 @@
 </ion-header>
 
 
-<ion-content padding>
-  <button ion-button block (click)="publicChat()">Public Chat</button>
+<ion-content style="text-align: center" padding>
+  <div class="background-wrap">
+    <div class="bubble x1"></div>
+    <div class="bubble x2"></div>
+    <div class="bubble x3"></div>
+    <div class="bubble x4"></div>
+    <div class="bubble x5"></div>
+    <div class="bubble x6"></div>
+    <div class="bubble x7"></div>
+    <div class="bubble x8"></div>
+    <div class="bubble x9"></div>
+    <div class="bubble x10"></div>
+  </div>
+  <div class="balloonContainer" *ngIf="!groupProvider.firstTimeFlag
+               &&groupProvider.userGroupId!=null
+               &&groupProvider.userGroupId!=''
+               &&groupProvider.groupTableInfo[groupProvider.userGroupId]!=null">
+    <div class="balloon"
+         *ngFor="let memberId of groupProvider.groupTableInfo[groupProvider.userGroupId].members">
+      <img src="{{userProvider.userTableInfo[memberId].photoUrl}}">
+    </div>
+
+  </div>
+
+  <!--<button ion-button block (click)="publicChat()">Public Chat</button>-->
   <div *ngIf="!groupProvider.firstTimeFlag
                &&groupProvider.userGroupId!=null
                &&groupProvider.userGroupId!=''">
-    <button ion-button block (click)="groupChat()">
-      Group Chat
-    </button>
-
+    <ion-item class="transparentBackground selfView" no-lines text-wrap>
+      <ion-avatar item-start>
+        <img src={{groupProvider.groupTableInfo[groupProvider.userGroupId].photoUrl}}>
+      </ion-avatar>
+      <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}</h2>
+    </ion-item>
+    <div class="spacer buttonSpacer"></div>
     <button *ngIf="!statusProvider.firstTimeFlag
                   &&(statusProvider.statusTableInfo==null
                   ||statusProvider.statusTableInfo.groups==null
                   ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId]==null
                   ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime==null
                   ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime=='')"
-            ion-button block (click)="joinGroup()">
+            ion-button round outline small (click)="joinGroup()">
       Change Group
     </button>
 

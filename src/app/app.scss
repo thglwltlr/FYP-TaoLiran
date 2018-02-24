@@ -71,10 +71,10 @@ ion-toolbar {
 }
 
 .selfView {
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 5px;
-  border-color: color($colors, eeeBlue, base);
+  border-style: solid!important;
+  border-width: 2px!important;
+  border-radius: 5px!important;
+  border-color: color($colors, eeeBlue, base)!important;
 }
 
 .in-progress {
@@ -131,8 +131,141 @@ ion-toolbar {
   position: fixed;
   right: 0;
   top: 0;
-  z-index: -1;
+  z-index: -2;
 }
+.balloon {
+  display: inline-block;
+  width: 50px;
+  height: 55px;
+  background: hsl(215, 50%, 65%);
+  border-radius: 80%;
+  position: relative;
+  box-shadow: inset -10px -10px 0 rgba(0, 0, 0, 0.07);
+  margin: 20px 30px;
+  transition: transform 0.5s ease;
+  z-index: 10;
+  animation: balloons 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+@keyframes balloons {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-25px) rotate(4deg);
+  }
+}
+.balloonContainer {
+  text-align: center;
+  z-index: -1;
+  img {
+    margin: 10px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+.balloon:before {
+  content: "▲";
+  font-size: 20px;
+  color: hsl(215, 30%, 50%);
+  display: block;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: -12px;
+  z-index: -100;
+}
+.balloon:after {
+  display: inline-block;
+  top: 63px;
+  left: 25px;
+  position: absolute;
+  height: 250px;
+  width: 1px;
+  margin: 0 auto;
+  content: "";
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.balloon:nth-child(6) {
+  background: hsl(245, 40%, 65%);
+  animation-duration: 3.5s;
+}
+.balloon:nth-child(6):before {
+  color: hsl(245, 40%, 65%);
+}
+
+.balloon:nth-child(7) {
+  background: hsl(139, 50%, 60%);
+  animation-duration: 3s;
+}
+.balloon:nth-child(7):before {
+  color: hsl(139, 30%, 50%);
+}
+.transparentBackground{
+  background-color: transparent!important;
+}
+
+.balloon:nth-child(8) {
+  background: hsl(59, 50%, 58%);
+  animation-duration: 4.5s;
+}
+.balloon:nth-child(8):before {
+  color: hsl(59, 30%, 52%);
+}
+
+.balloon:nth-child(9) {
+  background: hsl(23, 55%, 57%);
+  animation-duration: 5s;
+}
+.balloon:nth-child(9):before {
+  color: hsl(23, 44%, 46%);
+}
+.balloon:nth-child(10) {
+  background: hsl(23, 55%, 57%);
+  animation-duration: 5s;
+}
+.balloon:nth-child(10):before {
+  color: hsl(23, 44%, 46%);
+}
+
+.balloon:nth-child(2) {
+  background: hsl(245, 40%, 65%);
+  animation-duration: 3.5s;
+}
+.balloon:nth-child(2):before {
+  color: hsl(245, 40%, 65%);
+}
+
+.balloon:nth-child(3) {
+  background: hsl(139, 50%, 60%);
+  animation-duration: 3s;
+}
+.balloon:nth-child(3):before {
+  color: hsl(139, 30%, 50%);
+}
+
+.balloon:nth-child(4) {
+  background: hsl(59, 50%, 58%);
+  animation-duration: 4.5s;
+}
+.balloon:nth-child(4):before {
+  color: hsl(59, 30%, 52%);
+}
+
+.balloon:nth-child(5) {
+  background: hsl(23, 55%, 57%);
+  animation-duration: 5s;
+}
+.balloon:nth-child(5):before {
+  color: hsl(23, 44%, 46%);
+}
+
 
 @-webkit-keyframes animateBubble {
   0% {
