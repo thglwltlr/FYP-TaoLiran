@@ -79,7 +79,6 @@ export class UserProvider {
   updateUser(user: User) {
     user.edited = true;
     user.lastTimeOnline = this.settingProvider.getFireBaseTimeStamp();
-
     var promise = new Promise((resolve, reject) => {
       this.userTableRef.child(this.getUid()).update(user).then((snapshot) => {
         resolve(true);

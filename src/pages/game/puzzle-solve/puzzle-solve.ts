@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GameProvider} from '../../../providers/tables/game/game';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -19,12 +19,68 @@ export class PuzzleSolvePage {
   lock = false;
   answerTemp = '';
 
-  constructor(private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.puzzleId = this.navParams.get('puzzleId');
     if (this.statusProvider.puzzleStatus[this.puzzleId] == null) {
       this.navCtrl.pop();
     }
     this.answerTemp = '';
+  }
+
+  hideTimeScore() {
+    this.settingProvider.showTimeScoreFlag = false;
+  }
+
+  showOptions() {
+    if (this.settingProvider.showTimeScoreFlag) {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Hey yo! What do yo wanna do?',
+        buttons: [
+          {
+            text: 'Hide Time & Score',
+            handler: () => {
+              this.settingProvider.showTimeScoreFlag = false;
+            }
+          },
+          {
+            text: 'Ask Admin',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+    } else {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Hey yo! What do yo wanna do?',
+        buttons: [
+          {
+            text: 'Show Time & Score',
+            handler: () => {
+              this.settingProvider.showTimeScoreFlag = true;
+            }
+          },
+          {
+            text: 'Ask Admin',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+    }
   }
 
   openImage() {

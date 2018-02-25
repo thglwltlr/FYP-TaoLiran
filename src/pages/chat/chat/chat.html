@@ -61,12 +61,12 @@
 
 </ion-content>
 <ion-footer ion-fixed>
-  <ion-toolbar class="no-border" color="white">
-    <ion-textarea #textArea rows="1" class="chatInput"
-                  *ngIf="cameraProvider.base64Image==null||cameraProvider.base64Image=='';"
-                  (ionFocus)="scrollToBottom()"
-                  [(ngModel)]="messageTemp.content" placeholder="Write sth..."
-                  (keyup)="resize()"></ion-textarea>
+  <ion-toolbar no-border no-padding no-margin color="white">
+    <textarea #textArea id="textArea" rows="1" class="chatInput"
+              *ngIf="cameraProvider.base64Image==null||cameraProvider.base64Image=='';"
+              (ionFocus)="scrollToBottom()"
+              [(ngModel)]="messageTemp.content" placeholder="Write sth..."
+              (keyup)="resize()"></textarea>
     <ion-buttons *ngIf="cameraProvider.base64Image==null||cameraProvider.base64Image=='';" end>
       <button ion-button (click)="sendMessage()">
         <ion-icon name="send" color="primary"></ion-icon>

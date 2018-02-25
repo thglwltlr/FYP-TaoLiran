@@ -34,7 +34,12 @@ $colors: (
   danger: #f53d3d,
   light: #f4f4f4,
   dark: #222,
-  eeeBlue: #003777
+  eeeBlue: #003777,
+  eeeBlueLight:
+  (
+    base: rgba(0, 55, 119, 0.5),
+    contrast:  #003777
+  )
 );
 
 // App iOS Variables

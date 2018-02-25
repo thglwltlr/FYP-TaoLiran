@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>group</ion-title>
+    <ion-title>Chat</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -28,12 +28,12 @@
         <img src={{groupProvider.groupTableInfo[groupProvider.userGroupId].photoUrl}}>
       </ion-avatar>
       <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}</h2>
+      <p>Chat with your teammates!</p>
       <ion-badge color="eeeBlue" *ngIf="chatProvider.newMsgNo[groupProvider.userGroupId]!=0" item-end>
         {{chatProvider.newMsgNo[groupProvider.userGroupId]}}
       </ion-badge>
     </ion-item>
-    <div class="spacer buttonSpacer"></div>
-    <button *ngIf="!statusProvider.firstTimeFlag
+    <button style="margin-top: 10%;" *ngIf="!statusProvider.firstTimeFlag
                   &&(statusProvider.statusTableInfo==null
                   ||statusProvider.statusTableInfo.groups==null
                   ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId]==null

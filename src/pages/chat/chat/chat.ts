@@ -2,7 +2,6 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Content, IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {Message} from '../../../assets/models/interfaces/Message';
 import {ChatProvider} from '../../../providers/tables/chat/chat';
-import {SettingProvider} from '../../../providers/setting/setting';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {CameraProvider} from '../../../providers/utility/camera/camera';
 import {GalleryModal} from 'ionic-gallery-modal';
@@ -21,6 +20,8 @@ export class ChatPage {
   lock = false;
   @ViewChild('content') content: Content;
   @ViewChild('textArea') textArea: ElementRef;
+  defaultHeight = 0;
+  previousHeight = 0;
 
   constructor(private modalCtrl: ModalController, private cameraProvider: CameraProvider, private userProvider: UserProvider, private chatProvider: ChatProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.title = this.navParams.get('title');
@@ -31,8 +32,20 @@ export class ChatPage {
     this.scrollToBottom();
   }
 
+  ionViewDidLoad() {
+    this.defaultHeight = this.textArea.nativeElement.scrollHeight + 10;
+    this.previousHeight = this.defaultHeight;
+    this.textArea.nativeElement.style.height = this.defaultHeight + 'px';
+  }
+
   resize() {
-    this.textArea.nativeElement.style.height = this.textArea.nativeElement.scrollHeight + 'px';
+    if ((this.textArea.nativeElement.scrollHeight) <= this.previousHeight) {
+      return;
+    } else {
+      this.previousHeight = 10 + this.textArea.nativeElement.scrollHeight;
+      this.textArea.nativeElement.style.height = this.previousHeight + 'px'
+
+    }
   }
 
   ionViewWillLeave() {
@@ -73,6 +86,8 @@ export class ChatPage {
     this.lock = true;
     this.chatProvider.sendMessage(this.receiver, this.messageTemp).then((res) => {
       this.initMessage();
+      this.previousHeight = this.defaultHeight;
+      this.textArea.nativeElement.style.height = this.defaultHeight + 'px';
     }).catch((err) => {
       this.lock = false;
     });

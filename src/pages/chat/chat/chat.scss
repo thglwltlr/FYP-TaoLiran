@@ -66,9 +66,12 @@ page-chat {
   }
   .chatInput {
     font-size: 1.1em;
+    height: 90%;
     border: 1px solid color($colors, eeeBlue, base) !important;
-    border-radius: 10px !important;
+    border-radius: 5px !important;
     margin-left: 10% !important;
     width: 80%;
+    overflow: hidden;
+    resize: none
   }
 }

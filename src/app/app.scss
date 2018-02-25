@@ -9,6 +9,25 @@
 
 }
 
+.toolbar-background {
+  background-color: color($colors, eeeBlueLight, base);
+}
+
+.toolbar-title-md {
+  color: color($colors, eeeBlue, base);
+}
+
+.toolbar-title-ios {
+  color: color($colors, eeeBlue, base);
+}
+
+.fontBlue {
+  color: color($colors, eeeBlue, base);
+}
+ion-icon {
+  color: color($colors, eeeBlue, base);
+}
+
 .bar-header {
   border: 0px !important;
   border-bottom-color: transparent !important;
@@ -22,13 +41,13 @@
 
 .bottomElement {
   position: fixed;
-  bottom: 5%;
+  bottom: 15%;
   text-align: center;
 
 }
 
 .headSpacer {
-  height: 10%;
+  height: 15%;
 }
 
 .footSpacer {

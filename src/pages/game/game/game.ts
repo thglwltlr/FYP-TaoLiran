@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
+import {
+  ActionSheetController, IonicPage, ModalController, NavController, NavParams
+} from 'ionic-angular';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {GameProvider} from '../../../providers/tables/game/game';
@@ -13,11 +15,68 @@ import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 @Component({
   selector: 'page-game',
   templateUrl: 'game.html',
+
+
 })
 export class GamePage {
-  constructor(private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  showOptions() {
+    if (this.settingProvider.showTimeScoreFlag) {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Hey yo! What do yo wanna do?',
+        buttons: [
+          {
+            text: 'Hide Time & Score',
+            handler: () => {
+              this.settingProvider.showTimeScoreFlag = false;
+            }
+          },
+          {
+            text: 'Ask Admin',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+    } else {
+      let actionSheet = this.actionSheetCtrl.create({
+        title: 'Hey yo! What do yo wanna do?',
+        buttons: [
+          {
+            text: 'Show Time & Score',
+            handler: () => {
+              this.settingProvider.showTimeScoreFlag = true;
+            }
+          },
+          {
+            text: 'Ask Admin',
+            handler: () => {
+            }
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+            }
+          }
+        ]
+      });
+      actionSheet.present();
+    }
+  }
+
+  hideTimeScore() {
+    this.settingProvider.showTimeScoreFlag = false;
+  }
 
   joinGroup() {
     this.navCtrl.push("GroupListPage");

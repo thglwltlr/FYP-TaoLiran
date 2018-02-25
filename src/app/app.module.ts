@@ -35,7 +35,8 @@ import {CanvasDrawComponent} from '../components/canvas-draw/canvas-draw';
   imports: [
     BrowserModule,
     // IonicModule.forRoot(MyApp),
-    IonicModule.forRoot(MyApp, {tabsPlacement: 'top', scrollAssist: false, autoFocusAssist: true}),
+    //tabsPlacement: 'top',
+    IonicModule.forRoot(MyApp, { scrollAssist: false, autoFocusAssist: true}),
     AngularFireModule.initializeApp(config),
     ionicGalleryModal.GalleryModalModule,
     ComponentsModule
@@ -70,7 +71,8 @@ import {CanvasDrawComponent} from '../components/canvas-draw/canvas-draw';
       useClass: ionicGalleryModal.GalleryModalHammerConfig,
     },
     GoogleMaps,
-    Geolocation
+    Geolocation,
+
   ]
 })
 

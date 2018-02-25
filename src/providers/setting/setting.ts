@@ -10,6 +10,7 @@ export class SettingProvider {
   connectionGood = true;
   timer;
   time;
+  showTimeScoreFlag = true;
 
   constructor(private network: Network) {
   }
