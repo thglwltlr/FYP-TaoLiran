@@ -17,7 +17,8 @@
     <ion-input type="text"
                [(ngModel)]="userTemp.name"></ion-input>
   </ion-item>
-  <button ion-button block [disabled]="lock" (click)="chooseImage()">Choose image</button>
-
-  <button ion-button block [disabled]="lock" (click)="update()">Submit</button>
+  <div class="spacer buttonSpacer"></div>
+  <button ion-button outline round block [disabled]="lock" (click)="chooseImage()">Choose image</button>
+  <div class="spacer buttonSpacer"></div>
+  <button ion-button outline round block [disabled]="lock" (click)="update()">Submit</button>
 </ion-content>

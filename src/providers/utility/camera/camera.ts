@@ -19,6 +19,7 @@ export class CameraProvider {
   subChild: string;
   readonly puzzleDefault = 'https://firebasestorage.googleapis.com/v0/b/fyp03-136e5.appspot.com/o/puzzleImageDefault.png?alt=media&token=797e0b0a-152c-41be-b9ff-f3f0f838aa00';
   readonly puzzleRef = '/puzzleImage';
+  readonly chatImgRef = 'chatImage';
 
   constructor(private userProvider: UserProvider, private settingProvider: SettingProvider, private camera: Camera, private actionSheetCtrl: ActionSheetController) {
 

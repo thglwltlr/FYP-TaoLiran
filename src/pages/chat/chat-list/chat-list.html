@@ -8,18 +8,6 @@
 
 
 <ion-content style="text-align: center" padding>
-  <div class="background-wrap">
-    <div class="bubble x1"></div>
-    <div class="bubble x2"></div>
-    <div class="bubble x3"></div>
-    <div class="bubble x4"></div>
-    <div class="bubble x5"></div>
-    <div class="bubble x6"></div>
-    <div class="bubble x7"></div>
-    <div class="bubble x8"></div>
-    <div class="bubble x9"></div>
-    <div class="bubble x10"></div>
-  </div>
   <div class="balloonContainer" *ngIf="!groupProvider.firstTimeFlag
                &&groupProvider.userGroupId!=null
                &&groupProvider.userGroupId!=''
@@ -35,11 +23,14 @@
   <div *ngIf="!groupProvider.firstTimeFlag
                &&groupProvider.userGroupId!=null
                &&groupProvider.userGroupId!=''">
-    <ion-item class="transparentBackground selfView" no-lines text-wrap>
+    <ion-item class="transparentBackground selfView" no-lines text-wrap (click)="groupChat()">
       <ion-avatar item-start>
         <img src={{groupProvider.groupTableInfo[groupProvider.userGroupId].photoUrl}}>
       </ion-avatar>
       <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}</h2>
+      <ion-badge color="eeeBlue" *ngIf="chatProvider.newMsgNo[groupProvider.userGroupId]!=0" item-end>
+        {{chatProvider.newMsgNo[groupProvider.userGroupId]}}
+      </ion-badge>
     </ion-item>
     <div class="spacer buttonSpacer"></div>
     <button *ngIf="!statusProvider.firstTimeFlag

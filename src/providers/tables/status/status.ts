@@ -339,7 +339,7 @@ export class StatusProvider {
           reject(err);
         })
       }
-    )
+    );
     return promise;
   }
 

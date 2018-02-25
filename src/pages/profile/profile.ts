@@ -17,8 +17,6 @@ export class ProfilePage {
 
   constructor(private cameraProvider: CameraProvider, private loaderProvider: LoaderProvider, private userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.initUser();
-
-
     this.cameraProvider.initStartUpImage(this.userTemp.photoUrl);
   }
 

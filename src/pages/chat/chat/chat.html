@@ -3,7 +3,7 @@
   <ion-navbar>
     <ion-title>{{title}}</ion-title>
     <ion-buttons end>
-      <button ion-button>
+      <button ion-button (click)="chooseImage()">
         <ion-icon name="camera"></ion-icon>
       </button>
     </ion-buttons>
@@ -12,43 +12,72 @@
 </ion-header>
 
 
-<ion-content #content padding>
-  <div class="background-wrap">
-    <div class="bubble x1"></div>
-    <div class="bubble x2"></div>
-    <div class="bubble x3"></div>
-    <div class="bubble x4"></div>
-    <div class="bubble x5"></div>
-    <div class="bubble x6"></div>
-    <div class="bubble x7"></div>
-    <div class="bubble x8"></div>
-    <div class="bubble x9"></div>
-    <div class="bubble x10"></div>
-  </div>
+<ion-content #content (ionScrollEnd)="onScrollEnd()">
   <div class="chatWindow">
     <ion-list no-lines>
       <div *ngFor="let messageId of chatProvider.chatTableInfoKeys[receiver]">
-        <ion-item
-          *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender==userProvider.getUid()">
-          <div class="chatBox me"><p>{{chatProvider.chatTableInfo[receiver][messageId].content}}</p></div>
+        <ion-item text-wrap
+                  *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender==userProvider.getUid()">
+          <div class="chatBox me">
+            <div class="nameTime">
+              {{userProvider.userTableInfo[chatProvider.chatTableInfo[receiver][messageId].sender].name}}
+              {{chatProvider.chatTableInfo[receiver][messageId].time|date:'HH:mm'}}
+            </div>
+            <h5 *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.text">
+              {{chatProvider.chatTableInfo[receiver][messageId].content}}
+            </h5>
+            <img *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.image"
+                 src="{{chatProvider.chatTableInfo[receiver][messageId].content}}"
+                 (click)="openImage(chatProvider.chatTableInfo[receiver][messageId].content)">
+          </div>
 
         </ion-item>
-        <ion-item
-          *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender!=userProvider.getUid()">
-          <div class="chatBox others"><p>{{chatProvider.chatTableInfo[receiver][messageId].content}}</p></div>
-        </ion-item>
+        <ion-item text-wrap
+                  *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender!=userProvider.getUid()">
+          <div class="chatBox others">
+            <div class="nameTime">
+              {{userProvider.userTableInfo[chatProvider.chatTableInfo[receiver][messageId].sender].name}}
+              {{chatProvider.chatTableInfo[receiver][messageId].time|date:'HH:mm'}}
+            </div>
+            <h5 *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.text">
+              {{chatProvider.chatTableInfo[receiver][messageId].content}}
+            </h5>
 
+            <img *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.image"
+                 src="{{chatProvider.chatTableInfo[receiver][messageId].content}}"
+                 (click)="openImage(chatProvider.chatTableInfo[receiver][messageId].content)">
+
+          </div>
+        </ion-item>
       </div>
     </ion-list>
   </div>
+  <div ion-fixed style="width: 100%;top:90%;text-align: center;" *ngIf="chatProvider.newMsgFlag&&showNewMsg">
+    <button ion-button round outline small (click)="scrollToBottom()">
+      <ion-icon name="arrow-down"></ion-icon>
+      Got new message!
+    </button>
+  </div>
+
 </ion-content>
 <ion-footer ion-fixed>
   <ion-toolbar class="no-border" color="white">
-    <ion-input [(ngModel)]="messageTemp.content" placeholder="Write content ..."></ion-input>
-    <ion-buttons end>
+    <ion-textarea #textArea rows="1" class="chatInput"
+                  *ngIf="cameraProvider.base64Image==null||cameraProvider.base64Image=='';"
+                  (ionFocus)="scrollToBottom()"
+                  [(ngModel)]="messageTemp.content" placeholder="Write sth..."
+                  (keyup)="resize()"></ion-textarea>
+    <ion-buttons *ngIf="cameraProvider.base64Image==null||cameraProvider.base64Image=='';" end>
       <button ion-button (click)="sendMessage()">
         <ion-icon name="send" color="primary"></ion-icon>
       </button>
     </ion-buttons>
+
+    <ion-item *ngIf="cameraProvider.base64Image!=null&&cameraProvider.base64Image!='';" no-margin no-lines>
+      <button ion-button block outline (click)="uploadImage()">
+        Submit Image
+      </button>
+      <ion-icon item-end name="close-circle" (click)="cancelUpload()"></ion-icon>
+    </ion-item>
   </ion-toolbar>
 </ion-footer>

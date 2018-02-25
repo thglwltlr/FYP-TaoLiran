@@ -15,7 +15,7 @@
 
 </ion-header>
 
-<ion-content>
+<ion-content style="text-align: center">
   <div class="background-wrap">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
@@ -31,7 +31,7 @@
 
   <ion-toolbar ion-fixed>
     <ion-grid>
-      <ion-row style="text-align: center;">
+      <ion-row>
         <ion-col col-6>
           <ion-icon padding-right md="md-alarm"></ion-icon>
           {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
@@ -94,7 +94,7 @@
     <button ion-button [disabled]="lock"
             class="in-progress"
             *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false"
-            block (click)="viewHint1()">View Hint(-20)
+            block outline (click)="viewHint1()">Hint(-20)
     </button>
     <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true">
       <div class="row">
@@ -108,7 +108,7 @@
     <div class="spacer buttonSpacer"></div>
     <button ion-button [disabled]="lock"
             *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true"
-            block (click)="viewHint2()">View More Hint(-20)
+            block outline (click)="viewHint2()">View More Hint(-20)
     </button>
     <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true">
       <div class="row">
@@ -126,7 +126,7 @@
         <ion-input type="text"
                    [(ngModel)]="answerTemp"></ion-input>
       </ion-item>
-      <button ion-button block (click)="answerPuzzle()">Answer Question (+10)</button>
+      <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
     </div>
     <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
       <div class="col">
