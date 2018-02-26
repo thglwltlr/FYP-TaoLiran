@@ -8,6 +8,7 @@ import {ToastProvider} from '../../../providers/utility/toast/toast';
 import {LoaderProvider} from '../../../providers/utility/loader/loader';
 import {ModalController} from 'ionic-angular';
 import {GalleryModal} from 'ionic-gallery-modal';
+import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 
 @IonicPage()
 @Component({
@@ -84,6 +85,38 @@ export class PuzzleSolvePage {
       });
       actionSheet.present();
     }
+  }
+
+  viewIntro() {
+    this.navCtrl.push('IntroPage');
+  }
+
+  viewRank() {
+    this.navCtrl.push("RankPage");
+  }
+
+  viewTable() {
+    var photos = [];
+    photos.push({
+      url: 'https://firebasestorage.googleapis.com/v0/b/fyp03-136e5.appspot.com/o/Table.jpg?alt=media&token=a1264fe1-983b-464e-8690-95ab6dfe3228'
+    })
+    let modal = this.modalCtrl.create(GalleryModal, {
+        photos: photos,
+        initialSlide: 0
+      })
+    ;
+    modal.present();
+  }
+
+  viewMap() {
+    this.navCtrl.push("MapPage");
+  }
+
+  showCanvas() {
+    let canvasModal = this.modalCtrl.create(CanvasDrawComponent);
+    canvasModal.onDidDismiss((data => {
+    }));
+    canvasModal.present();
   }
 
   openImage() {

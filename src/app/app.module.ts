@@ -28,11 +28,13 @@ import {ComponentsModule} from '../components/components.module';
 import {CanvasDrawComponent} from '../components/canvas-draw/canvas-draw';
 import {NotificationProvider} from '../providers/utility/notification/notification';
 import {LocalNotifications} from '@ionic-native/local-notifications';
+import {SplashPage} from '../pages/splash/splash';
 
 @NgModule({
   declarations: [
     MyApp,
-    OpenPage
+    OpenPage,
+    SplashPage
   ],
   imports: [
     BrowserModule,
@@ -47,6 +49,7 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
   entryComponents: [
     MyApp,
     OpenPage,
+    SplashPage,
     CanvasDrawComponent
   ],
   providers: [

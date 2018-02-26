@@ -28,10 +28,11 @@ export class GamePage {
 
   ionViewWillEnter() {
     this.notificationProvider.clearAllNotification();
+    this.scrollToBottom();
   }
 
   ionViewDidLoad() {
-    this.scrollToBottom();
+
   }
 
   askAdmin() {
@@ -40,7 +41,7 @@ export class GamePage {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom();
+      this.content.scrollToBottom(3000);
     }, 1000);
   }
 

@@ -7,7 +7,8 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding text-center>
+
   <ion-item *ngIf="!userProvider.firstTimeFlag&&userProvider.userTableInfo[userProvider.getUid()]!=null" no-lines>
     <ion-avatar item-start>
       <img src={{userProvider.userTableInfo[userProvider.getUid()].photoUrl}}>
@@ -45,5 +46,6 @@
       Email: E140093@e.ntu.edu.sg
     </h6>
   </div>
-
+  <div class="spacer buttonSpacer"></div>
+  <img class="eeeLogo" src="../../assets/imgs/eeeLogo.png">
 </ion-content>

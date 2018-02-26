@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {IonicPage, NavController, NavParams, ViewController} from 'ionic-angular';
+import {SplashScreen} from '@ionic-native/splash-screen';
 
 @Component({
   selector: 'page-open',
@@ -9,4 +10,6 @@ export class OpenPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+
+
 }

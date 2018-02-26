@@ -33,7 +33,28 @@
     <div class="bubble x9"></div>
     <div class="bubble x10"></div>
   </div>
-
+  <ion-fab right bottom ion-fixed>
+    <button ion-fab mini color="light">
+      <ion-icon name="arrow-dropleft"></ion-icon>
+    </button>
+    <ion-fab-list side="left">
+      <button ion-fab (click)="viewIntro()">
+        <ion-icon name="logo-freebsd-devil"></ion-icon>
+      </button>
+      <button ion-fab (click)="viewMap()">
+        <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+      </button>
+      <button ion-fab (click)="viewTable()">
+        <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
+      </button>
+      <button ion-fab (click)="viewRank()">
+        <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
+      </button>
+      <button ion-fab (click)="showCanvas()">
+        <ion-icon ios="ios-color-palette" md="md-color-palette"></ion-icon>
+      </button>
+    </ion-fab-list>
+  </ion-fab>
   <ion-toolbar *ngIf="settingProvider.showTimeScoreFlag" ion-fixed>
     <ion-grid class="fontBlue">
       <ion-row>

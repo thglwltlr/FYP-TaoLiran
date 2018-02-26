@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ModalController, Platform} from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
 import {OpenPage} from '../pages/open/open';
 import {UserProvider} from '../providers/tables/user/user';
 import {User} from '../assets/models/interfaces/User';
+import {SplashPage} from '../pages/splash/splash';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,9 @@ export class MyApp {
   constructor(modalCtrl: ModalController, userProvider: UserProvider, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       statusBar.styleDefault();
-      splashScreen.hide();
+      let splash = modalCtrl.create(SplashPage);
+      splash.present();
+      // splashScreen.hide();
       userProvider.anonymousLogin().then((res) => {
         if (res == true) {
           console.log("login success");
