@@ -4,6 +4,7 @@ import {GroupProvider} from '../../../providers/tables/group/group';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {ChatProvider} from '../../../providers/tables/chat/chat';
+import {NotificationProvider} from '../../../providers/utility/notification/notification';
 
 @IonicPage()
 @Component({

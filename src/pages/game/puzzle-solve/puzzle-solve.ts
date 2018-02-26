@@ -24,6 +24,9 @@ export class PuzzleSolvePage {
     if (this.statusProvider.puzzleStatus[this.puzzleId] == null) {
       this.navCtrl.pop();
     }
+    if (!this.statusProvider.puzzleStatus[this.puzzleId].solved) {
+      this.statusProvider.solvingPuzzle = this.puzzleId;
+    }
     this.answerTemp = '';
   }
 
@@ -96,6 +99,9 @@ export class PuzzleSolvePage {
     modal.present();
   }
 
+  ionViewWillLeave() {
+    this.statusProvider.solvingPuzzle = '';
+  }
 
   checkAnswer(): boolean {
     var correctAnswer = this.gameProvider.puzzleDetails[this.puzzleId].answer.trim().toLowerCase();

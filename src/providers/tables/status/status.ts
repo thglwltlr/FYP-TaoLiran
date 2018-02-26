@@ -10,6 +10,8 @@ import {GroupProvider} from '../group/group';
 import {UserProvider} from '../user/user';
 import {RandomStyle} from '../../../assets/models/interfaces/RandomStyle';
 import {GroupRank} from '../../../assets/models/interfaces/GroupRank';
+import {NotificationProvider} from '../../utility/notification/notification';
+import {ToastProvider} from '../../utility/toast/toast';
 
 @Injectable()
 export class StatusProvider {
@@ -30,8 +32,9 @@ export class StatusProvider {
   readonly animationArray = ['moveHorizon', 'moveAround', 'rotate', 'moveVertical'];
   groupRank = [] as GroupRank[];
   groupRankKeys = [];
+  solvingPuzzle = '';
 
-  constructor(private userProvider: UserProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private settingProvider: SettingProvider, private events: Events) {
+  constructor(private toastProvider: ToastProvider, private notificationProvider: NotificationProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private settingProvider: SettingProvider, private events: Events) {
   }
 
   initParams() {
@@ -133,6 +136,10 @@ export class StatusProvider {
     for (let puzzleId of this.puzzleStatusKeys) {
       if (this.puzzleStatus[puzzleId].solved == false) {
         this.firstUnsolved = puzzleId;
+        if (this.solvingPuzzle != '' && this.firstUnsolved != this.solvingPuzzle) {
+          this.notificationProvider.showNotification("This puzzle has been solved", "You may go on and solve the next");
+          this.toastProvider.showToast("This puzzle has been solved");
+        }
         break;
       }
     }

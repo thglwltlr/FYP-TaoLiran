@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {
-  ActionSheetController, IonicPage, ModalController, NavController, NavParams
+  ActionSheetController, Content, IonicPage, ModalController, NavController, NavParams
 } from 'ionic-angular';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {GroupProvider} from '../../../providers/tables/group/group';
@@ -9,6 +9,7 @@ import {UserProvider} from '../../../providers/tables/user/user';
 import {SettingProvider} from '../../../providers/setting/setting';
 import {GalleryModal} from 'ionic-gallery-modal';
 import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
+import {NotificationProvider} from '../../../providers/utility/notification/notification';
 
 
 @IonicPage()
@@ -19,8 +20,25 @@ import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 
 })
 export class GamePage {
-  constructor(private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  @ViewChild('content') content: Content;
+
+  constructor(private notificationProvider: NotificationProvider, private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
+
+  ionViewWillEnter() {
+    this.notificationProvider.clearAllNotification();
+  }
+
+  ionViewDidLoad() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 500);
+  }
+
 
   showOptions() {
     if (this.settingProvider.showTimeScoreFlag) {

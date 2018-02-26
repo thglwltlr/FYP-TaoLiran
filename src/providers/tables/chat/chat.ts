@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 import {Message} from '../../../assets/models/interfaces/Message';
 import {UserProvider} from '../user/user';
 import {GroupProvider} from '../group/group';
+import {NotificationProvider} from '../../utility/notification/notification';
 
 
 @Injectable()
@@ -23,7 +24,7 @@ export class ChatProvider {
   readonly text = 'text';
   readonly image = 'image';
 
-  constructor(private groupProvider: GroupProvider, private userProvider: UserProvider, private events: Events, private settingProvider: SettingProvider) {
+  constructor(private notificationProvider: NotificationProvider, private groupProvider: GroupProvider, private userProvider: UserProvider, private events: Events, private settingProvider: SettingProvider) {
 
   }
 
@@ -45,8 +46,10 @@ export class ChatProvider {
           if (this.chatTableInfo[receiverId][messageId] == null) {
             this.chatTableInfo[receiverId][messageId] = infoTemp[receiverId][messageId];
             if (this.currentView != receiverId
-              && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag)
+              && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
+              this.notificationProvider.showNotification("new message", "You have received new message!");
               this.newMsgNo[receiverId]++;
+            }
             if (this.currentView == receiverId
               && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
               this.newMsgFlag = true;

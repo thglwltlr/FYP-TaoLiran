@@ -5,6 +5,8 @@ import {ChatProvider} from '../../../providers/tables/chat/chat';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {CameraProvider} from '../../../providers/utility/camera/camera';
 import {GalleryModal} from 'ionic-gallery-modal';
+import {NotificationProvider} from '../../../providers/utility/notification/notification';
+import {LocalNotifications} from '@ionic-native/local-notifications';
 
 
 @IonicPage()
@@ -23,16 +25,18 @@ export class ChatPage {
   defaultHeight = 0;
   previousHeight = 0;
 
-  constructor(private modalCtrl: ModalController, private cameraProvider: CameraProvider, private userProvider: UserProvider, private chatProvider: ChatProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private notificationProvider: NotificationProvider, private modalCtrl: ModalController, private cameraProvider: CameraProvider, private userProvider: UserProvider, private chatProvider: ChatProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.title = this.navParams.get('title');
     this.receiver = this.navParams.get('receiver');
     this.chatProvider.currentView = this.receiver;
     this.chatProvider.newMsgFlag = false;
     this.initMessage();
     this.scrollToBottom();
+    this.notificationProvider.clearAllNotification();
   }
 
   ionViewDidLoad() {
+    this.scrollToBottom();
     this.defaultHeight = this.textArea.nativeElement.scrollHeight + 10;
     this.previousHeight = this.defaultHeight;
     this.textArea.nativeElement.style.height = this.defaultHeight + 'px';

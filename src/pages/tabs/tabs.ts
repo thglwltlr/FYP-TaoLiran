@@ -6,6 +6,7 @@ import {GroupProvider} from '../../providers/tables/group/group';
 import {SettingProvider} from '../../providers/setting/setting';
 import {StatusProvider} from '../../providers/tables/status/status';
 import {ChatProvider} from '../../providers/tables/chat/chat';
+import {NotificationProvider} from '../../providers/utility/notification/notification';
 
 
 @IonicPage()
@@ -23,21 +24,20 @@ export class TabsPage {
   lastOnlineTimer;
   syncLocalTimer;
 
-  constructor( private chatProvider: ChatProvider, private statusProvider: StatusProvider, private settingProvider: SettingProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private events: Events, public userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private notificationProvider: NotificationProvider, private chatProvider: ChatProvider, private statusProvider: StatusProvider, private settingProvider: SettingProvider, private groupProvider: GroupProvider, private gameProvider: GameProvider, private events: Events, public userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.events.subscribe(this.userProvider.USER_TABLE_UPDATE);
     this.events.subscribe(this.gameProvider.GAME_TABLE_UPDATE);
     this.events.subscribe(this.groupProvider.GROUP_TABLE_UPDATE);
     this.events.subscribe(this.statusProvider.STATUS_TABLE_UPDATE);
     this.events.subscribe(this.chatProvider.CHAT_TABLE_UPDATE);
-
     this.syncLocalTimer = setInterval(() => {
       this.syncLocalTime();
-    }, 10000);
+    }, 100000);
     this.lastOnlineTimer = setInterval(() => {
       this.userProvider.updateLastOnline().then((res) => {
       }).catch((err) => {
       });
-    }, 20000);
+    }, 200000);
   }
 
   ionViewDidEnter() {
@@ -52,10 +52,10 @@ export class TabsPage {
     this.statusProvider.getStatusTable();
     this.chatProvider.getChatTable();
     this.syncLocalTime();
+
   }
 
   ionViewWillLeave() {
-    console.log("will leave");
     this.events.unsubscribe(this.userProvider.USER_TABLE_UPDATE);
     this.events.unsubscribe(this.gameProvider.GAME_TABLE_UPDATE);
     this.events.unsubscribe(this.groupProvider.GROUP_TABLE_UPDATE);
