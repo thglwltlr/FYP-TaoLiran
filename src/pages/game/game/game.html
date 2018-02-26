@@ -122,6 +122,9 @@
       <ion-icon name="arrow-dropleft"></ion-icon>
     </button>
     <ion-fab-list side="left">
+      <button ion-fab (click)="viewIntro()">
+        <ion-icon name="logo-freebsd-devil"></ion-icon>
+      </button>
       <button ion-fab (click)="viewMap()">
         <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
       </button>
@@ -170,7 +173,7 @@
           <ion-row no-padding>
             <ion-col col-10 offset-1 no-padding>
               <h6 no-margin>
-                Ask you team leader to start.
+                Ask your team leader to start.
               </h6>
             </ion-col>
           </ion-row>
@@ -186,6 +189,13 @@
               <img class="groupLeaderAvatar"
                    src={{userProvider.userTableInfo[groupProvider.groupTableInfo[groupProvider.userGroupId].groupCreator].photoUrl}}>
               <span> {{userProvider.userTableInfo[groupProvider.groupTableInfo[groupProvider.userGroupId].groupCreator].name}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col offset-1 col-10>
+              <button ion-button no-margin
+                      round outline small (click)="viewIntro()">Watch Intro First
+              </button>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -207,6 +217,13 @@
             <ion-col offset-3 col-6>
               <button ion-button no-margin
                       round outline small (click)="startGame()">Start Game
+              </button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col offset-1 col-10>
+              <button ion-button no-margin
+                      round outline small (click)="viewIntro()">Watch Intro First
               </button>
             </ion-col>
           </ion-row>

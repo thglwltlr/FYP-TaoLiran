@@ -1,0 +1,58 @@
+page-intro {
+  ion-content {
+    background-image: url("../../assets/imgs/introBg.jpeg");
+  }
+  .conversation {
+    padding: 5px;
+    color: white;
+    font-size: 1.5em;
+    background-color: color($colors, eeeBlueLight, base);
+    border-radius: 3%;
+    box-shadow: 0 0 6px color($colors, eeeBlue, base);
+    position: fixed;
+    bottom: 42%;
+    width: 80%;
+    left: 10%;
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bold;
+    text-shadow: 2px 2px color($colors, eeeBlue, base);
+  }
+.leftButton{
+  position: fixed;
+  left: 3%;
+  bottom: 3%;
+}
+  .rightButton{
+    position: fixed;
+    right: 3%;
+    bottom: 3%;
+  }
+  .prof {
+    width: 30%;
+    position: fixed;
+    left: 5%;
+    top: 60%;
+    -webkit-animation: moveVertical infinite;
+    -webkit-animation-duration: 1000ms;
+  }
+  .robot {
+    width: 30%;
+    position: fixed;
+    right: 5%;
+    top: 60%;
+    -webkit-animation: moveVertical infinite;
+    -webkit-animation-duration: 1000ms;
+  }
+
+  @-webkit-keyframes moveVertical {
+    0% {
+      -webkit-transform: translate3d(0, -3%, 0);
+    }
+    50% {
+      -webkit-transform: translate3d(0, +3%, 0);
+    }
+    100% {
+      -webkit-transform: translate3d(0, -3%, 0);
+    }
+  }
+}

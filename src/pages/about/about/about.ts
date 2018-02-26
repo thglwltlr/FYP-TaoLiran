@@ -10,8 +10,10 @@ import {ProfilePage} from '../../profile/profile';
 })
 export class AboutPage {
   showContributorFlag = false;
+  tapCounter = 0;
 
   constructor(private userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
+    this.tapCounter = 0;
   }
 
   goToAdminPage() {
@@ -23,7 +25,14 @@ export class AboutPage {
   }
 
   toggleContributor() {
-    this.showContributorFlag =!this.showContributorFlag;
+    this.showContributorFlag = !this.showContributorFlag;
+  }
+
+  adminOption() {
+    this.tapCounter++;
+    if (this.tapCounter >= 7) {
+      this.goToAdminPage();
+    }
   }
 
 }

@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-  <ion-item *ngIf="!userProvider.firstTimeFlag" no-lines>
+  <ion-item *ngIf="!userProvider.firstTimeFlag&&userProvider.userTableInfo[userProvider.getUid()]!=null" no-lines>
     <ion-avatar item-start>
       <img src={{userProvider.userTableInfo[userProvider.getUid()].photoUrl}}>
     </ion-avatar>
@@ -35,7 +35,7 @@
     <h6>
       Start-up screen design: Darin Tao
     </h6>
-    <h6>
+    <h6 (click)="adminOption()">
       Programmer: Li Wencheng
     </h6>
     <h6>

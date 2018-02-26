@@ -119,6 +119,10 @@ export class GamePage {
     });
   }
 
+  viewIntro() {
+    this.navCtrl.push('IntroPage');
+  }
+
   viewRank() {
     this.navCtrl.push("RankPage");
   }
