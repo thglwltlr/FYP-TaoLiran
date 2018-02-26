@@ -32,7 +32,7 @@ export class TabsPage {
     this.events.subscribe(this.chatProvider.CHAT_TABLE_UPDATE);
     this.syncLocalTimer = setInterval(() => {
       this.syncLocalTime();
-    }, 100000);
+    }, 10000);
     this.lastOnlineTimer = setInterval(() => {
       this.userProvider.updateLastOnline().then((res) => {
       }).catch((err) => {
@@ -41,7 +41,7 @@ export class TabsPage {
   }
 
   ionViewDidEnter() {
-    this.tabRef.select(1);
+    this.tabRef.select(2);
   }
 
   ionViewWillEnter() {

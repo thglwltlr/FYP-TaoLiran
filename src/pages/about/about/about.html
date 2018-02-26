@@ -1,21 +1,49 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>about</ion-title>
+    <ion-title>Setting</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let userId of userProvider.userTableInfoKey">
-      <p>{{userProvider.userTableInfo[userId].name}}</p>
-    </ion-item>
-  </ion-list>
-  <ion-list>
-    <ion-item>
-      <button ion-button block (click)="goToAdminPage()"> Admin Option</button>
-    </ion-item>
-  </ion-list>
+  <ion-item *ngIf="!userProvider.firstTimeFlag" no-lines>
+    <ion-avatar item-start>
+      <img src={{userProvider.userTableInfo[userProvider.getUid()].photoUrl}}>
+    </ion-avatar>
+    <h2>{{userProvider.userTableInfo[userProvider.getUid()].name}}</h2>
+    <p>You may update your profile!</p>
+    <button ion-button clear
+            item-end
+            (click)="editProfile()">
+      edit
+    </button>
+  </ion-item>
+  <button ion-button block outline (click)="toggleContributor()">Contributor
+    &nbsp;
+    <ion-icon name="close-circle" *ngIf="showContributorFlag"></ion-icon>
+  </button>
+  <div class="spacer buttonSpacer"></div>
+  <div *ngIf="showContributorFlag" style="text-align: center;">
+    <h6>
+      Supervisor: Prof.Shum Ping
+    </h6>
+    <h6>
+      Puzzle design: Cherie & Gloria
+    </h6>
+    <h6>
+      Start-up screen design: Darin Tao
+    </h6>
+    <h6>
+      Programmer: Li Wencheng
+    </h6>
+    <h6>
+      Main framework used: Ionic 3.0, Firebase, AngularFire 2
+    </h6>
+    <h6>
+      Email: E140093@e.ntu.edu.sg
+    </h6>
+  </div>
+
 </ion-content>

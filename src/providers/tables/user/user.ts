@@ -11,7 +11,7 @@ import {LoaderProvider} from '../../utility/loader/loader';
 export class UserProvider {
   readonly USER_TABLE = '/UserTable';
   readonly CONNECTION_STATE = '.info/connected';
-   userTableRef = firebase.database().ref(this.USER_TABLE);
+  userTableRef = firebase.database().ref(this.USER_TABLE);
   userTableInfo: User[];
   userTableInfoKey = [];
   readonly USER_TABLE_UPDATE = "userTableUpdate";
@@ -91,7 +91,7 @@ export class UserProvider {
 
   getUid() {
     if (this.platform.is('core') || this.platform.is('mobileweb')) {
-      return "rambo1412";
+      return "admin";
     }
     return this.device.uuid;
   }

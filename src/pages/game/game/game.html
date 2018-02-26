@@ -45,7 +45,7 @@
 
 </ion-header>
 
-<ion-content  #content >
+<ion-content #content>
   <div class="background-wrap">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
@@ -141,9 +141,14 @@
     &&!groupProvider.firstTimeFlag
     &&!statusProvider.firstTimeFlag">
     <!--tableAllFetched-->
-    <button *ngIf="(groupProvider.userGroupId==null||groupProvider.userGroupId=='')"
-            ion-button block (click)="joinGroup()">Join Group
-    </button>
+    <div class="bottomElement" style="width: 100%;"
+         *ngIf="(groupProvider.userGroupId==null||groupProvider.userGroupId=='')">
+      <h6>Let's join a group first!</h6>
+      <button padding
+              ion-button round outline (click)="joinGroup()">Join Group Now!
+      </button>
+    </div>
+
     <div *ngIf="statusProvider.statusTableInfo.startTime!=null
     &&statusProvider.statusTableInfo.startTime!=''
     &&(statusProvider.statusTableInfo.endTime==null
@@ -160,7 +165,8 @@
           </div>
 
         </div>
-        <ion-grid class="bottomElement" *ngIf="!groupProvider.groupLeaderFlag">
+        <ion-grid class="bottomElement"
+                  *ngIf="groupProvider.groupTableInfo[groupProvider.userGroupId]!=null&&!groupProvider.groupLeaderFlag">
           <ion-row no-padding>
             <ion-col col-10 offset-1 no-padding>
               <h6 no-margin>

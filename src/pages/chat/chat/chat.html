@@ -32,8 +32,27 @@
           </div>
 
         </ion-item>
+
         <ion-item text-wrap
-                  *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender!=userProvider.getUid()">
+                  *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender!=userProvider.getUid()&&chatProvider.chatTableInfo[receiver][messageId].sender==chatProvider.admin">
+          <div class="chatBox admin">
+            <div class="nameTime">
+              {{userProvider.userTableInfo[chatProvider.chatTableInfo[receiver][messageId].sender].name}}
+              {{chatProvider.chatTableInfo[receiver][messageId].time|date:'HH:mm'}}
+            </div>
+            <h5 *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.text">
+              {{chatProvider.chatTableInfo[receiver][messageId].content}}
+            </h5>
+
+            <img *ngIf="chatProvider.chatTableInfo[receiver][messageId].type==chatProvider.image"
+                 src="{{chatProvider.chatTableInfo[receiver][messageId].content}}"
+                 (click)="openImage(chatProvider.chatTableInfo[receiver][messageId].content)">
+
+          </div>
+        </ion-item>
+
+        <ion-item text-wrap
+                  *ngIf="chatProvider.chatTableInfo[receiver][messageId].sender!=userProvider.getUid()&&chatProvider.chatTableInfo[receiver][messageId].sender!=chatProvider.admin">
           <div class="chatBox others">
             <div class="nameTime">
               {{userProvider.userTableInfo[chatProvider.chatTableInfo[receiver][messageId].sender].name}}
@@ -52,7 +71,8 @@
       </div>
     </ion-list>
   </div>
-  <div ion-fixed style="width: 100%;top:90%;text-align: center;" *ngIf="chatProvider.newMsgFlag&&showNewMsg">
+  <!--showNewMsg-->
+  <div ion-fixed style="width: 100%;top:90%;text-align: center;" *ngIf="chatProvider.newMsgFlag">
     <button ion-button round outline small (click)="scrollToBottom()">
       <ion-icon name="arrow-down"></ion-icon>
       Got new message!
@@ -74,10 +94,10 @@
     </ion-buttons>
 
     <ion-item *ngIf="cameraProvider.base64Image!=null&&cameraProvider.base64Image!='';" no-margin no-lines>
-      <button ion-button block outline (click)="uploadImage()">
+      <button ion-button [disabled]="lock" block outline (click)="uploadImage()">
         Submit Image
       </button>
-      <ion-icon item-end name="close-circle" (click)="cancelUpload()"></ion-icon>
+      <ion-icon item-end name="close-circle" *ngIf="!lock" (click)="cancelUpload()"></ion-icon>
     </ion-item>
   </ion-toolbar>
 </ion-footer>

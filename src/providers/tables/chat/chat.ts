@@ -23,56 +23,63 @@ export class ChatProvider {
   newMsgFlag = false;
   readonly text = 'text';
   readonly image = 'image';
+  readonly admin = 'admin';
 
   constructor(private notificationProvider: NotificationProvider, private groupProvider: GroupProvider, private userProvider: UserProvider, private events: Events, private settingProvider: SettingProvider) {
-
   }
 
   getChatTable() {
     this.chatTableRef.on('value', (snapshot) => {
       var infoTemp = this.settingProvider.snapshotToArray(snapshot);
       for (let receiverId of Object.keys(infoTemp)) {
-        if (!this.groupProvider.firstTimeFlag && (this.groupProvider.userGroupId == null || this.groupProvider.userGroupId == ''))
-          break;
-        if (receiverId != this.groupProvider.userGroupId && receiverId != this.public)
-          continue;
-        if (this.chatTableInfo[receiverId] == null) {
-          this.chatTableInfo[receiverId] = [] as Message[]
+        if (!this.groupProvider.firstTimeFlag && (this.groupProvider.userGroupId == null || this.groupProvider.userGroupId == '')) {
         }
-        for (let messageId of Object.keys(infoTemp[receiverId])) {
-          if (this.newMsgNo[receiverId] == null) {
-            this.newMsgNo[receiverId] = 0;
-          }
-          if (this.chatTableInfo[receiverId][messageId] == null) {
-            this.chatTableInfo[receiverId][messageId] = infoTemp[receiverId][messageId];
-            if (this.currentView != receiverId
-              && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
-              this.notificationProvider.showNotification("new message", "You have received new message!");
-              this.newMsgNo[receiverId]++;
-            }
-            if (this.currentView == receiverId
-              && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
-              this.newMsgFlag = true;
-            }
-          }
+        else if (!this.groupProvider.firstTimeFlag && (this.groupProvider.userGroupId != null
+            && this.groupProvider.userGroupId != '')) {
+          if (receiverId != this.groupProvider.userGroupId && receiverId != this.public)
+            continue;
         }
-        this.chatTableInfoKeys[receiverId] = Object.keys(this.chatTableInfo[receiverId]);
-        this.getNewMsgCount();
+        this.handleMessages(infoTemp, receiverId);
       }
       this.events.publish(this.CHAT_TABLE_UPDATE);
       this.firstTimeFlag = false;
     });
   }
 
+  handleMessages(infoTemp, receiverId) {
+    if (this.chatTableInfo[receiverId] == null) {
+      this.chatTableInfo[receiverId] = [] as Message[]
+    }
+    for (let messageId of Object.keys(infoTemp[receiverId])) {
+      if (this.newMsgNo[receiverId] == null) {
+        this.newMsgNo[receiverId] = 0;
+      }
+      if (this.chatTableInfo[receiverId][messageId] == null) {
+        this.chatTableInfo[receiverId][messageId] = infoTemp[receiverId][messageId];
+        if (this.currentView != receiverId
+          && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
+          this.notificationProvider.showNotification("new message", "You have received new message!");
+          this.newMsgNo[receiverId]++;
+        }
+        if (this.currentView == receiverId
+          && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
+          this.newMsgFlag = true;
+        }
+      }
+    }
+    this.chatTableInfoKeys[receiverId] = Object.keys(this.chatTableInfo[receiverId]);
+    this.getNewMsgCount();
+  }
 
   getNewMsgCount() {
     if (this.newMsgNo == null)
       return;
     this.totalMsgNo = 0;
     for (let receiverId of Object.keys(this.newMsgNo)) {
-      if (receiverId == this.groupProvider.userGroupId) {
-        this.totalMsgNo += this.newMsgNo[receiverId];
-      }
+      // if (receiverId == this.groupProvider.userGroupId) {
+      //
+      // }
+      this.totalMsgNo += this.newMsgNo[receiverId];
     }
   }
 

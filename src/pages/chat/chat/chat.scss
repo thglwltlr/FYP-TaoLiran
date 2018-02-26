@@ -38,6 +38,21 @@ page-chat {
       color: grey;
     }
   }
+  .admin {
+    float: left;
+    border: 1px solid red;
+    box-shadow: -2px 2px 1px 0 red;
+    margin: 2px 45px 2px 20px;
+    .nameTime {
+      font-size: 0.25em;
+      text-align: left;
+      color: red;
+    }
+  }
+  .admin::before {
+    left: -5px;
+    box-shadow: -1px 1px 1px 0 red;
+  }
 
   .others::before {
     left: -5px;

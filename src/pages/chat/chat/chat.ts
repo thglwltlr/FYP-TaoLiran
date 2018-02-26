@@ -17,7 +17,7 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
 export class ChatPage {
   title: string;
   receiver: string;
-  showNewMsg = false;
+  // showNewMsg = false;
   messageTemp = {} as Message;
   lock = false;
   @ViewChild('content') content: Content;
@@ -31,9 +31,10 @@ export class ChatPage {
     this.chatProvider.currentView = this.receiver;
     this.chatProvider.newMsgFlag = false;
     this.initMessage();
-    this.scrollToBottom();
     this.notificationProvider.clearAllNotification();
+
   }
+
 
   ionViewDidLoad() {
     this.scrollToBottom();
@@ -58,12 +59,13 @@ export class ChatPage {
     this.cameraProvider.initStartUpImage('');
   }
 
+
   onScrollEnd() {
     if ((this.content.getContentDimensions().scrollHeight - this.content.getContentDimensions().scrollTop) <= (this.content.getContentDimensions().contentHeight + this.content.getContentDimensions().contentBottom)) {
-      this.showNewMsg = false;
+      // this.showNewMsg = true;
       this.chatProvider.newMsgFlag = false;
     } else {
-      this.showNewMsg = true;
+      // this.showNewMsg = true;
     }
   }
 
@@ -75,26 +77,26 @@ export class ChatPage {
     this.messageTemp = {} as Message;
     this.messageTemp.content = '';
     this.messageTemp.type = this.chatProvider.text;
-    this.scrollToBottom();
     this.cameraProvider.initStartUpImage('');
     this.lock = false;
-  }
-
-  scrollToBottom() {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, 500);
   }
 
   sendMessage() {
     this.lock = true;
     this.chatProvider.sendMessage(this.receiver, this.messageTemp).then((res) => {
       this.initMessage();
+      this.scrollToBottom();
       this.previousHeight = this.defaultHeight;
       this.textArea.nativeElement.style.height = this.defaultHeight + 'px';
     }).catch((err) => {
       this.lock = false;
     });
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom();
+    }, 1000);
   }
 
   cancelUpload() {
@@ -115,11 +117,13 @@ export class ChatPage {
   }
 
   uploadImage() {
+    this.lock = true;
     this.cameraProvider.uploadImage(this.cameraProvider.chatImgRef).then((url: any) => {
       this.messageTemp.content = url;
       this.messageTemp.type = this.chatProvider.image;
       this.sendMessage();
     }).catch((err) => {
+      this.lock = false;
     });
   }
 

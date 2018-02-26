@@ -14,9 +14,15 @@ import {LoaderProvider} from '../../providers/utility/loader/loader';
 export class ProfilePage {
   userTemp = {} as User;
   lock = false;
+  uid = '';
 
   constructor(private cameraProvider: CameraProvider, private loaderProvider: LoaderProvider, private userProvider: UserProvider, public navCtrl: NavController, public navParams: NavParams) {
-    this.initUser();
+    this.uid = this.navParams.get('uid');
+    if (this.uid == null || this.uid == '')
+      this.initUser();
+    else {
+      this.userTemp = this.userProvider.userTableInfo[this.uid];
+    }
     this.cameraProvider.initStartUpImage(this.userTemp.photoUrl);
   }
 

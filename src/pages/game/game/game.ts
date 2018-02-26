@@ -10,6 +10,7 @@ import {SettingProvider} from '../../../providers/setting/setting';
 import {GalleryModal} from 'ionic-gallery-modal';
 import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 import {NotificationProvider} from '../../../providers/utility/notification/notification';
+import {ChatProvider} from '../../../providers/tables/chat/chat';
 
 
 @IonicPage()
@@ -22,7 +23,7 @@ import {NotificationProvider} from '../../../providers/utility/notification/noti
 export class GamePage {
   @ViewChild('content') content: Content;
 
-  constructor(private notificationProvider: NotificationProvider, private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private chatProvider: ChatProvider, private notificationProvider: NotificationProvider, private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewWillEnter() {
@@ -33,10 +34,14 @@ export class GamePage {
     this.scrollToBottom();
   }
 
+  askAdmin() {
+    this.navCtrl.push("ChatPage", {"title": "Public Chat", "receiver": this.chatProvider.public});
+  }
+
   scrollToBottom() {
     setTimeout(() => {
       this.content.scrollToBottom();
-    }, 500);
+    }, 1000);
   }
 
 
@@ -54,7 +59,9 @@ export class GamePage {
           {
             text: 'Ask Admin',
             handler: () => {
+              this.askAdmin();
             }
+
           },
           {
             text: 'Cancel',
@@ -78,6 +85,7 @@ export class GamePage {
           {
             text: 'Ask Admin',
             handler: () => {
+              this.askAdmin();
             }
           },
           {
