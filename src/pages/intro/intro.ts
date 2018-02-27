@@ -26,4 +26,8 @@ export class IntroPage {
 
   }
 
+  back() {
+    this.navCtrl.pop();
+  }
+
 }

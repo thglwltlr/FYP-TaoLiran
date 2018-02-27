@@ -41,7 +41,7 @@ export class GamePage {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom(3000);
+      this.content.scrollToBottom(1000);
     }, 1000);
   }
 
