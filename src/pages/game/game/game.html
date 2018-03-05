@@ -122,16 +122,16 @@
       <ion-icon name="arrow-dropup"></ion-icon>
     </button>
     <ion-fab-list side="top">
-      <button  ion-fab (click)="viewIntro()">
+      <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
-      <button  ion-fab (click)="viewMap()">
+      <button ion-fab (click)="viewMap()">
         <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
       </button>
-      <button  ion-fab (click)="viewTable()">
+      <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
       </button>
-      <button  ion-fab (click)="viewRank()">
+      <button ion-fab (click)="viewRank()">
         <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
       </button>
       <button mini ion-fab (click)="showCanvas()">
@@ -239,7 +239,7 @@
 
         <div *ngFor="let puzzleId of statusProvider.puzzleStatusKeys">
           <!--group solved-->
-          <ion-item no-lines class="solvedPuzzle" *ngIf="statusProvider.puzzleStatus[puzzleId].solved"
+          <ion-item text-wrap no-lines class="puzzle" *ngIf="statusProvider.puzzleStatus[puzzleId].solved"
                     (click)="puzzleSolve(puzzleId)"
                     [ngStyle]="{'-webkit-animation':statusProvider.randomStyle[puzzleId].randomAnimation,'-webkit-animation-duration': statusProvider.randomStyle[puzzleId].randomDuration,'background':statusProvider.randomStyle[puzzleId].randomColor}">
             <ion-thumbnail item-start>
@@ -249,7 +249,7 @@
           </ion-item>
         </div>
         <ion-item no-lines *ngIf="statusProvider.firstUnsolved!=null&&statusProvider.firstUnsolved!=''"
-                  (click)="puzzleSolve(statusProvider.firstUnsolved)" class="unsolvedPuzzle">
+                  (click)="puzzleSolve(statusProvider.firstUnsolved)" class="puzzle unsolvedPuzzle">
 
           <ion-thumbnail item-start>
             <img src={{gameProvider.puzzleDetails[statusProvider.firstUnsolved].photoUrl}}>

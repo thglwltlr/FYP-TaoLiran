@@ -20,7 +20,7 @@
 
 </ion-header>
 
-<ion-content style="text-align: center" padding>
+<ion-content  #content style="text-align: center" padding>
   <div class="background-wrap">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
@@ -92,34 +92,12 @@
   </ion-toolbar>
 
   <div class="spacer headSpacer"></div>
-  <!--<div padding>-->
-  <!--<ion-item no-lines>-->
-  <!--<div class="row">-->
-  <!--<div class="col">-->
-  <!--<div class="text-center">-->
+
   <h2 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].title}}</h2>
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<div class="row">-->
-  <!--<div class="col">-->
-  <!--<div class="text-center">-->
+
   <h5 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].puzzleContent}}</h5>
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
+  <img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">
 
-  <!--<div class="row" no-margin no-padding>-->
-  <!--<div class="col" no-margin no-padding>-->
-  <!--<div class="text-center" no-margin no-padding>-->
-  <!--to delete-->
-  <img src="assets/imgs/puzzle3.png">
-  <!--<img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">-->
-
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</ion-item>-->
   <div class="spacer buttonSpacer"></div>
   <button ion-button [disabled]="lock"
           class="in-progress"
@@ -128,23 +106,21 @@
             &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
           block outline (click)="viewHint1()">Hint(-20)
   </button>
-  <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true">
-          <h5 style="text-align: left;">Hint 1:{{gameProvider.puzzleDetails[puzzleId].hint1}}</h5>
-  </ion-item>
+  <h5 *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true" style="text-align: left;">Hint
+    1: {{gameProvider.puzzleDetails[puzzleId].hint1}}</h5>
   <div *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
             &&gameProvider.puzzleDetails[puzzleId].hint1!=null
             &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
        class="spacer buttonSpacer"></div>
   <button ion-button [disabled]="lock"
           *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true
-            &&gameProvider.puzzleDetails[puzzleId].hint1!=null
-            &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
+            &&gameProvider.puzzleDetails[puzzleId].hint2!=null
+            &&gameProvider.puzzleDetails[puzzleId].hint2!=''"
           block outline (click)="viewHint2()">View More Hint(-20)
   </button>
-  <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true">
-          <h5 style="text-align: left;">Hint 2:{{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
-  </ion-item>
-  <div class="spacer buttonSpacer"></div>
+  <h5 *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true" style="text-align: left;">Hint
+    2: {{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
+  <!--<div class="spacer buttonSpacer"></div>-->
   <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
     <ion-item no-lines>
       <ion-label floating>Your answer:</ion-label>
@@ -153,17 +129,12 @@
     </ion-item>
     <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
   </div>
-  <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
-    <div class="col">
-      <div class="text-center">
-        <h5 style="text-align: left;">Puzzle has been solved,
-          answer:</h5>
-        <h2>
-          {{gameProvider.puzzleDetails[puzzleId].answer}}
-        </h2>
-      </div>
-    </div>
+  <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true">
+    <h5 style="text-align: left;">Puzzle has been solved,
+      answer: </h5>
+    <h3>
+      {{gameProvider.puzzleDetails[puzzleId].answer}}
+    </h3>
   </div>
-  <!--</div>-->
   <div class="spacer footSpacer"></div>
 </ion-content>

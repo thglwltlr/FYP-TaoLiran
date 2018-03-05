@@ -20,6 +20,7 @@
         <p>Strict Answer?{{gameProvider.gameTableInfo[locationId].puzzles[puzzleId].strictAnswer}}</p>
         <p>Special Puzzle?{{gameProvider.gameTableInfo[locationId].puzzles[puzzleId].special}}</p>
         <p>Order:{{gameProvider.gameTableInfo[locationId].puzzles[puzzleId].order}}</p>
+        <p>Memory:{{gameProvider.gameTableInfo[locationId].puzzles[puzzleId].memory}}</p>
       </ion-item>
       <ion-item-options slide="left">
         <button ion-button color="primary" (click)="editPuzzle(puzzleId)">
@@ -74,6 +75,11 @@
         <ion-label floating>Puzzle order:</ion-label>
         <ion-input type="text"
                    [(ngModel)]="puzzleTemp.order"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Memory:</ion-label>
+        <ion-input type="text"
+                   [(ngModel)]="puzzleTemp.memory"></ion-input>
       </ion-item>
 
 

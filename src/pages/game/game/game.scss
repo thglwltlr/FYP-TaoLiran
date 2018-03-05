@@ -18,30 +18,25 @@ page-game {
     text-align: center;
     font-size: 0.25em;
   }
-
-  .solvedPuzzle {
+  .puzzle {
     margin-left: 5%;
     width: 90%;
     text-align: center;
     box-sizing: border-box;
     border-radius: 5%;
-    color: white;
-    //border: 4px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 5px 5px grey;
-    //-webkit-animation: vibration infinite;
-    //-webkit-animation-duration: 5000ms;
-    //background: linear-gradient(-45deg, white, #003777, black);
+    font-size: 1.5em !important;
+    font-family: "Times New Roman", Times, serif;
+    color: color($colors, eeeBlue, base);
+    box-shadow: 0 1px 0 rgb(204, 204, 204), 0 2px 0 rgb(201, 201, 201), 0 3px 0 rgb(187, 187, 187), 0 4px 0 rgb(185, 185, 185), 0 5px 0 rgb(170, 170, 170), 0 6px 1px rgba(0, 0, 0, 0.0980392), 0 0 5px rgba(0, 0, 0, 0.0980392), 0 1px 3px rgba(0, 0, 0, 0.298039), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.247059), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.14902);
+    img {
+      -webkit-transform: rotate(-1deg);
+      border-radius: 5%;
+      box-shadow: 0 1px 0 rgb(204, 204, 204), 0 2px 0 rgb(201, 201, 201), 0 3px 0 rgb(187, 187, 187), 0 4px 0 rgb(185, 185, 185), 0 5px 0 rgb(170, 170, 170), 0 6px 1px rgba(0, 0, 0, 0.0980392), 0 0 5px rgba(0, 0, 0, 0.0980392), 0 1px 3px rgba(0, 0, 0, 0.298039), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.247059), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.14902);
+    }
   }
+
   .unsolvedPuzzle {
-    margin-left: 5%;
-    width: 90%;
-    text-align: center;
-    box-sizing: border-box;
-    border-radius: 5%;
-    color: white;
-    //border: 4px solid rgba(255, 255, 255, 0.4);
     background: linear-gradient(-45deg, white, #003777, black);
-    box-shadow: 5px 5px grey;
     -webkit-animation: scale infinite;
     -webkit-animation-duration: 3000ms;
   }

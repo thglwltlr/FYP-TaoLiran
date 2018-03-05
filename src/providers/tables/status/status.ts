@@ -258,10 +258,19 @@ export class StatusProvider {
     var locationOrder = [];
     locationOrder[0] = this.gameProvider.gameTableInfoKeys[0];
     var random = Math.floor(Math.random() * (this.gameProvider.gameTableInfoKeys.length - 1)) + 1;
+    var direction = (Math.random() - 0.5) > 0 ? true : false;
     for (var i = 0; i < this.gameProvider.gameTableInfoKeys.length - 1; i++) {
-      if (random + i == this.gameProvider.gameTableInfoKeys.length)
-        random = 1 - i;
-      locationOrder[i + 1] = this.gameProvider.gameTableInfoKeys[random + i];
+      if (direction) {
+        if (random + i == this.gameProvider.gameTableInfoKeys.length)
+          random = 1 - i;
+        locationOrder[i + 1] = this.gameProvider.gameTableInfoKeys[random + i];
+      }
+      else {
+        if (random - i == 0)
+          random = i + this.gameProvider.gameTableInfoKeys.length - 1;
+        locationOrder[i + 1] = this.gameProvider.gameTableInfoKeys[random - i];
+      }
+
     }
     return locationOrder;
   }

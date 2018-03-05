@@ -33,6 +33,7 @@ export class PuzzleListPage {
     this.puzzleTemp.photoUrl = this.cameraProvider.puzzleDefault;
     this.puzzleTemp.order = 0;
     this.puzzleTemp.special = false;
+    this.puzzleTemp.memory = '';
     this.puzzleTempKey = '';
   }
 

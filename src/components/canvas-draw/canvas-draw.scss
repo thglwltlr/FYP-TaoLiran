@@ -5,14 +5,17 @@ canvas-draw {
   display: block;
   background: rgba(0, 0, 0, 0.7);
 
-  #top-toolbar{
+  #top-toolbar {
     position: absolute;
     top: 0;
   }
 
   #bottom-toolbar {
     position: absolute;
-    bottom: 0
+    bottom: 0;
+    ion-icon {
+      color: white !important;
+    }
   }
 
 }

@@ -12,10 +12,8 @@ export class CanvasDrawComponent {
   lastX: number;
   lastY: number;
 
-
   currentColour: string = '#1abc9c';
   availableColours: any;
-
   brushSize: number = 10;
 
   constructor(public navController: NavController, public platform: Platform, public renderer: Renderer2) {
@@ -53,12 +51,12 @@ export class CanvasDrawComponent {
     this.lastY = ev.touches[0].pageY;
   }
 
+
   handleMove(ev) {
 
     let ctx = this.canvasElement.getContext('2d');
     let currentX = ev.touches[0].pageX;
     let currentY = ev.touches[0].pageY;
-
     ctx.beginPath();
     ctx.lineJoin = "round";
     ctx.moveTo(this.lastX, this.lastY);
@@ -66,11 +64,9 @@ export class CanvasDrawComponent {
     ctx.closePath();
     ctx.strokeStyle = this.currentColour;
     ctx.lineWidth = this.brushSize;
-    ctx.stroke();
-
     this.lastX = currentX;
     this.lastY = currentY;
-
+    ctx.stroke();
   }
 
   clearCanvas() {

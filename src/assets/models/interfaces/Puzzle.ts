@@ -7,5 +7,6 @@ export interface Puzzle {
   answer: string;
   photoUrl: string;
   order: number;
-  special:boolean;
+  special: boolean;
+  memory: string;
 }

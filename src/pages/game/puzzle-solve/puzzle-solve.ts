@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ActionSheetController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {ActionSheetController, Content, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GameProvider} from '../../../providers/tables/game/game';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -19,6 +19,7 @@ export class PuzzleSolvePage {
   puzzleId = '';
   lock = false;
   answerTemp = '';
+  @ViewChild('content') content: Content;
 
   constructor(private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.puzzleId = this.navParams.get('puzzleId');
@@ -34,6 +35,7 @@ export class PuzzleSolvePage {
   hideTimeScore() {
     this.settingProvider.showTimeScoreFlag = false;
   }
+
 
   showOptions() {
     if (this.settingProvider.showTimeScoreFlag) {
@@ -130,6 +132,16 @@ export class PuzzleSolvePage {
       })
     ;
     modal.present();
+  }
+
+  ionViewWillEnter() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.content.scrollToBottom(1000);
+    }, 1000);
   }
 
   ionViewWillLeave() {

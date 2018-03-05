@@ -3,14 +3,16 @@
     <button *ngFor="let colour of availableColours" icon-only ion-button (click)="changeColour(colour)">
       <ion-icon [style.color]="colour" name="brush"></ion-icon>
     </button>
-    <button style="border: 1px solid #cecece;" ion-button icon-only style.color="#fff" (click)="changeColour('#fff')">
-      <ion-icon style="color: #fff;" name="square"></ion-icon>
-    </button>
+
+    <!--<button style="border: 1px solid #cecece;" ion-button icon-only style.color="#fff"-->
+    <!--(click)="changeColour('#fff)">-->
+    <!--<ion-icon style="color: #fff;" name="square"></ion-icon>-->
+    <!--</button>-->
   </ion-buttons>
   <ion-buttons right>
 
     <button ion-button icon-only (click)="goBack()">
-      <ion-icon name="close-circle"></ion-icon>
+      <ion-icon name="close-circle" style="color: white!important;"></ion-icon>
     </button>
   </ion-buttons>
 </ion-toolbar>

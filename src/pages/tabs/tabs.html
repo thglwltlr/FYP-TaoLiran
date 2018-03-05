@@ -2,7 +2,7 @@
   <ion-tab [tabsHideOnSubPages]="true" [root]="tab1" tabTitle="Game" tabIcon="bonfire"></ion-tab>
   <ion-tab [tabsHideOnSubPages]="true" [root]="tab2" tabTitle="Chat" tabIcon="chatbubbles"
            [tabBadge]="chatProvider.totalMsgNo>0 ? chatProvider.totalMsgNo: null"></ion-tab>
-  <ion-tab [root]="tab3" tabTitle="Setting" tabIcon="settings"></ion-tab>
+  <ion-tab [tabsHideOnSubPages]="true" [root]="tab3" tabTitle="Setting" tabIcon="settings"></ion-tab>
 </ion-tabs>
 
 
