@@ -20,7 +20,7 @@
 
 </ion-header>
 
-<ion-content style="text-align: center">
+<ion-content style="text-align: center" padding>
   <div class="background-wrap">
     <div class="bubble x1"></div>
     <div class="bubble x2"></div>
@@ -35,9 +35,9 @@
   </div>
   <ion-fab right bottom ion-fixed>
     <button ion-fab mini color="light">
-      <ion-icon name="arrow-dropleft"></ion-icon>
+      <ion-icon name="arrow-dropup"></ion-icon>
     </button>
-    <ion-fab-list side="left">
+    <ion-fab-list side="top">
       <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
@@ -50,7 +50,7 @@
       <button ion-fab (click)="viewRank()">
         <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
       </button>
-      <button ion-fab (click)="showCanvas()">
+      <button mini ion-fab (click)="showCanvas()">
         <ion-icon ios="ios-color-palette" md="md-color-palette"></ion-icon>
       </button>
     </ion-fab-list>
@@ -92,82 +92,78 @@
   </ion-toolbar>
 
   <div class="spacer headSpacer"></div>
-  <div padding>
+  <!--<div padding>-->
+  <!--<ion-item no-lines>-->
+  <!--<div class="row">-->
+  <!--<div class="col">-->
+  <!--<div class="text-center">-->
+  <h2 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].title}}</h2>
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<div class="row">-->
+  <!--<div class="col">-->
+  <!--<div class="text-center">-->
+  <h5 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].puzzleContent}}</h5>
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+
+  <!--<div class="row" no-margin no-padding>-->
+  <!--<div class="col" no-margin no-padding>-->
+  <!--<div class="text-center" no-margin no-padding>-->
+  <!--to delete-->
+  <img src="assets/imgs/puzzle3.png">
+  <!--<img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">-->
+
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</ion-item>-->
+  <div class="spacer buttonSpacer"></div>
+  <button ion-button [disabled]="lock"
+          class="in-progress"
+          *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=null
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
+          block outline (click)="viewHint1()">Hint(-20)
+  </button>
+  <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true">
+          <h5 style="text-align: left;">Hint 1:{{gameProvider.puzzleDetails[puzzleId].hint1}}</h5>
+  </ion-item>
+  <div *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=null
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
+       class="spacer buttonSpacer"></div>
+  <button ion-button [disabled]="lock"
+          *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=null
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=''"
+          block outline (click)="viewHint2()">View More Hint(-20)
+  </button>
+  <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true">
+          <h5 style="text-align: left;">Hint 2:{{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
+  </ion-item>
+  <div class="spacer buttonSpacer"></div>
+  <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
     <ion-item no-lines>
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-            <h2 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].title}}</h2>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-            <h5 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].puzzleContent}}</h5>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-
-            <img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">
-
-          </div>
-        </div>
-      </div>
+      <ion-label floating>Your answer:</ion-label>
+      <ion-input type="text"
+                 [(ngModel)]="answerTemp"></ion-input>
     </ion-item>
-    <div class="spacer buttonSpacer"></div>
-    <button ion-button [disabled]="lock"
-            class="in-progress"
-            *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false"
-            block outline (click)="viewHint1()">Hint(-20)
-    </button>
-    <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==true">
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-            <h5 style="text-align: left;">Hint 1:{{gameProvider.puzzleDetails[puzzleId].hint1}}</h5>
-          </div>
-        </div>
-      </div>
-    </ion-item>
-    <div class="spacer buttonSpacer"></div>
-    <button ion-button [disabled]="lock"
-            *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==false&&statusProvider.puzzleStatus[puzzleId].hint1==true"
-            block outline (click)="viewHint2()">View More Hint(-20)
-    </button>
-    <ion-item no-lines *ngIf="statusProvider.puzzleStatus[puzzleId].hint2==true">
-      <div class="row">
-        <div class="col">
-          <div class="text-center">
-            <h5 style="text-align: left;">Hint 2:{{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
-          </div>
-        </div>
-      </div>
-    </ion-item>
-    <div class="spacer buttonSpacer"></div>
-    <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
-      <ion-item no-lines>
-        <ion-label floating>Your answer:</ion-label>
-        <ion-input type="text"
-                   [(ngModel)]="answerTemp"></ion-input>
-      </ion-item>
-      <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
-    </div>
-    <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
-      <div class="col">
-        <div class="text-center">
-          <h5 style="text-align: left;">Puzzle has been solved,
-            answer:</h5>
-          <h2>
-            {{gameProvider.puzzleDetails[puzzleId].answer}}
-          </h2>
-        </div>
+    <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
+  </div>
+  <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true" class="row">
+    <div class="col">
+      <div class="text-center">
+        <h5 style="text-align: left;">Puzzle has been solved,
+          answer:</h5>
+        <h2>
+          {{gameProvider.puzzleDetails[puzzleId].answer}}
+        </h2>
       </div>
     </div>
   </div>
+  <!--</div>-->
   <div class="spacer footSpacer"></div>
 </ion-content>
