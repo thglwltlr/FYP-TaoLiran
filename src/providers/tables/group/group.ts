@@ -15,6 +15,7 @@ export class GroupProvider {
   groupTableInfoKeys = [];
   readonly GROUP_TABLE_UPDATE = "groupTableUpdate";
   readonly groupSyncTime = 'groupSyncTime';
+  readonly members = 'members';
   firstTimeFlag = true;
   userGroupId = '';
   groupLeaderFlag = false;
@@ -54,6 +55,16 @@ export class GroupProvider {
         }
       })
     }
+  }
+
+  inviteMemberOut(userId) {
+    var groupTemp = this.groupTableInfo[this.userGroupId] as Group;
+    var index = groupTemp.members.indexOf(userId);
+    if (index !== -1) {
+      groupTemp.members.splice(index, 1);
+    }
+    var promise = this.updateGroup(this.userGroupId, groupTemp);
+    return promise;
   }
 
   updateUserGroupStatus() {

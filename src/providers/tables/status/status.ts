@@ -201,8 +201,18 @@ export class StatusProvider {
     return promise;
   }
 
+  groupForceEnd() {
+    var promise = new Promise((resolve, reject) => {
+      this.statusTableRef.child(this.groups).remove().then((res) => {
+        resolve(true);
+      }).catch((err) => {
+        reject(err);
+      })
+    });
+    return promise;
+  }
+
   answerPuzzle(puzzleId) {
-    this.firstUnsolved = '';
     var puzzleTemp = {} as PuzzleStatus;
     puzzleTemp.solved = true;
     puzzleTemp.solvedBy = this.userProvider.getUid();

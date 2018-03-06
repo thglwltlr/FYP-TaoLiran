@@ -4,6 +4,7 @@ import {Group} from '../../../assets/models/interfaces/Group';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {CameraProvider} from '../../../providers/utility/camera/camera';
+import {SettingProvider} from '../../../providers/setting/setting';
 
 
 @IonicPage()
@@ -16,7 +17,7 @@ export class GroupProfilePage {
   groupId: string;
   lock = false;
 
-  constructor(private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private settingProvider: SettingProvider, private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.groupId = this.navParams.get("groupId");
     if (this.groupId != null) {
       this.groupTemp.name = this.groupProvider.groupTableInfo[this.groupId].name;
@@ -39,6 +40,9 @@ export class GroupProfilePage {
 
 
   update() {
+    if (!this.settingProvider.checkName(this.groupTemp.name)) {
+      return;
+    }
     this.lock = true;
     if (this.groupId == null)
       this.createGroup();

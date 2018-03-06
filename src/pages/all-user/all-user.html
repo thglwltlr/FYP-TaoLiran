@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>User Page</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list *ngIf="groupProvider.userGroupId!=null
+                    &&groupProvider.groupTableInfo[groupProvider.userGroupId]!=null">
+    <ion-item *ngFor="let userId of groupProvider.groupTableInfo[groupProvider.userGroupId].members"
+              text-wrap>
+      <ion-avatar item-start>
+        <img src={{userProvider.userTableInfo[userId].photoUrl}}>
+      </ion-avatar>
+      <h2>{{userProvider.userTableInfo[userId].name}}</h2>
+      <button *ngIf="userId==userProvider.getUid()"
+              ion-button color="secondary"
+              clear item-end>You
+      </button>
+      <button *ngIf="userId!=userProvider.getUid()"
+              ion-button color="danger"
+              clear item-end (click)="inviteMemberOut(userId)">Invite out
+      </button>
+    </ion-item>
+  </ion-list>
+</ion-content>

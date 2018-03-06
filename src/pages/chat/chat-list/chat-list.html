@@ -24,11 +24,13 @@
     </ion-avatar>
     <h2>Public Chat</h2>
     <p>Ask admin questions</p>
-    <ion-badge color="eeeBlue" *ngIf="chatProvider.newMsgNo[chatProvider.public]!=0" item-end>
+    <ion-badge color="eeeBlue"
+               *ngIf="chatProvider.newMsgNo[chatProvider.public]!=null
+               &&chatProvider.newMsgNo[chatProvider.public]!=0"
+               item-end>
       {{chatProvider.newMsgNo[chatProvider.public]}}
     </ion-badge>
   </ion-item>
-  <!--<button ion-button block (click)="publicChat()">Public Chat</button>-->
   <div *ngIf="!groupProvider.firstTimeFlag
                &&groupProvider.userGroupId!=null
                &&groupProvider.userGroupId!=''">
@@ -38,25 +40,35 @@
       </ion-avatar>
       <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}</h2>
       <p>Chat with your teammates!</p>
-      <ion-badge color="eeeBlue" *ngIf="chatProvider.newMsgNo[groupProvider.userGroupId]!=0" item-end>
+      <ion-badge color="eeeBlue"
+                 *ngIf="chatProvider.newMsgNo[groupProvider.userGroupId]!=null
+                 &&chatProvider.newMsgNo[groupProvider.userGroupId]!=0"
+                 item-end>
         {{chatProvider.newMsgNo[groupProvider.userGroupId]}}
       </ion-badge>
     </ion-item>
-    <button style="margin-top: 10%;" *ngIf="!statusProvider.firstTimeFlag
-                  &&(statusProvider.statusTableInfo==null
-                  ||statusProvider.statusTableInfo.groups==null
-                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId]==null
-                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime==null
-                  ||statusProvider.statusTableInfo.groups[groupProvider.userGroupId].startTime=='')"
-            ion-button round outline small (click)="joinGroup()">
+    <div class="spacer buttonSpacer"></div>
+    <button style="margin-top: 10%;" *ngIf="!groupProvider.firstTimeFlag
+                &&groupProvider.userGroupId!=null
+                &&groupProvider.userGroupId!=''"
+            ion-button block outline  (click)="joinGroup()">
       Change Group
     </button>
+    <div class="spacer buttonSpacer"></div>
+    <button style="margin-top: 10%;" *ngIf="!groupProvider.firstTimeFlag
+                &&groupProvider.userGroupId!=null
+                &&groupProvider.userGroupId!=''
+                &&groupProvider.groupLeaderFlag"
+            ion-button block outline  (click)="showGroupLeaderOption()">
+      Group Leader Options
+    </button>
+
 
   </div>
 
   <button *ngIf="!groupProvider.firstTimeFlag
                 &&(groupProvider.userGroupId==null
                 ||groupProvider.userGroupId=='')"
-          ion-button block (click)="joinGroup()">Join Group
+          ion-button block outline (click)="joinGroup()">Join Group
   </button>
 </ion-content>

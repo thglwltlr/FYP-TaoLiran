@@ -2,7 +2,7 @@ x
 <ion-header>
 
   <ion-navbar>
-    <ion-title>group profile</ion-title>
+    <ion-title>Edit Group Profile</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,7 +18,8 @@ x
     <ion-input type="text"
                [(ngModel)]="groupTemp.name"></ion-input>
   </ion-item>
-  <button ion-button block [disabled]="lock" (click)="chooseImage()">Choose image</button>
-
-  <button ion-button block [disabled]="lock" (click)="update()">Submit</button>
+  <div class="spacer buttonSpacer"></div>
+  <button ion-button block round outline [disabled]="lock" (click)="chooseImage()">Choose image</button>
+  <div class="spacer buttonSpacer"></div>
+  <button ion-button block round outline [disabled]="lock" (click)="update()">Submit</button>
 </ion-content>

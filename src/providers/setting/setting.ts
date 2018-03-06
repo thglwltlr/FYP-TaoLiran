@@ -11,6 +11,7 @@ export class SettingProvider {
   timer;
   time;
   showTimeScoreFlag = true;
+  readonly regExString = '^[a-zA-Z0-9 _]+$';
 
   constructor(private network: Network) {
   }
@@ -86,5 +87,17 @@ export class SettingProvider {
       array[key] = json[key];
     }
     return array;
+  }
+
+  checkName(name) {
+    if (name == null) {
+      return false;
+    }
+    var trimmedName = name.trim();
+    if (trimmedName == 'admin')
+      return false;
+    var regEx = new RegExp(this.regExString);
+    return regEx.test(name);
+
   }
 }

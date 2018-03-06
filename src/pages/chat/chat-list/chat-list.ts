@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -13,7 +13,7 @@ import {NotificationProvider} from '../../../providers/utility/notification/noti
 })
 export class ChatListPage {
 
-  constructor(private chatProvider: ChatProvider, private userProvider: UserProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams, private groupProvider: GroupProvider) {
+  constructor(private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController, private chatProvider: ChatProvider, private userProvider: UserProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams, private groupProvider: GroupProvider) {
   }
 
   publicChat() {
@@ -33,6 +33,101 @@ export class ChatListPage {
   viewedChat(receiverId) {
     this.chatProvider.newMsgNo[receiverId] = 0;
     this.chatProvider.getNewMsgCount();
+  }
+
+  showGroupLeaderOption() {
+
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Group Leader Option:',
+      buttons: [
+        {
+          text: 'Manage Group Member',
+          handler: () => {
+            this.navCtrl.push('AllUserPage', {'allUserFlag': false});
+          }
+        },
+        {
+          text: 'End Game',
+          handler: () => {
+            this.confirmEndGame();
+          }
+        },
+        {
+          text: 'Edit Group Profile',
+          handler: () => {
+            this.editGroup();
+          }
+        },
+        {
+          text: 'Dismiss Group',
+          handler: () => {
+            this.showDismissAlert();
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
+
+  }
+
+  showDismissAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm dismiss',
+      message: 'If group is dismissed, all team members will have to join another group.',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Dismiss',
+          handler: () => {
+            this.groupProvider.dismissGroup(this.groupProvider.userGroupId).then((res) => {
+            }).catch((err) => {
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  editGroup() {
+    this.navCtrl.push("GroupProfilePage", {'groupId': this.groupProvider.userGroupId});
+  }
+
+  confirmEndGame() {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm ending game',
+      message: 'Your team will have to start over!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'End it!',
+          handler: () => {
+            this.statusProvider.groupForceEnd().then((res) => {
+
+            }).catch((err) => {
+
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
 }

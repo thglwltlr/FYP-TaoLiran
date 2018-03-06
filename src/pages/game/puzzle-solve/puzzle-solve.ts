@@ -135,7 +135,7 @@ export class PuzzleSolvePage {
   }
 
   ionViewWillEnter() {
-    this.scrollToBottom();
+    // this.scrollToBottom();
   }
 
   scrollToBottom() {
@@ -162,7 +162,6 @@ export class PuzzleSolvePage {
   }
 
   answerPuzzle() {
-
     if (!this.checkAnswer()) {
       this.toastProvider.showToast("Oops, wrong answer, try again");
       return

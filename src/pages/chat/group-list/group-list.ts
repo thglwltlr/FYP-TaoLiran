@@ -20,7 +20,7 @@ export class GroupListPage {
     this.navCtrl.push("GroupProfilePage");
   }
 
-  showDismissAlert(groupId) {
+  showDismissAlert() {
     let alert = this.alertCtrl.create({
       title: 'Confirm dismiss',
       message: 'If group is dismissed, all team members will have to join another group.',
@@ -44,20 +44,20 @@ export class GroupListPage {
     alert.present();
   }
 
-  showGroupOptions(groupId) {
+  showGroupOptions() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Options:',
       buttons: [
         {
           text: 'Edit',
           handler: () => {
-            this.editGroup(groupId);
+            this.editGroup();
           }
         },
         {
           text: 'Dismiss',
           handler: () => {
-            this.showDismissAlert(groupId);
+            this.showDismissAlert();
           }
         },
         {
@@ -144,7 +144,7 @@ export class GroupListPage {
     return promise;
   }
 
-  editGroup(groupId) {
-    this.navCtrl.push("GroupProfilePage", {'groupId': groupId});
+  editGroup() {
+    this.navCtrl.push("GroupProfilePage", {'groupId': this.groupProvider.userGroupId});
   }
 }

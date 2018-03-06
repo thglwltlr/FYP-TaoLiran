@@ -46,19 +46,6 @@
 </ion-header>
 
 <ion-content #content>
-  
-  <!--<div class="background-wrap">-->
-    <!--<div class="bubble x1"></div>-->
-    <!--<div class="bubble x2"></div>-->
-    <!--<div class="bubble x3"></div>-->
-    <!--<div class="bubble x4"></div>-->
-    <!--<div class="bubble x5"></div>-->
-    <!--<div class="bubble x6"></div>-->
-    <!--<div class="bubble x7"></div>-->
-    <!--<div class="bubble x8"></div>-->
-    <!--<div class="bubble x9"></div>-->
-    <!--<div class="bubble x10"></div>-->
-  <!--</div>-->
   <ion-toolbar *ngIf="(settingProvider.showTimeScoreFlag
     &&!gameProvider.firstTimeFlag
     &&!groupProvider.firstTimeFlag
@@ -126,9 +113,9 @@
       <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
-      <button ion-fab (click)="viewMap()">
-        <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
-      </button>
+      <!--<button ion-fab (click)="viewMap()">-->
+      <!--<ion-icon ios="ios-compass" md="md-compass"></ion-icon>-->
+      <!--</button>-->
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
       </button>
@@ -246,10 +233,12 @@
             <ion-thumbnail item-start>
               <img src={{gameProvider.puzzleDetails[puzzleId].photoUrl}}>
             </ion-thumbnail>
-            <h2> {{gameProvider.puzzleDetails[puzzleId].title}}</h2>
+            {{gameProvider.puzzleDetails[puzzleId].title}}
           </ion-item>
         </div>
-        <ion-item no-lines *ngIf="statusProvider.firstUnsolved!=null&&statusProvider.firstUnsolved!=''"
+        <ion-item no-lines
+                  *ngIf="statusProvider.firstUnsolved!=null
+                  &&statusProvider.firstUnsolved!=''"
                   (click)="puzzleSolve(statusProvider.firstUnsolved)" class="puzzle unsolvedPuzzle">
 
           <ion-thumbnail item-start>

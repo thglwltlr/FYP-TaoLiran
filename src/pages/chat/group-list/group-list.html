@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>groupList</ion-title>
+    <ion-title>Group List</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,7 +15,6 @@
   <ion-list>
     <ion-item *ngFor="let groupId of groupProvider.filteredKeys" text-wrap
               ngClass="{{groupId==groupProvider.userGroupId?'selfView':''}}">
-      <!---->
       <ion-avatar item-start>
         <img src={{groupProvider.groupTableInfo[groupId].photoUrl}}>
       </ion-avatar>
@@ -24,47 +23,14 @@
         {{groupProvider.groupTableInfo[groupId].members.length}}/10</h2>
       <p><i>Created on: {{groupId| date:'HH:mm'}}</i></p>
       <p><i>Group no :{{("00"+groupProvider.groupTableInfo[groupId].groupNumber).slice(-3)}}</i></p>
-      <button *ngIf="(statusProvider.statusTableInfo==null
-                ||statusProvider.statusTableInfo.groups==null
-                ||statusProvider.statusTableInfo.groups[groupId]==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime=='')
-                &&groupProvider.userGroupId!=groupId&&
-                groupProvider.groupTableInfo[groupId].members.length<10" [disabled]="lock" ion-button clear
-              item-end
-              (click)="joinGroup(groupId)">
-        join
-      </button>
-      <button *ngIf="(statusProvider.statusTableInfo==null
-                ||statusProvider.statusTableInfo.groups==null
-                ||statusProvider.statusTableInfo.groups[groupId]==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime=='')
-                &&groupProvider.userGroupId!=groupId
-                &&groupProvider.groupTableInfo[groupId].members.length>=10" ion-button clear item-end
-              color="light">
-        full
-      </button>
 
-
-      <button [disabled]="lock" *ngIf="(statusProvider.statusTableInfo==null
-                ||statusProvider.statusTableInfo.groups==null
-                ||statusProvider.statusTableInfo.groups[groupId]==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime=='')
-                &&groupProvider.userGroupId==groupId&&groupProvider.groupLeaderFlag" ion-button
-              clear item-end color="danger"
-              (click)="showGroupOptions(groupId)">Options
-      </button>
-      <button [disabled]="lock" *ngIf="(statusProvider.statusTableInfo==null
-                ||statusProvider.statusTableInfo.groups==null
-                ||statusProvider.statusTableInfo.groups[groupId]==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime==null
-                ||statusProvider.statusTableInfo.groups[groupId].startTime=='')
-                &&groupProvider.userGroupId==groupId
-                &&!groupProvider.groupLeaderFlag" ion-button
-              clear item-end
-              color="danger" (click)="quitGroup()">quit
+      <button *ngIf="statusProvider.statusTableInfo==null
+      ||statusProvider.statusTableInfo.groups==null
+      ||statusProvider.statusTableInfo.groups[groupId]==null
+      ||statusProvider.statusTableInfo.groups[groupId].startTime==null
+      ||statusProvider.statusTableInfo.groups[groupId].startTime==''"
+              ion-button color="secondary"
+              clear item-end>waiting
       </button>
 
       <button *ngIf="statusProvider.statusTableInfo!=null
@@ -72,12 +38,32 @@
       &&statusProvider.statusTableInfo.groups[groupId]!=null
       &&statusProvider.statusTableInfo.groups[groupId].startTime!=null
       &&statusProvider.statusTableInfo.groups[groupId].startTime!=''"
-              ion-button color="secondary"
+              ion-button color="danger"
               clear item-end>in game
       </button>
 
+      <button *ngIf="groupProvider.userGroupId!=groupId&&
+                groupProvider.groupTableInfo[groupId].members.length<10" [disabled]="lock" ion-button round outline
+              item-end
+              (click)="joinGroup(groupId)">
+        join
+      </button>
 
+      <button *ngIf="groupProvider.groupTableInfo[groupId].members.length>=10" ion-button clear item-end
+              color="danger">
+        full
+      </button>
+
+      <button [disabled]="lock" *ngIf="groupProvider.userGroupId==groupId&&groupProvider.groupLeaderFlag" ion-button
+              round outline item-end
+              (click)="showGroupOptions()">options
+      </button>
+      <button [disabled]="lock" *ngIf="groupProvider.userGroupId==groupId
+                &&!groupProvider.groupLeaderFlag" ion-button
+              round outline item-end
+              color="danger" (click)="quitGroup()">quit
+      </button>
     </ion-item>
   </ion-list>
-  <button *ngIf="!groupProvider.groupLeaderFlag" ion-button block (click)="createGroup()">Create Group</button>
+  <button *ngIf="!groupProvider.groupLeaderFlag" outline ion-button block (click)="createGroup()">Create Group</button>
 </ion-content>
