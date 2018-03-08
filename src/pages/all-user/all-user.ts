@@ -9,11 +9,17 @@ import {GroupProvider} from '../../providers/tables/group/group';
   templateUrl: 'all-user.html',
 })
 export class AllUserPage {
+  lock = false;
 
   constructor(private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   inviteMemberOut(userId) {
-
+    this.lock = true;
+    this.groupProvider.inviteMemberOut(userId).then((res) => {
+      this.lock = false;
+    }).catch((err) => {
+      this.lock = false;
+    })
   }
 }

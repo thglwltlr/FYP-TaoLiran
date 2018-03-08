@@ -17,7 +17,7 @@
               clear item-end>You
       </button>
       <button *ngIf="userId!=userProvider.getUid()"
-              ion-button color="danger"
+              ion-button color="danger" [disabled]="lock"
               clear item-end (click)="inviteMemberOut(userId)">Invite out
       </button>
     </ion-item>

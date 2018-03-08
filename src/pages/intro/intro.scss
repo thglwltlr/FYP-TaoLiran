@@ -41,16 +41,14 @@ page-intro {
     position: fixed;
     left: 5%;
     bottom: 10%;
-    animation: moveVertical infinite;
-    animation-duration: 1000ms;
+    animation: moveVertical 4s ease-in-out infinite;
   }
   .robot {
     width: 30%;
     position: fixed;
     right: 5%;
     bottom: 10%;
-    animation: moveVertical infinite;
-    animation-duration: 1000ms;
+    animation: moveVertical 4s ease-in-out infinite;
   }
 
   @keyframes moveVertical {
