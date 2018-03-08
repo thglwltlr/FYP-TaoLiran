@@ -15,6 +15,7 @@
     <div class="balloon"
          *ngFor="let memberId of groupProvider.groupTableInfo[groupProvider.userGroupId].members">
       <img src="{{userProvider.userTableInfo[memberId].photoUrl}}">
+      {{userProvider.userTableInfo[memberId].name}}
     </div>
 
   </div>

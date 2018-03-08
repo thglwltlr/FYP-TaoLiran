@@ -20,18 +20,19 @@
 
 </ion-header>
 
-<ion-content  #content style="text-align: center" padding>
+<ion-content #content style="text-align: center" padding (ionScrollEnd)="onScrollEnd()"
+             (ionScrollStart)="onScrollStart()">
   <!--<div class="background-wrap">-->
-    <!--<div class="bubble x1"></div>-->
-    <!--<div class="bubble x2"></div>-->
-    <!--<div class="bubble x3"></div>-->
-    <!--<div class="bubble x4"></div>-->
-    <!--<div class="bubble x5"></div>-->
-    <!--<div class="bubble x6"></div>-->
-    <!--<div class="bubble x7"></div>-->
-    <!--<div class="bubble x8"></div>-->
-    <!--<div class="bubble x9"></div>-->
-    <!--<div class="bubble x10"></div>-->
+  <!--<div class="bubble x1"></div>-->
+  <!--<div class="bubble x2"></div>-->
+  <!--<div class="bubble x3"></div>-->
+  <!--<div class="bubble x4"></div>-->
+  <!--<div class="bubble x5"></div>-->
+  <!--<div class="bubble x6"></div>-->
+  <!--<div class="bubble x7"></div>-->
+  <!--<div class="bubble x8"></div>-->
+  <!--<div class="bubble x9"></div>-->
+  <!--<div class="bubble x10"></div>-->
   <!--</div>-->
   <ion-fab right bottom ion-fixed>
     <button ion-fab mini color="light">
@@ -42,7 +43,7 @@
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
       <!--<button ion-fab (click)="viewMap()">-->
-        <!--<ion-icon ios="ios-compass" md="md-compass"></ion-icon>-->
+      <!--<ion-icon ios="ios-compass" md="md-compass"></ion-icon>-->
       <!--</button>-->
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
@@ -135,6 +136,20 @@
     <h3>
       {{gameProvider.puzzleDetails[puzzleId].answer}}
     </h3>
+    <h5 style="text-align: left;" *ngIf="gameProvider.puzzleDetails[puzzleId].memory!=null
+              &&gameProvider.puzzleDetails[puzzleId].memory!=''">
+      Memory piece has been unlocked: </h5>
+    <h3>
+      {{gameProvider.puzzleDetails[puzzleId].memory}}
+    </h3>
   </div>
   <div class="spacer footSpacer"></div>
+  <div ion-fixed style="width: 100%;top:90%;text-align: center;"
+       *ngIf="onScrollFlag
+       &&!statusProvider.puzzleStatus[puzzleId].solved">
+    <h5>
+      <ion-icon name="arrow-down"></ion-icon>
+      Enter answer at bottom!
+    </h5>
+  </div>
 </ion-content>

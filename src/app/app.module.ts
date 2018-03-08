@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, NgModule} from '@angular/core';
-import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
+import {IonicApp, IonicErrorHandler, IonicModule, IonicPageModule} from 'ionic-angular';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {StatusBar} from '@ionic-native/status-bar';
 import {MyApp} from './app.component';
@@ -13,7 +13,6 @@ import {Network} from '@ionic-native/network';
 import {ToastProvider} from '../providers/utility/toast/toast';
 import {LoaderProvider} from '../providers/utility/loader/loader';
 import {Device} from '@ionic-native/device';
-import {OpenPage} from '../pages/open/open';
 import {GameProvider} from '../providers/tables/game/game';
 import {StatusProvider} from '../providers/tables/status/status';
 import {GroupProvider} from '../providers/tables/group/group';
@@ -29,6 +28,7 @@ import {CanvasDrawComponent} from '../components/canvas-draw/canvas-draw';
 import {NotificationProvider} from '../providers/utility/notification/notification';
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {SplashPage} from '../pages/splash/splash';
+import {OpenPage} from '../pages/open/open';
 
 @NgModule({
   declarations: [
@@ -43,6 +43,7 @@ import {SplashPage} from '../pages/splash/splash';
     IonicModule.forRoot(MyApp, {scrollAssist: false, autoFocusAssist: true}),
     AngularFireModule.initializeApp(config),
     ionicGalleryModal.GalleryModalModule,
+    // IonicPageModule.forChild(OpenPage),
     ComponentsModule
   ],
   bootstrap: [IonicApp],

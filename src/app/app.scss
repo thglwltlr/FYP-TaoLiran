@@ -199,6 +199,7 @@ ion-toolbar {
 .balloonContainer {
   text-align: center;
   z-index: -1;
+  color:color($colors, eeeBlue, base);
   img {
     margin: 10px;
     width: 35px;

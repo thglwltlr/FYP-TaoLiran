@@ -19,6 +19,8 @@ export class PuzzleSolvePage {
   puzzleId = '';
   lock = false;
   answerTemp = '';
+  onScrollFlag = false;
+
   @ViewChild('content') content: Content;
 
   constructor(private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
@@ -36,6 +38,16 @@ export class PuzzleSolvePage {
     this.settingProvider.showTimeScoreFlag = false;
   }
 
+  onScrollStart() {
+    this.onScrollFlag = true;
+  }
+
+  onScrollEnd() {
+    this.onScrollFlag = false;
+    // setTimeout(() => {
+    //   this.onScrollFlag = false;
+    // }, 1000);
+  }
 
   showOptions() {
     if (this.settingProvider.showTimeScoreFlag) {
@@ -140,8 +152,8 @@ export class PuzzleSolvePage {
 
   scrollToBottom() {
     setTimeout(() => {
-      this.content.scrollToBottom(1000);
-    }, 1000);
+      this.content.scrollToBottom(300);
+    }, 300);
   }
 
   ionViewWillLeave() {
@@ -173,7 +185,13 @@ export class PuzzleSolvePage {
         this.lock = false;
         this.loaderProvider.dismissLoader();
         if (res) {
-          this.navCtrl.pop();
+          if (this.gameProvider.puzzleDetails[this.puzzleId] != null
+            && this.gameProvider.puzzleDetails[this.puzzleId].memory != null
+            && this.gameProvider.puzzleDetails[this.puzzleId].memory != '') {
+            this.scrollToBottom();
+          } else {
+            this.navCtrl.pop();
+          }
         }
       }).catch((err) => {
         this.lock = false;

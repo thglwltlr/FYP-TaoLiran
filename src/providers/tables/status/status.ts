@@ -267,9 +267,10 @@ export class StatusProvider {
   getLocationOrder() {
     var locationOrder = [];
     locationOrder[0] = this.gameProvider.gameTableInfoKeys[0];
-    var random = Math.floor(Math.random() * (this.gameProvider.gameTableInfoKeys.length - 1)) + 1;
+    locationOrder[this.gameProvider.gameTableInfoKeys.length-1]=this.gameProvider.gameTableInfoKeys[this.gameProvider.gameTableInfoKeys.length-1];
+    var random = Math.floor(Math.random() * (this.gameProvider.gameTableInfoKeys.length - 2)) + 1;
     var direction = (Math.random() - 0.5) > 0 ? true : false;
-    for (var i = 0; i < this.gameProvider.gameTableInfoKeys.length - 1; i++) {
+    for (var i = 0; i < this.gameProvider.gameTableInfoKeys.length - 2; i++) {
       if (direction) {
         if (random + i == this.gameProvider.gameTableInfoKeys.length)
           random = 1 - i;

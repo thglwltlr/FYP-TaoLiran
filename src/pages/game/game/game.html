@@ -87,10 +87,10 @@
         </div>
 
       </ion-row>
-      <ion-row *ngIf="statusProvider.groupStatus.endTime!=null
-                        &&statusProvider.groupStatus.endTime!=''">
-        check team rank
-      </ion-row>
+      <!--<ion-row *ngIf="statusProvider.groupStatus.endTime!=null-->
+      <!--&&statusProvider.groupStatus.endTime!=''" text-center>-->
+      <!--check team rank-->
+      <!--</ion-row>-->
     </ion-grid>
   </ion-toolbar>
   <ion-fab *ngIf="(!gameProvider.firstTimeFlag
@@ -153,6 +153,7 @@
           <div class="balloon"
                *ngFor="let memberId of groupProvider.groupTableInfo[groupProvider.userGroupId].members">
             <img src="{{userProvider.userTableInfo[memberId].photoUrl}}">
+            {{userProvider.userTableInfo[memberId].name}}
           </div>
 
         </div>
@@ -234,9 +235,15 @@
               <img src={{gameProvider.puzzleDetails[puzzleId].photoUrl}}>
             </ion-thumbnail>
             {{gameProvider.puzzleDetails[puzzleId].title}}
+            <h5 *ngIf="gameProvider.puzzleDetails[puzzleId].memory!=null
+                       &&gameProvider.puzzleDetails[puzzleId].memory!=''">
+              Memory piece found!
+              <ion-icon name="happy"></ion-icon>
+            </h5>
+            <ion-icon name="checkmark" item-end></ion-icon>
           </ion-item>
         </div>
-        <ion-item no-lines
+        <ion-item text-wrap no-lines
                   *ngIf="statusProvider.firstUnsolved!=null
                   &&statusProvider.firstUnsolved!=''"
                   (click)="puzzleSolve(statusProvider.firstUnsolved)" class="puzzle unsolvedPuzzle">
@@ -244,13 +251,34 @@
           <ion-thumbnail item-start>
             <img src={{gameProvider.puzzleDetails[statusProvider.firstUnsolved].photoUrl}}>
           </ion-thumbnail>
-          <h2> {{gameProvider.puzzleDetails[statusProvider.firstUnsolved].title}}</h2>
+          {{gameProvider.puzzleDetails[statusProvider.firstUnsolved].title}}
           <h5>Awaits your challenge!</h5>
+          <ion-icon item-end name="bonfire"></ion-icon>
         </ion-item>
-        <ion-item *ngIf="statusProvider.groupStatus.endTime!=null
+        <ion-grid text-center  *ngIf="statusProvider.groupStatus.endTime!=null
                         &&statusProvider.groupStatus.endTime!=''">
-          <p>Game Finished</p>
-        </ion-item>
+          <ion-row>
+            <ion-col  no-padding>
+              <h6 no-margin>
+                Your team has finished!
+              </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding>
+              <h6 no-margin>
+                You may proceed to the specified location!
+              </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button ion-button no-margin
+                      round outline small (click)="viewRank()">View rank
+              </button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </div>
     </div>
   </div>
