@@ -120,6 +120,7 @@ export class GroupListPage {
 
   ionViewWillLeave() {
     this.groupProvider.filterString = '';
+    this.statusProvider.getStatusTableOnce();
   }
 
 

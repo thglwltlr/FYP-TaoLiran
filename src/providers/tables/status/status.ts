@@ -43,6 +43,23 @@ export class StatusProvider {
     this.puzzleStatusKeys = [];
   }
 
+  getStatusTableOnce() {
+    this.statusTableRef.once('value', (snapshot) => {
+      this.initParams();
+      this.statusTableInfo = snapshot.val();
+      if (this.statusTableInfo.groups != null
+        && this.statusTableInfo.groups.length != 0
+        && this.groupProvider.userGroupId != null
+        && this.groupProvider.userGroupId != '') {
+        this.groupStatus = this.statusTableInfo.groups[this.groupProvider.userGroupId];
+        this.getGroupRank();
+        this.getPuzzleStatus();
+        this.getRandomStyle();
+        this.getFirstUnsolved();
+      }
+    });
+  }
+
   getStatusTable() {
     this.statusTableRef.on('value', (snapshot) => {
       this.initParams();
@@ -144,9 +161,8 @@ export class StatusProvider {
       }
     }
     if ((this.firstUnsolved == null || this.firstUnsolved == '')
-      && (this.groupStatus.endTime == null || this.groupStatus.endTime == '')) {
+      && this.groupStatus != null && this.groupStatus.startTime != null && (this.groupStatus.endTime == null || this.groupStatus.endTime == '')) {
       this.groupEnd().then((res) => {
-
       }).catch((err => {
 
       }));

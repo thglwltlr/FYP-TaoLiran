@@ -42,14 +42,14 @@
               clear item-end>in game
       </button>
 
-      <button *ngIf="groupProvider.userGroupId!=groupId&&
+      <button *ngIf="groupProvider.groupTableInfo[groupId].members!=null&&groupProvider.userGroupId!=groupId&&
                 groupProvider.groupTableInfo[groupId].members.length<10" [disabled]="lock" ion-button round outline
               item-end
               (click)="joinGroup(groupId)">
         join
       </button>
 
-      <button *ngIf="groupProvider.groupTableInfo[groupId].members.length>=10" ion-button clear item-end
+      <button *ngIf="groupProvider.groupTableInfo[groupId].members!=null&&groupProvider.groupTableInfo[groupId].members.length>=10" ion-button clear item-end
               color="danger">
         full
       </button>

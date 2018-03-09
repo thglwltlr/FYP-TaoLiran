@@ -83,11 +83,13 @@ export class GroupProfilePage {
     this.groupProvider.updateGroup(this.groupId, this.groupTemp).then((res) => {
       if (res) {
         this.loaderProvider.dismissLoader();
+        this.events.unsubscribe('image');
         this.navCtrl.pop();
       }
     }).catch((err) => {
       this.lock = false;
       this.loaderProvider.dismissLoader();
+
     });
   }
 
@@ -133,7 +135,7 @@ export class GroupProfilePage {
         this.groupTemp.photoUrl = url;
         this.createGroupFurtherMore();
       }).catch((err) => {
-
+        this.loaderProvider.dismissLoader();
       });
     }
     else {
@@ -143,8 +145,11 @@ export class GroupProfilePage {
 
   createGroupFurtherMore() {
     this.groupProvider.createGroup(this.groupTemp).then((res) => {
+      this.loaderProvider.dismissLoader();
+      this.events.unsubscribe('image');
       this.navCtrl.pop();
     }).catch((err) => {
+      this.loaderProvider.dismissLoader();
       this.lock = false;
     });
   }
@@ -153,8 +158,10 @@ export class GroupProfilePage {
     this.cameraProvider.uploadImage(this.cameraProvider.groupDefault).then((res) => {
       return res;
     }).catch((err) => {
+      this.loaderProvider.dismissLoader();
       return this.cameraProvider.groupDefault;
     })
   }
+
 
 }

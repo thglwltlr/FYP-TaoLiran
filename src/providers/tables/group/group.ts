@@ -68,10 +68,9 @@ export class GroupProvider {
   }
 
   updateUserGroupStatus() {
-    this.userGroupId = '';
     this.groupLeaderFlag = false;
     for (let groupId of this.groupTableInfoKeys) {
-      if (this.groupTableInfo[groupId].members.indexOf(this.userProvider.getUid()) > -1) {
+      if (this.groupTableInfo[groupId].members != null && this.groupTableInfo[groupId].members.indexOf(this.userProvider.getUid()) > -1) {
         this.userGroupId = groupId;
         if (this.groupTableInfo[groupId].groupCreator == this.userProvider.getUid()) {
           this.groupLeaderFlag = true;
