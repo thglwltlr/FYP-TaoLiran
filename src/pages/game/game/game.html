@@ -114,7 +114,7 @@
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
       <button ion-fab (click)="viewMap()">
-      <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+        <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
       </button>
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
@@ -132,8 +132,14 @@
     &&!groupProvider.firstTimeFlag
     &&!statusProvider.firstTimeFlag">
     <!--tableAllFetched-->
+    <div *ngIf="groupProvider.userGroupId==null||groupProvider.userGroupId==''" class="balloonContainer">
+      <div class="balloon">
+        <img src="{{userProvider.userTableInfo[userProvider.getUid()].photoUrl}}">
+        {{userProvider.userTableInfo[userProvider.getUid()].name}}
+      </div>
+    </div>
     <div class="bottomElement" style="width: 100%;"
-         *ngIf="(groupProvider.userGroupId==null||groupProvider.userGroupId=='')">
+         *ngIf="groupProvider.userGroupId==null||groupProvider.userGroupId==''">
       <h6>Hello! {{userProvider.userTableInfo[userProvider.getUid()].name}}</h6>
       <h6>Let's join a group first!</h6>
       <button padding
@@ -158,6 +164,7 @@
           </div>
 
         </div>
+
         <ion-grid class="bottomElement"
                   *ngIf="groupProvider.groupTableInfo[groupProvider.userGroupId]!=null&&!groupProvider.groupLeaderFlag">
           <ion-row no-padding>
@@ -256,10 +263,10 @@
           <h5>Awaits your challenge!</h5>
           <ion-icon item-end name="bonfire"></ion-icon>
         </ion-item>
-        <ion-grid text-center  *ngIf="statusProvider.groupStatus.endTime!=null
+        <ion-grid text-center *ngIf="statusProvider.groupStatus.endTime!=null
                         &&statusProvider.groupStatus.endTime!=''">
           <ion-row>
-            <ion-col  no-padding>
+            <ion-col no-padding>
               <h6 no-margin>
                 Your team has finished!
               </h6>

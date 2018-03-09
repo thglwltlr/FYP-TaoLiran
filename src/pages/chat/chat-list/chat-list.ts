@@ -90,7 +90,7 @@ export class ChatListPage {
         {
           text: 'Dismiss',
           handler: () => {
-            this.groupProvider.dismissGroup(this.groupProvider.userGroupId).then((res) => {
+            this.statusProvider.deleteGroupStatus(this.groupProvider.userGroupId).then((res) => {
             }).catch((err) => {
             });
           }

@@ -34,7 +34,7 @@ export class GroupListPage {
         {
           text: 'Dismiss',
           handler: () => {
-            this.groupProvider.dismissGroup(this.groupProvider.userGroupId).then((res) => {
+            this.statusProvider.deleteGroupStatus(this.groupProvider.userGroupId).then((res) => {
             }).catch((err) => {
             });
           }
@@ -74,7 +74,7 @@ export class GroupListPage {
   joinGroup(groupId) {
     this.lock = true;
     if (this.groupProvider.groupLeaderFlag) {
-      this.groupProvider.dismissGroup(this.groupProvider.userGroupId).then((res) => {
+      this.statusProvider.deleteGroupStatus(this.groupProvider.userGroupId).then((res) => {
         if (res == true) {
           this.joinGroupFurther(groupId);
         }

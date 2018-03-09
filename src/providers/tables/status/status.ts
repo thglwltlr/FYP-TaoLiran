@@ -267,7 +267,7 @@ export class StatusProvider {
   getLocationOrder() {
     var locationOrder = [];
     locationOrder[0] = this.gameProvider.gameTableInfoKeys[0];
-    locationOrder[this.gameProvider.gameTableInfoKeys.length-1]=this.gameProvider.gameTableInfoKeys[this.gameProvider.gameTableInfoKeys.length-1];
+    locationOrder[this.gameProvider.gameTableInfoKeys.length - 1] = this.gameProvider.gameTableInfoKeys[this.gameProvider.gameTableInfoKeys.length - 1];
     var random = Math.floor(Math.random() * (this.gameProvider.gameTableInfoKeys.length - 2)) + 1;
     var direction = (Math.random() - 0.5) > 0 ? true : false;
     for (var i = 0; i < this.gameProvider.gameTableInfoKeys.length - 2; i++) {
@@ -284,6 +284,21 @@ export class StatusProvider {
 
     }
     return locationOrder;
+  }
+
+  deleteGroupStatus(groupId) {
+    var promise = new Promise(((resolve, reject) => {
+      this.statusTableRef.child(this.groups).child(groupId).remove().then((res) => {
+        this.groupProvider.dismissGroup(groupId).then((res) => {
+          resolve(true);
+        }).catch((err) => {
+          reject(err);
+        })
+      }).catch((err) => {
+        reject(err);
+      })
+    }));
+    return promise;
   }
 
   getRandomStyle() {
