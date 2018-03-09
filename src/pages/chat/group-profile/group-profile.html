@@ -1,24 +1,55 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Edit Group Profile</ion-title>
+    <ion-title>Group Profile</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <div class="profileImage">
-    <img src="{{cameraProvider.base64Image}}">
-  </div>
 
-  <ion-item>
-    <ion-label floating>Pick a team name</ion-label>
+  <ion-item *ngIf="!nameChecked">
+    <ion-label floating>Pick a name</ion-label>
     <ion-input type="text"
                [(ngModel)]="groupTemp.name"></ion-input>
   </ion-item>
-  <div class="spacer buttonSpacer"></div>
-  <button ion-button block round outline [disabled]="lock" (click)="chooseImage()">Choose image</button>
-  <div class="spacer buttonSpacer"></div>
-  <button ion-button block round outline [disabled]="lock" (click)="update()">Submit</button>
+
+  <button *ngIf="!nameChecked" ion-button outline round block [disabled]="lock" (click)="checkName()">Check Name
+  </button>
+
+  <!--name and image -->
+  <button *ngIf="nameChecked" ion-button outline round block [disabled]="lock"
+          (click)="changeName()">Change name
+  </button>
+  <div *ngIf="nameChecked" class="spacer buttonSpacer"></div>
+
+  <div *ngIf="nameChecked" class="profileImage">
+    <img src="{{cameraProvider.base64Image}}">
+  </div>
+
+  <div *ngIf="nameChecked" class="spacer buttonSpacer"></div>
+  <!--name and image -->
+
+  <!--first time-->
+  <button *ngIf="nameChecked&&groupId==null||groupId==''" ion-button outline round block [disabled]="lock"
+          (click)="update()">Use default image
+  </button>
+  <div *ngIf="nameChecked&&groupId==null||groupId==''" class="spacer buttonSpacer"></div>
+  <button *ngIf="nameChecked&&groupId==null||groupId==''" ion-button outline round block [disabled]="lock"
+          (click)="chooseImage()">Use other image
+  </button>
+  <h5 *ngIf="nameChecked&&groupId==null||groupId==''">You can edit again in options</h5>
+  <!--first time-->
+
+  <!--editing-->
+  <button *ngIf="nameChecked&&groupId!=null&&groupId!=''" ion-button outline round block [disabled]="lock"
+          (click)="update()">Image is OK
+  </button>
+  <div *ngIf="nameChecked&&groupId!=null&&groupId!=''" class="spacer buttonSpacer"></div>
+  <button *ngIf="nameChecked&&groupId!=null&&groupId!=''" ion-button outline round block [disabled]="lock"
+          (click)="chooseImage()">Use other image
+  </button>
+  <!--editing-->
+
 </ion-content>

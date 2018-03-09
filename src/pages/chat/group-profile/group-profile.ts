@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Group} from '../../../assets/models/interfaces/Group';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {UserProvider} from '../../../providers/tables/user/user';
 import {CameraProvider} from '../../../providers/utility/camera/camera';
 import {SettingProvider} from '../../../providers/setting/setting';
+import {LoaderProvider} from '../../../providers/utility/loader/loader';
 
 
 @IonicPage()
@@ -16,8 +17,9 @@ export class GroupProfilePage {
   groupTemp = {} as Group;
   groupId: string;
   lock = false;
+  nameChecked = false;
 
-  constructor(private settingProvider: SettingProvider, private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private events: Events, private loaderProvider: LoaderProvider, private settingProvider: SettingProvider, private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.groupId = this.navParams.get("groupId");
     if (this.groupId != null) {
       this.groupTemp.name = this.groupProvider.groupTableInfo[this.groupId].name;
@@ -27,6 +29,11 @@ export class GroupProfilePage {
       this.initGroup();
     this.cameraProvider.initStartUpImage(this.groupTemp.photoUrl);
     this.lock = false;
+
+    this.events.subscribe('image', (dataImage) => {
+      this.loaderProvider.showLoader("Updating");
+      this.update();
+    })
   }
 
   initGroup() {
@@ -38,11 +45,19 @@ export class GroupProfilePage {
     this.groupTemp.groupNumber = 0;
   }
 
+  changeName() {
+    this.nameChecked = false;
+  }
 
-  update() {
+  checkName() {
     if (!this.settingProvider.checkName(this.groupTemp.name)) {
       return;
     }
+    this.nameChecked = true;
+  }
+
+  update() {
+
     this.lock = true;
     if (this.groupId == null)
       this.createGroup();
@@ -56,7 +71,7 @@ export class GroupProfilePage {
         this.groupTemp.photoUrl = url;
         this.updateGroupFurther();
       }).catch((err) => {
-
+        this.loaderProvider.dismissLoader();
       });
     }
     else {
@@ -67,10 +82,12 @@ export class GroupProfilePage {
   updateGroupFurther() {
     this.groupProvider.updateGroup(this.groupId, this.groupTemp).then((res) => {
       if (res) {
+        this.loaderProvider.dismissLoader();
         this.navCtrl.pop();
       }
     }).catch((err) => {
       this.lock = false;
+      this.loaderProvider.dismissLoader();
     });
   }
 

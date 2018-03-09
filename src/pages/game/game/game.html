@@ -238,7 +238,7 @@
           <!--group solved-->
           <ion-item text-wrap no-lines class="puzzle" *ngIf="statusProvider.puzzleStatus[puzzleId].solved"
                     (click)="puzzleSolve(puzzleId)"
-                    [ngStyle]="{'-webkit-animation':statusProvider.randomStyle[puzzleId].randomAnimation,'-webkit-animation-duration': statusProvider.randomStyle[puzzleId].randomDuration,'background':statusProvider.randomStyle[puzzleId].randomColor}">
+                    [ngStyle]="{'animation':statusProvider.randomStyle[puzzleId].randomAnimation,'animation-duration': statusProvider.randomStyle[puzzleId].randomDuration,'background':statusProvider.randomStyle[puzzleId].randomColor}">
             <ion-thumbnail item-start>
               <img src={{gameProvider.puzzleDetails[puzzleId].photoUrl}}>
             </ion-thumbnail>

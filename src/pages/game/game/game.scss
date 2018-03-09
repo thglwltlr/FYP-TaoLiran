@@ -1,6 +1,9 @@
 page-game {
   ion-content {
-    background: linear-gradient(-90deg,color($colors, eeeBlueLight, base), white)!important;
+    //background: linear-gradient(-90deg,color($colors, eeeBlueLight, base), white)!important;
+    background: linear-gradient(217deg, rgba(255, 0, 0, .2), rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(127deg, rgba(0, 255, 0, .2), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, .2), rgba(0, 0, 255, 0) 70.71%);
   }
   ion-item {
     padding-left: 5%;
