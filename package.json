@@ -87,8 +87,8 @@
       }
     },
     "platforms": [
-      "android",
       "browser",
+      "android",
       "ios"
     ]
   }

@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {ActionSheetController} from 'ionic-angular';
+import {ActionSheetController, Events, Platform} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import * as firebase from 'firebase';
 import {SettingProvider} from '../../setting/setting';
 import {UserProvider} from '../../tables/user/user';
+import {normalizeURL} from 'ionic-angular';
 
 @Injectable()
 export class CameraProvider {
@@ -13,7 +14,7 @@ export class CameraProvider {
   fireStore = firebase.storage();
   readonly groupImgRef = '/groupImage';
   readonly groupDefault = 'https://firebasestorage.googleapis.com/v0/b/fyp03-136e5.appspot.com/o/groupImageDefault.png?alt=media&token=11ae859f-3a99-477a-a50b-24f97b002c3a';
-  readonly imgHeader = "data:image/jpeg;base64,";
+  readonly imgHeader = "data:image/png;base64,";
   readonly userDefault = 'https://firebasestorage.googleapis.com/v0/b/myapp-4eadd.appspot.com/o/chatterplace.png?alt=media&token=e51fa887-bfc6-48ff-87c6-e2c61976534e';
   readonly userImgRef = '/userImage';
   subChild: string;
@@ -21,7 +22,7 @@ export class CameraProvider {
   readonly puzzleRef = '/puzzleImage';
   readonly chatImgRef = 'chatImage';
 
-  constructor(private userProvider: UserProvider, private settingProvider: SettingProvider, private camera: Camera, private actionSheetCtrl: ActionSheetController) {
+  constructor(private events: Events, private platform: Platform, private userProvider: UserProvider, private settingProvider: SettingProvider, private camera: Camera, private actionSheetCtrl: ActionSheetController) {
 
   }
 
@@ -64,10 +65,12 @@ export class CameraProvider {
       quality: 100,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      // destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 1000,
-      targetHeight: 1000
+      targetHeight: 1000,
+      // correctOrientation: true
     }
   }
 
@@ -76,6 +79,7 @@ export class CameraProvider {
       quality: 100,
       sourceType: this.camera.PictureSourceType.CAMERA,
       destinationType: this.camera.DestinationType.DATA_URL,
+      // destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       targetWidth: 1000,
@@ -85,8 +89,11 @@ export class CameraProvider {
 
   getPicture() {
     this.camera.getPicture(this.options).then((imageData) => {
+      // this.base64Image = imageData;
       this.base64Image = this.imgHeader + imageData;
       this.base64ImgRaw = imageData;
+      // this.base64Image = normalizeURL(imageData);
+      this.events.publish('image', this.base64Image);
     }, (err) => {
     });
 

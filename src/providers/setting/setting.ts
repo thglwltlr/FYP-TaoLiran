@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Network} from '@ionic-native/network';
 import * as firebase from "firebase";
+import {ToastProvider} from '../utility/toast/toast';
 
 @Injectable()
 export class SettingProvider {
@@ -13,7 +14,7 @@ export class SettingProvider {
   showTimeScoreFlag = true;
   readonly regExString = '^[a-zA-Z0-9 _]+$';
 
-  constructor(private network: Network) {
+  constructor(private network: Network, private toastProvider: ToastProvider) {
   }
 
   startLocalTimer() {
@@ -91,13 +92,35 @@ export class SettingProvider {
 
   checkName(name) {
     if (name == null) {
+      this.toastProvider.showToast("The name can not be empty");
+      return false;
+    }
+    if (name.length < 3) {
+      this.toastProvider.showToast("The name length should be between 3-20");
+      return false;
+    }
+    if (name.length > 20) {
+      this.toastProvider.showToast("The name length should be between 3-20");
       return false;
     }
     var trimmedName = name.trim();
-    if (trimmedName == 'admin')
+    if (trimmedName == '') {
+      this.toastProvider.showToast("The name can not be empty");
       return false;
+    }
+    if (trimmedName == 'admin') {
+      this.toastProvider.showToast("Name can not be admin");
+      return false;
+    }
     var regEx = new RegExp(this.regExString);
-    return regEx.test(name);
+    var testResult = regEx.test(name);
+    if (testResult) {
+      this.toastProvider.showToast('Name OK');
+      return true;
+    } else {
+      this.toastProvider.showToast('Name can not contain special char');
+      return false;
+    }
 
   }
 }

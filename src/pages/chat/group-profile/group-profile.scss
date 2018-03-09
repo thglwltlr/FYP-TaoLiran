@@ -15,4 +15,7 @@ page-group-profile {
     align-content: center;
     text-align: center;
   }
+  ion-content{
+    color:color($colors, eeeBlue, base)!important;
+  }
 }

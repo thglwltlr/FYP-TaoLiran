@@ -1,5 +1,7 @@
 page-game {
-
+  ion-content {
+    background: linear-gradient(-90deg,color($colors, eeeBlueLight, base), white)!important;
+  }
   ion-item {
     padding-left: 5%;
     margin-top: 10% !important;
@@ -18,6 +20,7 @@ page-game {
     text-align: center;
     font-size: 0.5em;
   }
+
   .puzzle {
     margin-left: 5%;
     width: 90%;

@@ -113,9 +113,9 @@
       <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
-      <!--<button ion-fab (click)="viewMap()">-->
-      <!--<ion-icon ios="ios-compass" md="md-compass"></ion-icon>-->
-      <!--</button>-->
+      <button ion-fab (click)="viewMap()">
+      <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+      </button>
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
       </button>
@@ -134,6 +134,7 @@
     <!--tableAllFetched-->
     <div class="bottomElement" style="width: 100%;"
          *ngIf="(groupProvider.userGroupId==null||groupProvider.userGroupId=='')">
+      <h6>Hello! {{userProvider.userTableInfo[userProvider.getUid()].name}}</h6>
       <h6>Let's join a group first!</h6>
       <button padding
               ion-button round outline (click)="joinGroup()">Join Group Now!
