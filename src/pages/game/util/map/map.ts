@@ -63,23 +63,41 @@ export class MapPage {
             this.toastProvider.showToast("You need to enable location manually :)");
           }
         });
-
+        var firstMarkerFlag = true;
         const subscription = this.geoLocation.watchPosition()
           .subscribe(position => {
             if (position.coords != undefined && position.coords != null) {
               let userPosition: LatLng = new LatLng(position.coords.latitude, position.coords.longitude);
               if (this.selfmarker != null) {
                 this.selfmarker.setPosition(userPosition);
-                this.map.addMarker(this.selfmarker);
+                if (firstMarkerFlag) {
+                  this.map.addMarker(this.selfmarker).then((res) => {
+                    firstMarkerFlag = false
+                  }).catch((err) => {
+                    firstMarkerFlag = false
+                  });
+                }
+                else{
+                  //original code
+                  this.map.addMarker(this.selfmarker);
+                }
+                firstMarkerFlag = false
               } else {
-                let markerOptions: MarkerOptions = {
-                  position: userPosition,
-                  icon: markerIcon,
-                  animation: 'DROP'
-                };
-                this.map.addMarker(markerOptions).then((marker) => {
-                  this.selfmarker = marker;
-                });
+                if (firstMarkerFlag) {
+                  let markerOptions: MarkerOptions = {
+                    position: userPosition,
+                    icon: markerIcon,
+                    animation: 'DROP'
+                  };
+                  this.map.addMarker(markerOptions).then((marker) => {
+                    this.selfmarker = marker;
+                    firstMarkerFlag = false
+                  }).catch((err) => {
+                    firstMarkerFlag = false;
+                  })
+                }
+                firstMarkerFlag = false
+
               }
             }
           });
