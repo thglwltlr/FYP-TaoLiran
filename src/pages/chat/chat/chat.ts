@@ -83,6 +83,13 @@ export class ChatPage {
 
   sendMessage() {
     this.lock = true;
+    if (this.messageTemp.type == this.chatProvider.text) {
+      if (this.messageTemp.content == null || this.messageTemp.content.trim() == '') {
+        this.messageTemp.content = '';
+        return;
+      }
+
+    }
     this.chatProvider.sendMessage(this.receiver, this.messageTemp).then((res) => {
       this.initMessage();
       this.scrollToBottom();

@@ -265,7 +265,7 @@ export class StatusProvider {
     var puzzleStatusArray = [] as PuzzleStatus[];
     var order = 0;
     var locationOrder = this.getLocationOrder();
-
+    console.log("location order", locationOrder);
     for (let locationId of locationOrder) {
       if (this.gameProvider.gameTableInfo[locationId].puzzles != null) {
         for (let puzzleId of this.gameProvider.puzzleInfoKeys[locationId]) {
@@ -276,7 +276,7 @@ export class StatusProvider {
         }
       }
     }
-    console.log("puzzleStatusArray", puzzleStatusArray);
+
     return puzzleStatusArray;
   }
 
@@ -288,13 +288,13 @@ export class StatusProvider {
     var direction = (Math.random() - 0.5) > 0 ? true : false;
     for (var i = 0; i < this.gameProvider.gameTableInfoKeys.length - 2; i++) {
       if (direction) {
-        if (random + i == this.gameProvider.gameTableInfoKeys.length)
+        if (random + i == this.gameProvider.gameTableInfoKeys.length - 1)
           random = 1 - i;
         locationOrder[i + 1] = this.gameProvider.gameTableInfoKeys[random + i];
       }
       else {
         if (random - i == 0)
-          random = i + this.gameProvider.gameTableInfoKeys.length - 1;
+          random = i + this.gameProvider.gameTableInfoKeys.length - 2;
         locationOrder[i + 1] = this.gameProvider.gameTableInfoKeys[random - i];
       }
 

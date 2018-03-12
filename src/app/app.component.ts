@@ -36,6 +36,7 @@ export class MyApp {
       }).catch((err) => {
         console.log("login fail")
       });
+
     });
   }
 }

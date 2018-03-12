@@ -28,7 +28,6 @@ export class ProfilePage {
     }
     this.cameraProvider.initStartUpImage(this.userTemp.photoUrl);
     this.events.subscribe('image', (dataImage) => {
-      this.loaderProvider.showLoader("Updating");
       this.update();
     })
   }
@@ -57,7 +56,7 @@ export class ProfilePage {
   }
 
   update() {
-
+    this.loaderProvider.showLoader("Updating");
     this.lock = true;
     if (this.userTemp.photoUrl != this.cameraProvider.base64Image) {
       this.cameraProvider.uploadImage(this.cameraProvider.userImgRef).then((url: any) => {
@@ -89,7 +88,11 @@ export class ProfilePage {
         this.loaderProvider.dismissLoader();
         this.lock = false;
       })
-
   }
+
+  ionViewWillLeave() {
+    this.loaderProvider.dismissLoader();
+  }
+
 
 }

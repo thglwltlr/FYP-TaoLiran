@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {ActionSheetController, AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {StatusProvider} from '../../../providers/tables/status/status';
+import {ToastProvider} from '../../../providers/utility/toast/toast';
 
 @IonicPage()
 @Component({
@@ -12,11 +13,19 @@ export class GroupListPage {
 
   lock = false;
 
-  constructor(private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private toastProvider: ToastProvider, private alertCtrl: AlertController, private actionSheetCtrl: ActionSheetController, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.lock = false;
   }
 
   createGroup() {
+    if (!this.groupProvider.groupLeaderFlag
+      && this.statusProvider.groupStatus != null
+      && this.statusProvider.groupStatus.startTime != null
+      && this.statusProvider.groupStatus.startTime != ''
+    ) {
+      this.toastProvider.showToast("Your team has started, ask your team leader to end game or invite you out!");
+      return;
+    }
     this.navCtrl.push("GroupProfilePage");
   }
 
@@ -135,6 +144,14 @@ export class GroupListPage {
   }
 
   quitGroup() {
+    if (!this.groupProvider.groupLeaderFlag
+      && this.statusProvider.groupStatus != null
+      && this.statusProvider.groupStatus.startTime != null
+      && this.statusProvider.groupStatus.startTime != ''
+    ) {
+      this.toastProvider.showToast("Your team has started, ask your team leader to end game or invite you out!");
+      return;
+    }
     var promise = new Promise((resolve, reject) => {
       this.groupProvider.quitGroup().then((res) => {
         resolve(true);

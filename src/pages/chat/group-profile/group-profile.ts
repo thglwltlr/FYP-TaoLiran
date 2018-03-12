@@ -31,7 +31,6 @@ export class GroupProfilePage {
     this.lock = false;
 
     this.events.subscribe('image', (dataImage) => {
-      this.loaderProvider.showLoader("Updating");
       this.update();
     })
   }
@@ -57,7 +56,7 @@ export class GroupProfilePage {
   }
 
   update() {
-
+    this.loaderProvider.showLoader("Updating");
     this.lock = true;
     if (this.groupId == null)
       this.createGroup();
@@ -163,5 +162,7 @@ export class GroupProfilePage {
     })
   }
 
-
+  ionViewWillLeave() {
+    this.loaderProvider.dismissLoader();
+  }
 }
