@@ -43,7 +43,7 @@
         <ion-icon name="logo-freebsd-devil"></ion-icon>
       </button>
       <button ion-fab (click)="viewMap()">
-      <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+        <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
       </button>
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
@@ -84,11 +84,6 @@
           {{statusProvider.puzzleStatusKeys.indexOf(statusProvider.firstUnsolved)}}/{{statusProvider.puzzleStatusKeys.length}}
         </div>
       </ion-row>
-      <ion-row *ngIf="statusProvider.groupStatus.endTime!=null
-                        &&statusProvider.groupStatus.endTime!=''">
-        check team rank
-      </ion-row>
-
     </ion-grid>
   </ion-toolbar>
 
@@ -100,6 +95,12 @@
   <img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">
 
   <div class="spacer buttonSpacer"></div>
+  <h5 style="text-align: center;"
+      *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=null
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=''">
+    Try to save point for hard ones!
+  </h5>
   <button ion-button [disabled]="lock"
           class="in-progress"
           *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
@@ -124,8 +125,8 @@
   <!--<div class="spacer buttonSpacer"></div>-->
   <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
     <ion-item>
-      <ion-label stacked>Your answer:</ion-label>
-      <ion-input type="text"
+      <!--<ion-label color="primary" floating>Answer:</ion-label>-->
+      <ion-input type="text" placeholder="Enter your answer here: "
                  [(ngModel)]="answerTemp"></ion-input>
     </ion-item>
     <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
@@ -136,12 +137,26 @@
     <h3>
       {{gameProvider.puzzleDetails[puzzleId].answer}}
     </h3>
+    <h5 *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
+    &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null"
+        style="text-align: left;">Solved by:
+    </h5>
+    <img class="solvedByAvatar"
+         *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
+    &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null"
+         src={{userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy].photoUrl}}>
+    <span *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
+    &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null">
+      {{userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy].name}}</span>
+
     <h5 style="text-align: left;" *ngIf="gameProvider.puzzleDetails[puzzleId].memory!=null
               &&gameProvider.puzzleDetails[puzzleId].memory!=''">
-      Memory piece has been unlocked: </h5>
-    <h3>
+      <ion-icon name="happy"></ion-icon>
+      Memory piece has been unlocked:
+    </h5>
+    <h6>
       {{gameProvider.puzzleDetails[puzzleId].memory}}
-    </h3>
+    </h6>
   </div>
   <div class="spacer footSpacer"></div>
   <div ion-fixed style="width: 100%;top:90%;text-align: center;"
