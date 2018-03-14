@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ActionSheetController, Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Group} from '../../../assets/models/interfaces/Group';
 import {GroupProvider} from '../../../providers/tables/group/group';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -19,7 +19,7 @@ export class GroupProfilePage {
   lock = false;
   nameChecked = false;
 
-  constructor(private events: Events, private loaderProvider: LoaderProvider, private settingProvider: SettingProvider, private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private actionSheetCtrl: ActionSheetController, private settingProvider: SettingProvider, private cameraProvider: CameraProvider, private userProvider: UserProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
     this.groupId = this.navParams.get("groupId");
     if (this.groupId != null) {
       this.groupTemp.name = this.groupProvider.groupTableInfo[this.groupId].name;
@@ -30,9 +30,6 @@ export class GroupProfilePage {
     this.cameraProvider.initStartUpImage(this.groupTemp.photoUrl);
     this.lock = false;
 
-    this.events.subscribe('image', (dataImage) => {
-      this.update();
-    })
   }
 
   initGroup() {
@@ -56,7 +53,6 @@ export class GroupProfilePage {
   }
 
   update() {
-    this.loaderProvider.showLoader("Updating");
     this.lock = true;
     if (this.groupId == null)
       this.createGroup();
@@ -70,7 +66,6 @@ export class GroupProfilePage {
         this.groupTemp.photoUrl = url;
         this.updateGroupFurther();
       }).catch((err) => {
-        this.loaderProvider.dismissLoader();
       });
     }
     else {
@@ -81,19 +76,50 @@ export class GroupProfilePage {
   updateGroupFurther() {
     this.groupProvider.updateGroup(this.groupId, this.groupTemp).then((res) => {
       if (res) {
-        this.loaderProvider.dismissLoader();
-        this.events.unsubscribe('image');
         this.navCtrl.pop();
       }
     }).catch((err) => {
       this.lock = false;
-      this.loaderProvider.dismissLoader();
-
     });
   }
 
   chooseImage() {
-    this.cameraProvider.presentChoice();
+    this.presentChoice();
+  }
+
+  presentChoice() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Source:',
+      buttons: [
+        {
+          text: 'Gallery',
+          handler: () => {
+            this.cameraProvider.initGallery();
+            this.cameraProvider.getPicture().then((res) => {
+              this.update();
+            }).catch((err) => {
+            });
+          }
+        },
+        {
+          text: 'Camera',
+          handler: () => {
+            this.cameraProvider.initCamera();
+            this.cameraProvider.getPicture().then((res) => {
+              this.update();
+            }).catch((err) => {
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
   quitGroup() {
@@ -134,7 +160,6 @@ export class GroupProfilePage {
         this.groupTemp.photoUrl = url;
         this.createGroupFurtherMore();
       }).catch((err) => {
-        this.loaderProvider.dismissLoader();
       });
     }
     else {
@@ -144,11 +169,8 @@ export class GroupProfilePage {
 
   createGroupFurtherMore() {
     this.groupProvider.createGroup(this.groupTemp).then((res) => {
-      this.loaderProvider.dismissLoader();
-      this.events.unsubscribe('image');
       this.navCtrl.pop();
     }).catch((err) => {
-      this.loaderProvider.dismissLoader();
       this.lock = false;
     });
   }
@@ -157,12 +179,10 @@ export class GroupProfilePage {
     this.cameraProvider.uploadImage(this.cameraProvider.groupDefault).then((res) => {
       return res;
     }).catch((err) => {
-      this.loaderProvider.dismissLoader();
       return this.cameraProvider.groupDefault;
     })
   }
 
   ionViewWillLeave() {
-    this.loaderProvider.dismissLoader();
   }
 }

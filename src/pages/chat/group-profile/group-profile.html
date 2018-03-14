@@ -30,7 +30,7 @@
 
   <div *ngIf="nameChecked" class="spacer buttonSpacer"></div>
   <!--name and image -->
-
+  <h5 *ngIf="nameChecked&&lock">Updating...</h5>
   <!--first time-->
   <button *ngIf="nameChecked&&groupId==null||groupId==''" ion-button outline round block [disabled]="lock"
           (click)="update()">Use default image

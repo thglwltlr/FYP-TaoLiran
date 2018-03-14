@@ -52,16 +52,35 @@
     <button style="margin-top: 10%;" *ngIf="!groupProvider.firstTimeFlag
                 &&groupProvider.userGroupId!=null
                 &&groupProvider.userGroupId!=''"
-            ion-button block outline  (click)="joinGroup()">
+            ion-button block outline (click)="joinGroup()">
       Change Group
     </button>
     <div class="spacer buttonSpacer"></div>
-    <button style="margin-top: 10%;" *ngIf="!groupProvider.firstTimeFlag
+    <p *ngIf="!groupProvider.firstTimeFlag
+                &&groupProvider.userGroupId!=null
+                &&groupProvider.userGroupId!=''
+                &&groupProvider.groupLeaderFlag">
+      Got friend arrive late?
+    </p>
+    <p *ngIf="!groupProvider.firstTimeFlag
+                &&groupProvider.userGroupId!=null
+                &&groupProvider.userGroupId!=''
+                &&groupProvider.groupLeaderFlag">
+      Someone wants to quit after game started?
+    </p>
+    <h6 *ngIf="!groupProvider.firstTimeFlag
+                &&groupProvider.userGroupId!=null
+                &&groupProvider.userGroupId!=''
+                &&groupProvider.groupLeaderFlag">
+      Check below!
+      <ion-icon name="happy"></ion-icon>
+    </h6>
+    <button *ngIf="!groupProvider.firstTimeFlag
                 &&groupProvider.userGroupId!=null
                 &&groupProvider.userGroupId!=''
                 &&groupProvider.groupLeaderFlag"
-            ion-button block outline  (click)="showGroupLeaderOption()">
-      Group Leader Options
+            ion-button block outline (click)="showGroupLeaderOption()">
+      Mighty Group Leader
     </button>
 
 

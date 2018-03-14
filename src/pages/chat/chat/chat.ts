@@ -17,7 +17,6 @@ import {LocalNotifications} from '@ionic-native/local-notifications';
 export class ChatPage {
   title: string;
   receiver: string;
-  // showNewMsg = false;
   messageTemp = {} as Message;
   lock = false;
   @ViewChild('content') content: Content;
@@ -62,15 +61,13 @@ export class ChatPage {
 
   onScrollEnd() {
     if ((this.content.getContentDimensions().scrollHeight - this.content.getContentDimensions().scrollTop) <= (this.content.getContentDimensions().contentHeight + this.content.getContentDimensions().contentBottom)) {
-      // this.showNewMsg = true;
       this.chatProvider.newMsgFlag = false;
     } else {
-      // this.showNewMsg = true;
     }
   }
 
   chooseImage() {
-    this.cameraProvider.presentChoice();
+    this.cameraProvider.presentChoiceNotSupportedForIOS();
   }
 
   initMessage() {

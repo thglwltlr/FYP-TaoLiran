@@ -68,7 +68,7 @@ export class PuzzleListPage {
   }
 
   chooseImage() {
-    this.cameraProvider.presentChoice();
+    this.cameraProvider.presentChoiceNotSupportedForIOS();
   }
 
   updateFurther() {

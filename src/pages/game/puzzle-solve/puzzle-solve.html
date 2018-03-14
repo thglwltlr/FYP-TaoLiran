@@ -123,8 +123,8 @@
     2: {{gameProvider.puzzleDetails[puzzleId].hint2}}</h5>
   <!--<div class="spacer buttonSpacer"></div>-->
   <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
-    <ion-item no-lines>
-      <ion-label floating>Your answer:</ion-label>
+    <ion-item>
+      <ion-label stacked>Your answer:</ion-label>
       <ion-input type="text"
                  [(ngModel)]="answerTemp"></ion-input>
     </ion-item>

@@ -22,7 +22,7 @@ export class CameraProvider {
   readonly puzzleRef = '/puzzleImage';
   readonly chatImgRef = 'chatImage';
 
-  constructor(private events: Events, private platform: Platform, private userProvider: UserProvider, private settingProvider: SettingProvider, private camera: Camera, private actionSheetCtrl: ActionSheetController) {
+  constructor(private platform: Platform, private userProvider: UserProvider, private settingProvider: SettingProvider, private camera: Camera, private actionSheetCtrl: ActionSheetController) {
 
   }
 
@@ -30,35 +30,6 @@ export class CameraProvider {
     this.base64Image = startUpImage;
   }
 
-
-  presentChoice() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Source:',
-      buttons: [
-        {
-          text: 'Gallery',
-          handler: () => {
-            this.initGallery();
-            this.getPicture();
-          }
-        },
-        {
-          text: 'Camera',
-          handler: () => {
-            this.initCamera();
-            this.getPicture();
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    actionSheet.present();
-  }
 
   initGallery() {
     this.options = {
@@ -88,15 +59,16 @@ export class CameraProvider {
   }
 
   getPicture() {
-    this.camera.getPicture(this.options).then((imageData) => {
-      // this.base64Image = imageData;
-      this.base64Image = this.imgHeader + imageData;
-      this.base64ImgRaw = imageData;
-      // this.base64Image = normalizeURL(imageData);
-      this.events.publish('image', this.base64Image);
-    }, (err) => {
+    var promise = new Promise((resolve, reject) => {
+      this.camera.getPicture(this.options).then((imageData) => {
+        this.base64Image = this.imgHeader + imageData;
+        this.base64ImgRaw = imageData;
+        resolve(true);
+      }, (err) => {
+        reject(err);
+      });
     });
-
+    return promise;
   }
 
   uploadImage(chosenRef) {
@@ -109,6 +81,9 @@ export class CameraProvider {
       var imgRef = this.fireStore.ref(chosenRef).child(this.subChild);
       imgRef.put(imgBlob).then((res) => {
         imgRef.getDownloadURL().then((res) => {
+          if (this.platform.is('ios')) {
+            this.base64Image = res;
+          }
           resolve(res);
         }).catch((err) => {
           reject(err);
@@ -128,6 +103,39 @@ export class CameraProvider {
     var imgBlob = new Blob([byteArray], {type: 'image/jpeg'});
     this.base64ImgRaw = null;
     return imgBlob;
+  }
+
+  presentChoiceNotSupportedForIOS() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Source:',
+      buttons: [
+        {
+          text: 'Gallery',
+          handler: () => {
+            this.initGallery();
+            this.getPicture().then((res) => {
+            }).catch((err) => {
+            });
+          }
+        },
+        {
+          text: 'Camera',
+          handler: () => {
+            this.initCamera();
+            this.getPicture().then((res) => {
+            }).catch((err) => {
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 
 }

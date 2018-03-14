@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <ion-item *ngIf="!nameChecked">
-    <ion-label floating>Pick a name</ion-label>
+    <ion-label stacked>Pick a name</ion-label>
     <ion-input type="text"
                [(ngModel)]="userTemp.name"></ion-input>
   </ion-item>
@@ -29,7 +29,7 @@
 
   <div *ngIf="nameChecked" class="spacer buttonSpacer"></div>
   <!--name and image -->
-
+  <h5 *ngIf="nameChecked&&lock">Updating...</h5>
   <!--first time-->
   <button *ngIf="nameChecked&&uid==null||uid==''" ion-button outline round block [disabled]="lock"
           (click)="update()">Use default image

@@ -57,7 +57,10 @@ export class ChatProvider {
       if (this.chatTableInfo[receiverId][messageId] == null) {
         this.chatTableInfo[receiverId][messageId] = infoTemp[receiverId][messageId];
         if (this.currentView != receiverId
-          && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid() && !this.firstTimeFlag) {
+          && this.chatTableInfo[receiverId][messageId].sender != this.userProvider.getUid()
+          && !this.firstTimeFlag
+          && (receiverId == this.groupProvider.userGroupId
+            || receiverId == this.public)) {
           this.notificationProvider.showNotification("new message", "You have received new message!");
           this.newMsgNo[receiverId]++;
         }
@@ -76,10 +79,9 @@ export class ChatProvider {
       return;
     this.totalMsgNo = 0;
     for (let receiverId of Object.keys(this.newMsgNo)) {
-      // if (receiverId == this.groupProvider.userGroupId) {
-      //
-      // }
-      this.totalMsgNo += this.newMsgNo[receiverId];
+      if (receiverId == this.groupProvider.userGroupId || receiverId == this.public) {
+        this.totalMsgNo += this.newMsgNo[receiverId];
+      }
     }
   }
 

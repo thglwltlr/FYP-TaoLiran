@@ -161,7 +161,7 @@ export class StatusProvider {
       }
     }
     if ((this.firstUnsolved == null || this.firstUnsolved == '')
-      && this.groupStatus != null && this.groupStatus.startTime != null && (this.groupStatus.endTime == null || this.groupStatus.endTime == '')) {
+      && (this.groupProvider.userGroupId != null && this.groupProvider.userGroupId != '') && this.groupStatus != null && this.groupStatus.startTime != null && (this.groupStatus.endTime == null || this.groupStatus.endTime == '')) {
       this.groupEnd().then((res) => {
       }).catch((err => {
 
