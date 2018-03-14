@@ -3,7 +3,7 @@
     <name>Xperience</name>
     <description>For NTU EEE Alumni Event 2017</description>
     <author email="sm2liwencheng@gmail.com" href="">Li Wencheng</author>
-    <content original-src="index.html" src="http://192.168.0.169:8101" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
