@@ -109,7 +109,8 @@ export class ProfilePage {
         this.navCtrl.push("TabsPage");
       }
       else {
-        this.navCtrl.pop();
+        if (this.navCtrl.canGoBack())
+          this.navCtrl.pop();
       }
       this.lock = false;
     })

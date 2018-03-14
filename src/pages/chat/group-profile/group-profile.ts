@@ -76,7 +76,8 @@ export class GroupProfilePage {
   updateGroupFurther() {
     this.groupProvider.updateGroup(this.groupId, this.groupTemp).then((res) => {
       if (res) {
-        this.navCtrl.pop();
+        if (this.navCtrl.canGoBack())
+          this.navCtrl.pop();
       }
     }).catch((err) => {
       this.lock = false;
@@ -169,7 +170,8 @@ export class GroupProfilePage {
 
   createGroupFurtherMore() {
     this.groupProvider.createGroup(this.groupTemp).then((res) => {
-      this.navCtrl.pop();
+      if (this.navCtrl.canGoBack())
+        this.navCtrl.pop();
     }).catch((err) => {
       this.lock = false;
     });
