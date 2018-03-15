@@ -22,10 +22,10 @@ export class PuzzleSolvePage {
   answerTemp = '';
   onScrollFlag = false;
   readonly noAudio = "Enter your answer here: ";
-  readonly audioText = "I am listening...";
   placeHolderText = this.noAudio;
   matches: string[];
   isRecording = false;
+  micActivated = false;
   @ViewChild('content') content: Content;
 
   constructor(private platform: Platform,
@@ -56,31 +56,57 @@ export class PuzzleSolvePage {
     return this.platform.is('ios');
   }
 
-  stopListeningMic() {
-    this.placeHolderText = this.noAudio;
-    if (this.matches != null && this.matches.length >= 0) {
-      this.answerTemp = this.matches[0];
-    }
-    this.speechRecognition.stopListening().then(() => {
-      this.isRecording = false;
-    });
-  }
-
-  startListeningMic() {
+  checkPermission() {
+    if (this.settingProvider.audioPermission)
+      return;
     this.speechRecognition.hasPermission()
       .then((hasPermission: boolean) => {
         if (!hasPermission) {
-          this.speechRecognition.requestPermission();
+          this.speechRecognition.requestPermission().then(
+            () => {
+              this.settingProvider.audioPermission = true;
+            },
+            () => this.settingProvider.audioPermission = false
+          )
         }
         else {
+          this.settingProvider.audioPermission = true;
           this.startListeningFurther();
         }
       });
+  }
 
+  selectMatch(match) {
+    this.answerTemp = match;
+    this.closeMicChanel();
+  }
+
+  stopListeningMic() {
+    this.speechRecognition.stopListening().then(() => {
+      this.isRecording = false;
+      this.matches = [] as string[];
+    });
+  }
+
+  openMicChanel() {
+    this.micActivated = true;
+  }
+
+  closeMicChanel() {
+    this.micActivated = false;
+    this.stopListeningMic();
+  }
+
+  startListeningMic() {
+    this.answerTemp = '';
+    if (this.settingProvider.audioPermission)
+      this.startListeningFurther();
+    else
+      this.checkPermission();
   }
 
   startListeningFurther() {
-    this.placeHolderText = this.audioText;
+    this.micActivated = true;
     let options = {
       language: 'en-US'
     }
@@ -95,15 +121,22 @@ export class PuzzleSolvePage {
     this.settingProvider.showTimeScoreFlag = false;
   }
 
+  onScroll() {
+    var fixedHeight = this.content.getContentDimensions().scrollHeight
+    var relativeHeight = this.content.getContentDimensions().contentHeight
+      + this.content.getContentDimensions().scrollTop + 50;
+    if (relativeHeight > fixedHeight)
+      this.onScrollFlag = false;
+    else
+      this.onScrollFlag = true;
+  }
+
   onScrollStart() {
     this.onScrollFlag = true;
   }
 
   onScrollEnd() {
     this.onScrollFlag = false;
-    // setTimeout(() => {
-    //   this.onScrollFlag = false;
-    // }, 1000);
   }
 
   showOptions() {

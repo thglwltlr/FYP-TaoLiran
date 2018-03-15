@@ -13,7 +13,7 @@ page-puzzle-solve {
     text-align: center;
     font-size: 0.5em;
   }
-  span{
+  span {
     color: color($colors, eeeBlue, base);
   }
   h5, h2 {
@@ -26,6 +26,9 @@ page-puzzle-solve {
     height: 35px;
     border-radius: 50%;
     vertical-align: middle;
+  }
+  .shadowText {
+    text-shadow: 1px 1px color($colors, eeeBlueLight, base);
   }
   h3, h6 {
     color: color($colors, eeeBlue, base);

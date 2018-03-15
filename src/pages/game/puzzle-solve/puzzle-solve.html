@@ -21,7 +21,7 @@
 </ion-header>
 
 <ion-content #content style="text-align: center" padding (ionScrollEnd)="onScrollEnd()"
-             (ionScrollStart)="onScrollStart()">
+             (ionScrollStart)="onScrollStart()" (ionScroll)="onScroll()">
   <!--<div class="background-wrap">-->
   <!--<div class="bubble x1"></div>-->
   <!--<div class="bubble x2"></div>-->
@@ -128,35 +128,51 @@
       <!--<ion-label color="primary" floating>Answer:</ion-label>-->
       <ion-input type="text" placeholder="{{placeHolderText}}"
                  [(ngModel)]="answerTemp" clearInput></ion-input>
-      <ion-icon *ngIf="isIos()" item-end name="mic" (press)="startListeningMic()"
-                (pressup)="stopListeningMic()"></ion-icon>
+      <ion-icon *ngIf="isIos()&&!micActivated" item-end name="mic" (click)="openMicChanel()"></ion-icon>
+      <ion-icon *ngIf="isIos()&&micActivated" item-end name="mic-off" (click)="closeMicChanel()"></ion-icon>
     </ion-item>
+    <button ion-button round outline *ngIf="micActivated&&!isRecording" (click)="startListeningMic()">Click to record
+    </button>
+    <h5 *ngIf="micActivated&&isRecording">I am listening...</h5>
+    <button ion-button round outline *ngIf="micActivated&&isRecording" (click)="stopListeningMic()">Click to stop
+    </button>
+    <h5 *ngIf="(micActivated&&!isRecording)&&(matches==null||matches.length<0)">No match yet</h5>
+    <ion-card *ngIf="micActivated&&!isRecording&&matches!=null&&matches.length>=0" text-center>
+      <ion-card-header>Select a match below</ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let match of matches" (click)="selectMatch(match)" text-center>
+            {{ match }}
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
     <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
   </div>
   <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true">
-    <h5 style="text-align: left;">Puzzle has been solved,
+    <h5 style="text-align: center;">Puzzle has been solved,
       answer: </h5>
     <h3>
       {{gameProvider.puzzleDetails[puzzleId].answer}}
     </h3>
     <h5 *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
     &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null"
-        style="text-align: left;">Solved by:
+        style="text-align: center;">Solved by:
     </h5>
     <img class="solvedByAvatar"
          *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
     &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null"
          src={{userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy].photoUrl}}>
-    <span *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
+    <span class="shadowText" *ngIf="statusProvider.puzzleStatus[puzzleId].solvedBy!=null
     &&userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy]!=null">
       {{userProvider.userTableInfo[statusProvider.puzzleStatus[puzzleId].solvedBy].name}}</span>
 
-    <h5 style="text-align: left;" *ngIf="gameProvider.puzzleDetails[puzzleId].memory!=null
+    <h5 style="text-align: center;" *ngIf="gameProvider.puzzleDetails[puzzleId].memory!=null
               &&gameProvider.puzzleDetails[puzzleId].memory!=''">
       <ion-icon name="happy"></ion-icon>
       Memory piece has been unlocked:
     </h5>
-    <h5>
+    <h5 class="shadowText">
       {{gameProvider.puzzleDetails[puzzleId].memory}}
     </h5>
   </div>
