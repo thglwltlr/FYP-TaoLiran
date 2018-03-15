@@ -29,6 +29,7 @@ import {NotificationProvider} from '../providers/utility/notification/notificati
 import {LocalNotifications} from '@ionic-native/local-notifications';
 import {SplashPage} from '../pages/splash/splash';
 import {OpenPage} from '../pages/open/open';
+import {SpeechRecognition} from '@ionic-native/speech-recognition';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import {OpenPage} from '../pages/open/open';
     Geolocation,
     LocalNotifications,
     NotificationProvider,
+    SpeechRecognition
 
   ]
 })

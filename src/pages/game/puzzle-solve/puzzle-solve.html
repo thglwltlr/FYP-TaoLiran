@@ -126,8 +126,10 @@
   <div *ngIf="statusProvider.puzzleStatus[puzzleId].solved==false">
     <ion-item>
       <!--<ion-label color="primary" floating>Answer:</ion-label>-->
-      <ion-input type="text" placeholder="Enter your answer here: "
-                 [(ngModel)]="answerTemp"></ion-input>
+      <ion-input type="text" placeholder="{{placeHolderText}}"
+                 [(ngModel)]="answerTemp" clearInput></ion-input>
+      <ion-icon *ngIf="isIos()" item-end name="mic" (press)="startListeningMic()"
+                (pressup)="stopListeningMic()"></ion-icon>
     </ion-item>
     <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
   </div>

@@ -1,5 +1,5 @@
-import {Component, ViewChild} from '@angular/core';
-import {ActionSheetController, Content, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
+import {ActionSheetController, Content, IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 import {GameProvider} from '../../../providers/tables/game/game';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -9,6 +9,7 @@ import {LoaderProvider} from '../../../providers/utility/loader/loader';
 import {ModalController} from 'ionic-angular';
 import {GalleryModal} from 'ionic-gallery-modal';
 import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
+import {SpeechRecognition} from '@ionic-native/speech-recognition';
 
 @IonicPage()
 @Component({
@@ -20,10 +21,26 @@ export class PuzzleSolvePage {
   lock = false;
   answerTemp = '';
   onScrollFlag = false;
-
+  readonly noAudio = "Enter your answer here: ";
+  readonly audioText = "I am listening...";
+  placeHolderText = this.noAudio;
+  matches: string[];
+  isRecording = false;
   @ViewChild('content') content: Content;
 
-  constructor(private actionSheetCtrl: ActionSheetController, private modalCtrl: ModalController, private loaderProvider: LoaderProvider, private toastProvider: ToastProvider, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private platform: Platform,
+              private cd: ChangeDetectorRef,
+              private speechRecognition: SpeechRecognition,
+              private actionSheetCtrl: ActionSheetController,
+              private modalCtrl: ModalController,
+              private loaderProvider: LoaderProvider,
+              private toastProvider: ToastProvider,
+              private settingProvider: SettingProvider,
+              private userProvider: UserProvider,
+              private gameProvider: GameProvider,
+              private statusProvider: StatusProvider,
+              public navCtrl: NavController,
+              public navParams: NavParams) {
     this.puzzleId = this.navParams.get('puzzleId');
     if (this.statusProvider.puzzleStatus[this.puzzleId] == null) {
       this.navCtrl.pop();
@@ -32,6 +49,46 @@ export class PuzzleSolvePage {
       this.statusProvider.solvingPuzzle = this.puzzleId;
     }
     this.answerTemp = '';
+    this.placeHolderText = this.noAudio;
+  }
+
+  isIos() {
+    return this.platform.is('ios');
+  }
+
+  stopListeningMic() {
+    this.placeHolderText = this.noAudio;
+    if (this.matches != null && this.matches.length >= 0) {
+      this.answerTemp = this.matches[0];
+    }
+    this.speechRecognition.stopListening().then(() => {
+      this.isRecording = false;
+    });
+  }
+
+  startListeningMic() {
+    this.speechRecognition.hasPermission()
+      .then((hasPermission: boolean) => {
+        if (!hasPermission) {
+          this.speechRecognition.requestPermission();
+        }
+        else {
+          this.startListeningFurther();
+        }
+      });
+
+  }
+
+  startListeningFurther() {
+    this.placeHolderText = this.audioText;
+    let options = {
+      language: 'en-US'
+    }
+    this.speechRecognition.startListening().subscribe(matches => {
+      this.matches = matches;
+      this.cd.detectChanges();
+    });
+    this.isRecording = true;
   }
 
   hideTimeScore() {
