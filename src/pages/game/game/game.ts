@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {
-  ActionSheetController, Content, IonicPage, ModalController, NavController, NavParams
+  ActionSheetController, Content, FabContainer, IonicPage, ModalController, NavController, NavParams
 } from 'ionic-angular';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {GroupProvider} from '../../../providers/tables/group/group';
@@ -22,8 +22,21 @@ import {ChatProvider} from '../../../providers/tables/chat/chat';
 })
 export class GamePage {
   @ViewChild('content') content: Content;
+  @ViewChild('fab') fab: FabContainer;
 
   constructor(private chatProvider: ChatProvider, private notificationProvider: NotificationProvider, private actionSheetCtrl: ActionSheetController, private modalController: ModalController, private modalCtrl: ModalController, private settingProvider: SettingProvider, private userProvider: UserProvider, private gameProvider: GameProvider, private statusProvider: StatusProvider, private groupProvider: GroupProvider, public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  onScroll() {
+    this.closeFab();
+  }
+
+  closeFab() {
+    this.fab.close();
+  }
+
+  viewAllMemory() {
+    this.navCtrl.push("FinishPage");
   }
 
   ionViewWillEnter() {
@@ -123,14 +136,17 @@ export class GamePage {
   }
 
   viewIntro() {
+    this.closeFab();
     this.navCtrl.push('IntroPage');
   }
 
   viewRank() {
+    this.closeFab();
     this.navCtrl.push("RankPage");
   }
 
   viewTable() {
+    this.closeFab();
     var photos = [];
     photos.push({
       url: 'https://firebasestorage.googleapis.com/v0/b/fyp03-136e5.appspot.com/o/Table.jpg?alt=media&token=a1264fe1-983b-464e-8690-95ab6dfe3228'
@@ -144,10 +160,12 @@ export class GamePage {
   }
 
   viewMap() {
+    this.closeFab();
     this.navCtrl.push("MapPage");
   }
 
   showCanvas() {
+    this.closeFab();
     let canvasModal = this.modalCtrl.create(CanvasDrawComponent);
     canvasModal.onDidDismiss((data => {
     }));

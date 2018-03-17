@@ -35,4 +35,5 @@ export class AboutPage {
     }
   }
 
+
 }

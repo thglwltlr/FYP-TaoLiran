@@ -12,7 +12,7 @@ export class SettingProvider {
   timer;
   time;
   showTimeScoreFlag = true;
-  readonly regExString = '^[a-zA-Z0-9 _]+$';
+  readonly regExString = "^[a-zA-Z0-9 '_]+$";
   audioPermission = false;
 
   constructor(private network: Network, private toastProvider: ToastProvider) {

@@ -12,10 +12,10 @@
   <ion-item *ngIf="!nameChecked">
     <ion-label floating>Pick a name</ion-label>
     <ion-input type="text"
-               [(ngModel)]="groupTemp.name"></ion-input>
+               [(ngModel)]="groupTemp.name" clearInput></ion-input>
   </ion-item>
 
-  <button *ngIf="!nameChecked" ion-button outline round block [disabled]="lock" (click)="checkName()">Check Name
+  <button style="margin-top: 5%" *ngIf="!nameChecked" ion-button outline round block [disabled]="lock" (click)="checkName()">Check Name
   </button>
 
   <!--name and image -->

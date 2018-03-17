@@ -37,7 +37,13 @@ export class GroupProfilePage {
     this.groupTemp.members = [];
     this.groupTemp.groupCreator = '';
     this.groupTemp.photoUrl = this.cameraProvider.groupDefault;
-    this.groupTemp.name = '';
+    if (this.userProvider.userTableInfo[this.userProvider.getUid()] != null
+      && this.userProvider.userTableInfo[this.userProvider.getUid()].name != null
+      && this.userProvider.userTableInfo[this.userProvider.getUid()].name != '')
+      this.groupTemp.name = this.userProvider.userTableInfo[this.userProvider.getUid()].name + "'s group";
+    else {
+      this.groupTemp.name = '';
+    }
     this.groupTemp.groupNumber = 0;
   }
 

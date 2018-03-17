@@ -45,7 +45,7 @@
 
 </ion-header>
 
-<ion-content #content>
+<ion-content #content (ionScroll)="onScroll()">
   <ion-toolbar *ngIf="(settingProvider.showTimeScoreFlag
     &&!gameProvider.firstTimeFlag
     &&!groupProvider.firstTimeFlag
@@ -93,7 +93,7 @@
       <!--</ion-row>-->
     </ion-grid>
   </ion-toolbar>
-  <ion-fab *ngIf="(!gameProvider.firstTimeFlag
+  <ion-fab #fab *ngIf="(!gameProvider.firstTimeFlag
     &&!groupProvider.firstTimeFlag
     &&!statusProvider.firstTimeFlag)
     &&(statusProvider.statusTableInfo.startTime!=null
@@ -106,24 +106,29 @@
     &&statusProvider.groupStatus.startTime!=null
     &&statusProvider.groupStatus.puzzles!=null)"
            right bottom ion-fixed>
-    <button ion-fab mini color="light">
-      <ion-icon name="arrow-dropup"></ion-icon>
+    <button ion-fab mini color="eeeBlueLight">
+      <ion-icon name="arrow-dropup" ></ion-icon>
     </button>
     <ion-fab-list side="top">
       <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
+        <ion-label>Introduction</ion-label>
       </button>
       <button ion-fab (click)="viewMap()">
         <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+        <ion-label>Track me</ion-label>
       </button>
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
+        <ion-label>Periodic table</ion-label>
       </button>
       <button ion-fab (click)="viewRank()">
         <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
+        <ion-label>Team rank</ion-label>
       </button>
       <button mini ion-fab (click)="showCanvas()">
         <ion-icon ios="ios-color-palette" md="md-color-palette"></ion-icon>
+        <ion-label>Doodling</ion-label>
       </button>
     </ion-fab-list>
   </ion-fab>
@@ -277,6 +282,13 @@
               <h6 no-margin>
                 You may proceed to the specified location!
               </h6>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <button ion-button no-margin
+                      round outline small (click)="viewAllMemory()">Check all memory pieces!
+              </button>
             </ion-col>
           </ion-row>
           <ion-row>

@@ -1,0 +1,22 @@
+<ion-fab>
+  <button ion-fab mini color="eeeBlueLight" (click)="back()">
+    <ion-icon name="close-circle" style="color: white!important;"></ion-icon>
+  </button>
+</ion-fab>
+<ion-content no-lines no-border>
+  <ion-fab>
+    <button ion-fab mini color="eeeBlueLight" (click)="back()">
+      <ion-icon name="close-circle" style="color: white!important;"></ion-icon>
+    </button>
+  </ion-fab>
+  <ion-slides pager="true" parallax="true" padding>
+    <ion-slide *ngFor="let memoryPiece of memoryPieces">
+      <div class="conversation"
+           [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (memoryPiece.replace(forwardSlash, '</span>').replace(backSlash,'<span>'))"></div>
+    </ion-slide>
+  </ion-slides>
+  <img class="adven" src="assets/imgs/adven.png">
+  <img class="chest" src="assets/imgs/chest.png">
+</ion-content>

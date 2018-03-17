@@ -1,5 +1,8 @@
 import {ChangeDetectorRef, Component, ViewChild} from '@angular/core';
-import {ActionSheetController, Content, IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
+import {
+  ActionSheetController, Content, FabContainer, IonicPage, NavController, NavParams,
+  Platform
+} from 'ionic-angular';
 import {GameProvider} from '../../../providers/tables/game/game';
 import {StatusProvider} from '../../../providers/tables/status/status';
 import {UserProvider} from '../../../providers/tables/user/user';
@@ -29,7 +32,9 @@ export class PuzzleSolvePage {
   matches: string[];
   isRecording = false;
   micActivated = false;
+  micTimer;
   @ViewChild('content') content: Content;
+  @ViewChild('fab') fab: FabContainer;
 
   constructor(private domSanitizer: DomSanitizer,
               private platform: Platform,
@@ -60,6 +65,11 @@ export class PuzzleSolvePage {
     return this.platform.is('ios');
   }
 
+  closeFab() {
+    this.fab.close();
+  }
+
+
   checkPermission() {
     if (this.settingProvider.audioPermission)
       return;
@@ -86,6 +96,7 @@ export class PuzzleSolvePage {
   }
 
   stopListeningMic() {
+    clearTimeout(this.micTimer);
     this.speechRecognition.stopListening().then(() => {
       this.isRecording = false;
       this.matches = [] as string[];
@@ -93,7 +104,7 @@ export class PuzzleSolvePage {
   }
 
   openMicChanel() {
-    this.micActivated = true;
+    this.startListeningMic();
   }
 
   closeMicChanel() {
@@ -111,6 +122,11 @@ export class PuzzleSolvePage {
 
   startListeningFurther() {
     this.micActivated = true;
+    clearTimeout(this.micTimer);
+    this.micTimer = setTimeout(() => {
+      this.stopListeningMic();
+    }, 10000);
+    this.micActivated = true;
     let options = {
       language: 'en-US'
     }
@@ -121,11 +137,19 @@ export class PuzzleSolvePage {
     this.isRecording = true;
   }
 
+  answerOnfocus() {
+    if (this.isIos())
+      this.closeMicChanel();
+  }
+
   hideTimeScore() {
-    this.settingProvider.showTimeScoreFlag = false;
+    setTimeout(() => {
+      this.settingProvider.showTimeScoreFlag = false;
+    }, 1000);
   }
 
   onScroll() {
+    this.closeFab();
     var fixedHeight = this.content.getContentDimensions().scrollHeight
     var relativeHeight = this.content.getContentDimensions().contentHeight
       + this.content.getContentDimensions().scrollTop + 50;
@@ -196,14 +220,17 @@ export class PuzzleSolvePage {
   }
 
   viewIntro() {
+    this.closeFab();
     this.navCtrl.push('IntroPage');
   }
 
   viewRank() {
+    this.closeFab();
     this.navCtrl.push("RankPage");
   }
 
   viewTable() {
+    this.closeFab();
     var photos = [];
     photos.push({
       url: 'https://firebasestorage.googleapis.com/v0/b/fyp03-136e5.appspot.com/o/Table.jpg?alt=media&token=a1264fe1-983b-464e-8690-95ab6dfe3228'
@@ -217,10 +244,12 @@ export class PuzzleSolvePage {
   }
 
   viewMap() {
+    this.closeFab();
     this.navCtrl.push("MapPage");
   }
 
   showCanvas() {
+    this.closeFab();
     let canvasModal = this.modalCtrl.create(CanvasDrawComponent);
     canvasModal.onDidDismiss((data => {
     }));
@@ -337,7 +366,7 @@ export class PuzzleSolvePage {
 
   checkPoint() {
     if (this.statusProvider.groupStatus.point < 20) {
-      //to do
+      this.toastProvider.showToast("Point not enough, ask admin for help!");
       return false
     }
     return true;

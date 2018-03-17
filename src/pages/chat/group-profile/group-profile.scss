@@ -15,7 +15,13 @@ page-group-profile {
     align-content: center;
     text-align: center;
   }
-  ion-content{
-    color:color($colors, eeeBlue, base)!important;
+  ion-content {
+    color: color($colors, eeeBlue, base) !important;
+    background: linear-gradient(217deg, rgba(255, 0, 0, .2), rgba(255, 0, 0, 0) 70.71%),
+    linear-gradient(127deg, rgba(0, 255, 0, .2), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, .2), rgba(0, 0, 255, 0) 70.71%);
+  }
+  ion-item {
+    background-color: transparent !important;
   }
 }

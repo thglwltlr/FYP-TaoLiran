@@ -1,5 +1,10 @@
-page-intro {
-
+page-finish {
+  .back {
+    position: fixed;
+    top: 2%;
+    left: 2%;
+    color: white !important;
+  }
   span {
     color: color($colors, eeeOrange, base);
   }
@@ -22,26 +27,20 @@ page-intro {
     font-family: "Times New Roman", Times, serif;
     font-weight: bold;
     text-shadow: 1px 1px color($colors, eeeBlue, base);
-
   }
-
-  .prof {
-    clear: both;
-    float: left;
+  .adven{
     width: 20%;
-    margin-left: 5%;
-    margin-top: 10%;
-    animation: moveVertical 4s ease-in-out infinite;
-  }
-  .robot {
-    clear: both;
-    float: right;
-    margin-right: 5%;
-    width: 20%;
-    margin-top: 10%;
-    animation: moveVertical 4s ease-in-out infinite;
-  }
+    position: fixed;
+    left: 5%;
+    bottom: 10%;
 
+  }
+  .chest {
+    width: 20%;
+    position: fixed;
+    right: 5%;
+    bottom: 10%;
+  }
   @keyframes moveVertical {
     0% {
       transform: translate3d(0, -3%, 0);

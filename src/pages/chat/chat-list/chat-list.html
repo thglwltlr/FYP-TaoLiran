@@ -39,7 +39,9 @@
       <ion-avatar item-start>
         <img src={{groupProvider.groupTableInfo[groupProvider.userGroupId].photoUrl}}>
       </ion-avatar>
-      <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}</h2>
+      <h2>{{groupProvider.groupTableInfo[groupProvider.userGroupId].name}}
+        </h2>
+      <p>Group no: {{("00"+groupProvider.groupTableInfo[groupProvider.userGroupId].groupNumber).slice(-3)}}</p>
       <p>Chat with your teammates!</p>
       <ion-badge color="eeeBlue"
                  *ngIf="chatProvider.newMsgNo[groupProvider.userGroupId]!=null
@@ -80,7 +82,7 @@
                 &&groupProvider.userGroupId!=''
                 &&groupProvider.groupLeaderFlag"
             ion-button block outline (click)="showGroupLeaderOption()">
-      Mighty Group Leader
+      You Are the Mighty Group Leader
     </button>
 
 

@@ -1,27 +1,47 @@
-<!--<ion-header no-lines no-border>-->
-  <!--<ion-navbar no-lines no-border transparent>-->
-  <!--</ion-navbar>-->
-<!--</ion-header>-->
+<ion-fab>
+  <button ion-fab mini color="eeeBlueLight" (click)="back()">
+    <ion-icon name="close-circle" style="color: white!important;"></ion-icon>
+  </button>
+</ion-fab>
 <ion-content no-lines no-border>
-  <button class="back" ion-button icon-only small clear (click)="back()">
-    <ion-icon>
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-icon>
-  </button>
-  <img src="assets/imgs/introBg.jpeg" class="backgroundImage">
-  <img *ngIf="navNumber==0||navNumber==2" class="prof" src="assets/imgs/prof.png">
-  <div #conversation class="conversation">
-    {{conversationContent[navNumber]}}
-  </div>
-  <img *ngIf="navNumber==1||navNumber==3" class="robot" src="assets/imgs/robot.png">
-  <button *ngIf="navNumber!=0" (click)="changeNav(-1)" class="leftButton" ion-button icon-only small clear>
-    <ion-icon>
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-icon>
-  </button>
-  <button *ngIf="navNumber!=3" (click)="changeNav(+1)" class="rightButton" ion-button icon-only small clear>
-    <ion-icon>
-      <ion-icon name="arrow-forward"></ion-icon>
-    </ion-icon>
-  </button>
+
+  <ion-slides pager="true" parallax="true" padding>
+    <ion-slide>
+
+      <div class="conversation"
+           [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (conversationContent[0].replace(forwardSlash, '</span>').replace(backSlash,'<span>'))"></div>
+      <img class="prof" src="assets/imgs/prof.png">
+    </ion-slide>
+
+    <ion-slide>
+
+      <div class="conversation"
+           [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (conversationContent[1].replace(forwardSlash, '</span>').replace(backSlash,'<span>'))"></div>
+      <img class="robot" src="assets/imgs/robot.png">
+    </ion-slide>
+
+    <ion-slide>
+
+      <div class="conversation"
+           [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (conversationContent[2].replace(forwardSlash, '</span>').replace(backSlash,'<span>'))"></div>
+      <img class="prof" src="assets/imgs/prof.png">
+    </ion-slide>
+
+    <ion-slide>
+
+      <div class="conversation"
+           [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (conversationContent[3].replace(forwardSlash, '</span>').replace(backSlash,'<span>'))"></div>
+      <img class="prof" class="robot" src="assets/imgs/robot.png">
+    </ion-slide>
+  </ion-slides>
+
 </ion-content>
+

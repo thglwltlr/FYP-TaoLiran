@@ -34,25 +34,30 @@
   <!--<div class="bubble x9"></div>-->
   <!--<div class="bubble x10"></div>-->
   <!--</div>-->
-  <ion-fab right bottom ion-fixed>
-    <button ion-fab mini color="light">
+  <ion-fab #fab right bottom ion-fixed>
+    <button ion-fab mini color="eeeBlueLight">
       <ion-icon name="arrow-dropup"></ion-icon>
     </button>
     <ion-fab-list side="top">
       <button ion-fab (click)="viewIntro()">
         <ion-icon name="logo-freebsd-devil"></ion-icon>
+        <ion-label>Introduction</ion-label>
       </button>
       <button ion-fab (click)="viewMap()">
         <ion-icon ios="ios-compass" md="md-compass"></ion-icon>
+        <ion-label>Track me</ion-label>
       </button>
       <button ion-fab (click)="viewTable()">
         <ion-icon ios="ios-flask" md="md-flask"></ion-icon>
+        <ion-label>Periodic table</ion-label>
       </button>
       <button ion-fab (click)="viewRank()">
         <ion-icon ios="ios-podium" md="md-podium"></ion-icon>
+        <ion-label>Team rank</ion-label>
       </button>
       <button mini ion-fab (click)="showCanvas()">
         <ion-icon ios="ios-color-palette" md="md-color-palette"></ion-icon>
+        <ion-label>Doodling</ion-label>
       </button>
     </ion-fab-list>
   </ion-fab>
@@ -132,13 +137,17 @@
     <ion-item>
       <!--<ion-label color="primary" floating>Answer:</ion-label>-->
       <ion-input type="text" placeholder="{{placeHolderText}}"
-                 [(ngModel)]="answerTemp" clearInput></ion-input>
+                 [(ngModel)]="answerTemp" clearInput (ionFocus)="answerOnfocus()"></ion-input>
       <ion-icon *ngIf="isIos()&&!micActivated" item-end name="mic" (click)="openMicChanel()"></ion-icon>
       <ion-icon *ngIf="isIos()&&micActivated" item-end name="mic-off" (click)="closeMicChanel()"></ion-icon>
     </ion-item>
     <button ion-button round outline *ngIf="micActivated&&!isRecording" (click)="startListeningMic()">Click to record
     </button>
-    <h5 *ngIf="micActivated&&isRecording">I am listening...</h5>
+    <h5 *ngIf="micActivated&&isRecording">I am listening...
+      <div class="timer">
+        <div class="mask"></div>
+      </div>
+    </h5>
     <button ion-button round outline *ngIf="micActivated&&isRecording" (click)="stopListeningMic()">Click to stop
     </button>
     <h5 *ngIf="(micActivated&&!isRecording)&&(matches==null||matches.length<0)">No match yet</h5>
@@ -152,7 +161,7 @@
         </ion-list>
       </ion-card-content>
     </ion-card>
-    <button ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
+    <button style="margin-top: 5%" ion-button block outline (click)="answerPuzzle()">Submit (+10)</button>
   </div>
   <div padding *ngIf="statusProvider.puzzleStatus[puzzleId].solved==true">
     <h5 style="text-align: center;">Puzzle has been solved,
