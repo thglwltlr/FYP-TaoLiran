@@ -10,6 +10,7 @@ import {ModalController} from 'ionic-angular';
 import {GalleryModal} from 'ionic-gallery-modal';
 import {CanvasDrawComponent} from '../../../components/canvas-draw/canvas-draw';
 import {SpeechRecognition} from '@ionic-native/speech-recognition';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @IonicPage()
 @Component({
@@ -22,13 +23,16 @@ export class PuzzleSolvePage {
   answerTemp = '';
   onScrollFlag = false;
   readonly noAudio = "Enter your answer here: ";
+  readonly forwardSlash = /\//g;
+  readonly backSlash = /\\/g;
   placeHolderText = this.noAudio;
   matches: string[];
   isRecording = false;
   micActivated = false;
   @ViewChild('content') content: Content;
 
-  constructor(private platform: Platform,
+  constructor(private domSanitizer: DomSanitizer,
+              private platform: Platform,
               private cd: ChangeDetectorRef,
               private speechRecognition: SpeechRecognition,
               private actionSheetCtrl: ActionSheetController,

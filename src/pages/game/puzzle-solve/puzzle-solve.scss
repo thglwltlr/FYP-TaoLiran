@@ -20,6 +20,12 @@ page-puzzle-solve {
     font-family: "Aladin", Helvetica, sans-serif;
     //text-shadow: 0 1px 0 rgb(204, 204, 204), 0 2px 0 rgb(201, 201, 201), 0 3px 0 rgb(187, 187, 187), 0 4px 0 rgb(185, 185, 185), 0 5px 0 rgb(170, 170, 170), 0 6px 1px rgba(0, 0, 0, 0.0980392), 0 0 5px rgba(0, 0, 0, 0.0980392), 0 1px 3px rgba(0, 0, 0, 0.298039), 0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.247059), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.14902);
     color: color($colors, eeeBlue, base);
+    span {
+      color: color($colors, eeeOrange, base);
+    }
+  }
+  .importantText{
+    color: color($colors, eeeOrange, base);
   }
   .solvedByAvatar {
     width: 35px;
@@ -30,7 +36,12 @@ page-puzzle-solve {
   .shadowText {
     text-shadow: 1px 1px color($colors, eeeBlueLight, base);
   }
-  h3, h6 {
+  h3 {
+    color: color($colors, eeeOrange, base);
+    //font-family: "Times New Roman", Times, serif;
+    text-shadow: 1px 1px color($colors, eeeBlueLight, base);
+  }
+  h6 {
     color: color($colors, eeeBlue, base);
     //font-family: "Times New Roman", Times, serif;
     text-shadow: 1px 1px color($colors, eeeBlueLight, base);

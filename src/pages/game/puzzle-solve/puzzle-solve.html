@@ -91,14 +91,19 @@
 
   <h2 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].title}}</h2>
 
-  <h5 style="text-align: center;">{{gameProvider.puzzleDetails[puzzleId].puzzleContent}}</h5>
+  <h5 style="text-align: center;"
+      [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (gameProvider.puzzleDetails[puzzleId].puzzleContent.replace(forwardSlash, '</span>').replace(backSlash,'<span>'))">
+
+  </h5>
   <img src='{{gameProvider.puzzleDetails[puzzleId].photoUrl}}' (click)="openImage()">
 
   <div class="spacer buttonSpacer"></div>
   <h5 style="text-align: center;"
       *ngIf="statusProvider.puzzleStatus[puzzleId].hint1==false
             &&gameProvider.puzzleDetails[puzzleId].hint1!=null
-            &&gameProvider.puzzleDetails[puzzleId].hint1!=''">
+            &&gameProvider.puzzleDetails[puzzleId].hint1!=''" class="importantText">
     Try to save point for hard ones!
   </h5>
   <button ion-button [disabled]="lock"
@@ -172,8 +177,10 @@
       <ion-icon name="happy"></ion-icon>
       Memory piece has been unlocked:
     </h5>
-    <h5 class="shadowText">
-      {{gameProvider.puzzleDetails[puzzleId].memory}}
+    <h5 class="shadowText"
+        [innerHtml]="domSanitizer.
+        bypassSecurityTrustHtml
+        (gameProvider.puzzleDetails[puzzleId].memory.replace(forwardSlash, '</span>').replace(backSlash,'<span>'))">
     </h5>
   </div>
   <div class="spacer footSpacer"></div>

@@ -28,7 +28,9 @@ export class GamePage {
 
   ionViewWillEnter() {
     this.notificationProvider.clearAllNotification();
-    this.scrollToBottom();
+    if (this.statusProvider.firstUnsolved != null
+      && this.statusProvider.firstUnsolved != '')
+      this.scrollToBottom();
   }
 
   ionViewDidLoad() {
