@@ -64,9 +64,13 @@
   <ion-toolbar *ngIf="settingProvider.showTimeScoreFlag" ion-fixed>
     <ion-grid class="fontBlue">
       <ion-row>
-        <ion-col col-6>
-          <ion-icon padding-right md="md-alarm"></ion-icon>
+        <ion-col col-6 *ngIf="statusProvider.groupStatus.endTime==null||statusProvider.groupStatus.endTime==''">
+          <ion-icon padding-right ios="ios-alarm" md="md-alarm"></ion-icon>
           {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
+        </ion-col>
+        <ion-col col-6 *ngIf="statusProvider.groupStatus.endTime!=null&&statusProvider.groupStatus.endTime!=''">
+          <ion-icon padding-right ios="ios-alarm" md="md-alarm"></ion-icon>
+          {{statusProvider.groupStatus.endTime-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
         </ion-col>
         <ion-col col-5>
           <ion-icon padding-right ios="ios-clipboard" md="md-clipboard"></ion-icon>

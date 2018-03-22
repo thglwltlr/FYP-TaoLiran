@@ -32,11 +32,16 @@ export class GamePage {
   }
 
   closeFab() {
-    this.fab.close();
+    if (this.fab != null)
+      this.fab.close();
   }
 
   viewAllMemory() {
     this.navCtrl.push("FinishPage");
+  }
+
+  ionViewWillLeave() {
+    this.closeFab();
   }
 
   ionViewWillEnter() {

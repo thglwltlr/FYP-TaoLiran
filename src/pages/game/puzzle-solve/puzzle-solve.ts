@@ -66,7 +66,8 @@ export class PuzzleSolvePage {
   }
 
   closeFab() {
-    this.fab.close();
+    if (this.fab != null)
+      this.fab.close();
   }
 
 
@@ -281,6 +282,10 @@ export class PuzzleSolvePage {
 
   ionViewWillLeave() {
     this.statusProvider.solvingPuzzle = '';
+    if (this.isIos()) {
+      this.closeMicChanel();
+    }
+
   }
 
   checkAnswer(): boolean {

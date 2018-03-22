@@ -61,9 +61,13 @@
     &&statusProvider.groupStatus.puzzles!=null)" ion-fixed>
     <ion-grid class="fontBlue">
       <ion-row style="text-align: center;">
-        <ion-col col-6>
+        <ion-col col-6 *ngIf="statusProvider.groupStatus.endTime==null||statusProvider.groupStatus.endTime==''">
           <ion-icon padding-right ios="ios-alarm" md="md-alarm"></ion-icon>
           {{settingProvider.time-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
+        </ion-col>
+        <ion-col col-6 *ngIf="statusProvider.groupStatus.endTime!=null&&statusProvider.groupStatus.endTime!=''">
+          <ion-icon padding-right ios="ios-alarm" md="md-alarm"></ion-icon>
+          {{statusProvider.groupStatus.endTime-statusProvider.groupStatus.startTime|date:'HH:mm:ss':'UTC'}}
         </ion-col>
         <ion-col col-5>
           <ion-icon padding-right ios="ios-clipboard" md="md-clipboard"></ion-icon>
@@ -107,7 +111,7 @@
     &&statusProvider.groupStatus.puzzles!=null)"
            right bottom ion-fixed>
     <button ion-fab mini color="eeeBlueLight">
-      <ion-icon name="arrow-dropup" ></ion-icon>
+      <ion-icon name="arrow-dropup"></ion-icon>
     </button>
     <ion-fab-list side="top">
       <button ion-fab (click)="viewIntro()">
