@@ -8,5 +8,6 @@ export interface Puzzle {
   photoUrl: string;
   order: number;
   special: boolean;
+  //special : "opencv"
   memory: string;
 }
